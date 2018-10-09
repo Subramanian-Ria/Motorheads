@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package legacy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -30,7 +30,7 @@ public class PIDControlTest extends LinearOpMode {
         // get reference to DC motor.
         // since we are using the Expansion Hub,
         // cast this motor to a DcMotorEx object.
-        PIDRevTestHardware robot   = new PIDRevTestHardware();
+        //PIDRevTestHardware robot   = new PIDRevTestHardware();
 
 
 

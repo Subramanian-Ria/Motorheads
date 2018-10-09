@@ -1,6 +1,6 @@
 //THIS IS A MOTORHEADS PROGRAM
 
-package org.firstinspires.ftc.teamcode;
+package legacy;
 
 import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
