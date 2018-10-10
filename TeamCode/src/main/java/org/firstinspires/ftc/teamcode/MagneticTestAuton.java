@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 @Autonomous(name="MagneticTestAuton", group="MagneticTest")
-//@Disabled
+@Disabled
 public class MagneticTestAuton extends LinearOpMode {
 
     MagneticTestHardware         robot   = new MagneticTestHardware();   // Use a Pushbot's hardware

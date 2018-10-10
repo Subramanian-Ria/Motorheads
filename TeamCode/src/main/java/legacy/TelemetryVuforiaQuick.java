@@ -25,6 +25,7 @@ import legacy.FoOHardware;
  * Created by coolb on 12/20/2017
  */
 
+@Disabled
 @Autonomous(name = "vu", group = "Force of Oros")
 public class TelemetryVuforiaQuick extends LinearOpMode
 {

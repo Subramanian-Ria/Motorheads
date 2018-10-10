@@ -13,7 +13,7 @@ import java.util.Locale;
 //import legacy.FoOHardware;
 
 @TeleOp(name="TankTestTeleop", group="TankTestBot")
-//@Disabled
+@Disabled
 public class TankTestTeleop extends OpMode {
 
     TankTestHardware robot = new TankTestHardware();

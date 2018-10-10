@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,7 +12,7 @@ import java.util.Locale;
 //import legacy.FoOHardware;
 
 @TeleOp(name="SensorTest", group="SensorTestBot")
-//@Disabled
+@Disabled
 public class SensorTest extends OpMode {
 
     SensorTestHardware robot = new SensorTestHardware();

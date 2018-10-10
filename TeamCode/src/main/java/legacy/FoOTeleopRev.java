@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import legacy.ForceofHaskinsHardware;
 
+@Disabled
 @TeleOp(name="FoOTeleopRev", group="ForceofHaskins")
 public class FoOTeleopRev extends OpMode{
 

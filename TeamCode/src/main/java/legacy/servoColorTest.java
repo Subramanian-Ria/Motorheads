@@ -4,6 +4,7 @@ package legacy;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -32,6 +33,7 @@ import legacy.FoOHardware;
  * Created by coolb on 12/20/2017
  */
 
+@Disabled
 @Autonomous(name = "servoColorTest", group = "Force of Oros")
 public class servoColorTest extends LinearOpMode
 {
