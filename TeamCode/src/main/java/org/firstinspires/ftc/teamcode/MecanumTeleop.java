@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import legacy.FoOHardware;
 
-@TeleOp(name="TankTestTeleop", group="TankTestBot")
+@TeleOp(name="MecanumTeleop", group="MecanumBot")
 //@Disabled
 public class MecanumTeleop extends OpMode {
 
