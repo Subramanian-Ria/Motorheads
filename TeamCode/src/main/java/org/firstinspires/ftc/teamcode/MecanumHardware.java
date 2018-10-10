@@ -38,10 +38,10 @@ public class MecanumHardware
         hwMap = ahwMap;
 
         // Define Motors
-        fLMotor = hwMap.get(DcMotor.class, "motorLeft");
-        fRMotor = hwMap.get(DcMotor.class, "motorRight");
-        bRMotor = hwMap.get(DcMotor.class, "motorCenter");
-        bLMotor = hwMap.get(DcMotor.class, "verticalarm");
+        fLMotor = hwMap.get(DcMotor.class, "fLMotor");
+        fRMotor = hwMap.get(DcMotor.class, "fRMotor");
+        bRMotor = hwMap.get(DcMotor.class, "bRMotor");
+        bLMotor = hwMap.get(DcMotor.class, "bLMotor");
 
         //Setting Motor Directions
         fLMotor.setDirection(DcMotor.Direction.REVERSE); //right and left should be correct
