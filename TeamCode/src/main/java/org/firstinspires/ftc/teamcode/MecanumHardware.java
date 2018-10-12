@@ -50,7 +50,7 @@ public class MecanumHardware
         bRMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
-        fLMotor.setPower(0);
+
         fRMotor.setPower(0);
         bLMotor.setPower(0);
         bRMotor.setPower(0);
