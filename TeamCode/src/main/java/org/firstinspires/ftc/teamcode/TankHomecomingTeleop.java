@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import legacy.FoOHardware;
 
-@TeleOp(name="TankDriveTeleop", group="TankTestBot")
+@TeleOp(name="TankHomecomingTeleop", group="TankTestBot")
 @Disabled
-public class TankDriveTeleop extends OpMode {
+public class TankHomecomingTeleop extends OpMode {
 
     TankTestHardware robot = new TankTestHardware();
     ElapsedTime runTime = new ElapsedTime();
@@ -33,7 +33,7 @@ public class TankDriveTeleop extends OpMode {
     public void loop() {
         //forward/backwards movement .8 lim
         LPower = gamepad1.left_stick_y * pLim;
-        RPower = gamepad1.right_stick_y * pLim;
+        RPower = gamepad2.right_stick_y * pLim;
 
         //lower threshold .1
         if (Math.abs(gamepad1.left_stick_y) < tHold) {
@@ -47,8 +47,8 @@ public class TankDriveTeleop extends OpMode {
         robot.leftMotor.setPower(LPower);
         robot.rightMotor.setPower(RPower);
 
-        telemetry.addData("Left-Y", gamepad1.left_stick_y);
-        telemetry.addData("Right-Y", gamepad1.right_stick_y);
+        telemetry.addData("Left Motor Power", gamepad1.left_stick_y);
+        telemetry.addData("Right Motor Power", gamepad2.right_stick_y);
     }
 
 }
