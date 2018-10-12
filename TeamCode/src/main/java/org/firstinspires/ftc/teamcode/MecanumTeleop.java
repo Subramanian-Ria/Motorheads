@@ -13,8 +13,8 @@ public class MecanumTeleop extends OpMode {
     MecanumHardware robot = new MecanumHardware();
     ElapsedTime runTime = new ElapsedTime();
     
-    float pLim = .8f; //power multiplier that acts as a limit
-    float tHold = .1f;
+    //float pLim = .8f; //power multiplier that acts as a limit
+    //float tHold = .1f;
 
     @Override
     public void init() {
