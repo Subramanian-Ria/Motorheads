@@ -47,8 +47,8 @@ public class TankHomecomingTeleop extends OpMode {
         robot.leftMotor.setPower(LPower);
         robot.rightMotor.setPower(RPower);
 
-        telemetry.addData("Left Motor Power", gamepad1.left_stick_y);
-        telemetry.addData("Right Motor Power", gamepad2.right_stick_y);
+        telemetry.addData("Left Motor Power", LPower);
+        telemetry.addData("Right Motor Power", RPower);
     }
 
 }
