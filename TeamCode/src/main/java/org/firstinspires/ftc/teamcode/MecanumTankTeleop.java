@@ -8,13 +8,14 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="MecanumTankTeleop", group="MecanumBot")
 //@Disabled
+
 public class MecanumTankTeleop extends OpMode {
 
     MecanumHardware robot = new MecanumHardware();
     ElapsedTime runTime = new ElapsedTime();
     
-    float pLim = 1f; //power multiplier that acts as a limit
-    float tHold = .1f; //lowest threshold for it to register
+    private float pLim = 1f; //power multiplier that acts as a limit
+    private float tHold = .1f; //lowest threshold for it to register
 
     @Override
     public void init() {
