@@ -13,5 +13,9 @@ buildscript {
         classpath 'com.google.gms:google-services:4.0.1'
     }
 }
-
-
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
