@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -7,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //import legacy.FoOHardware;
 
 @TeleOp(name="MecanumTeleop", group="MecanumBot")
-//@Disabled
+@Disabled
 public class MecanumTeleop extends OpMode {
 
     MecanumHardware robot = new MecanumHardware();

@@ -12,7 +12,7 @@ import java.util.Locale;
 //import legacy.FoOHardware;
 
 @TeleOp(name="SensorTest", group="SensorTestBot")
-@Disabled
+//@Disabled
 public class SensorTest extends OpMode {
 
     SensorTestHardware robot = new SensorTestHardware();
@@ -53,12 +53,12 @@ public class SensorTest extends OpMode {
 
         telemetry.addData("Left-Y", gamepad1.left_stick_y);
         telemetry.addData("Right-Y", gamepad1.right_stick_y);
-        telemetry.addData("Distance (cm)", String.format(Locale.US, "%.02f", robot.sensorDis.getDistance(DistanceUnit.CM)));
+        //telemetry.addData("Distance (cm)", String.format(Locale.US, "%.02f", robot.sensorDis.getDistance(DistanceUnit.CM)));
         telemetry.addData("Alpha", robot.sensorCol.alpha());
         telemetry.addData("Red  ", robot.sensorCol.red());
         telemetry.addData("Green", robot.sensorCol.green());
         telemetry.addData("Blue ", robot.sensorCol.blue());
-        telemetry.addData("MagnetTouch", robot.sensorMag.getState());
+        //telemetry.addData("MagnetTouch", robot.sensorMag.getState());
     }
 
 }

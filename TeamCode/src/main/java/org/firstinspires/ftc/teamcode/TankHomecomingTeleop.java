@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //import legacy.FoOHardware;
 
 @TeleOp(name="TankHomecomingTeleop", group="TankTestBot")
-//@Disabled
+@Disabled
 public class TankHomecomingTeleop extends OpMode {
 
     TankTestHardware robot = new TankTestHardware();
