@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import legacy.FoOHardware;
@@ -45,6 +46,27 @@ public class MecanumTeleop extends OpMode {
         robot.fRMotor.setPower(v2);
         robot.bLMotor.setPower(v3);
         robot.bRMotor.setPower(v4);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.update();
+
+        robot.fLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.fRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.bLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.bRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.fLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.fRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.bLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        telemetry.addData("Path0",  "Starting at %7d :%7d",
+                robot.fLMotor.getCurrentPosition(),
+                robot.fRMotor.getCurrentPosition(),
+                robot.bLMotor.getCurrentPosition(),
+                robot.bRMotor.getCurrentPosition());
+        telemetry.update();
     }
 
 
