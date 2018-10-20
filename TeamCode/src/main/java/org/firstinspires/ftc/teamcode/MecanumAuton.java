@@ -130,6 +130,7 @@ public class MecanumAuton extends LinearOpMode
 
                 //Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d", TargetBL,  TargetBR, TargetFL, TargetFR);
+
                 telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d", robot.fLMotor.getCurrentPosition(), robot.fRMotor.getCurrentPosition(), robot.bLMotor.getCurrentPosition(), robot.bRMotor.getCurrentPosition());
                 telemetry.update();
             }
