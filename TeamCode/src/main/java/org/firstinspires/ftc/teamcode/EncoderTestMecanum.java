@@ -57,7 +57,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  *  The code is written using a method called: encoderDrive(speed, leftInches, rightInches, timeoutS)
  *  that performs the actual movement.
  *  This methods assumes that each movement is relative to the last stopping place.
- *  There are other ways to perform encoder based moves, but this method is probably the simplest.
+ *  There are other ways t  o perform encoder based moves, but this method is probably the simplest.
  *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
  *
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
@@ -72,7 +72,7 @@ public class EncoderTestMecanum extends LinearOpMode {
     MecanumHardware         robot   = new MecanumHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder TODO: CHECK THIS
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder TODO: CHECK THIS
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
@@ -102,8 +102,9 @@ public class EncoderTestMecanum extends LinearOpMode {
         robot.bLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        ElapsedTime time = new ElapsedTime();
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
+        telemetry.addData("Path0",  "Starting at %7d :%7d :%7d :%7d",
                           robot.fLMotor.getCurrentPosition(),
                           robot.fRMotor.getCurrentPosition(),
                           robot.bLMotor.getCurrentPosition(),
@@ -111,11 +112,33 @@ public class EncoderTestMecanum extends LinearOpMode {
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
-        //waitForStart();
+        waitForStart();
 
+        time.reset();
+
+        int runtime = 3;
+
+        //robot.fLMotor.setPower(.5);
+        //robot.bLMotor.setPower(.5);
+        //robot.fRMotor.setPower(.5);
+        //robot.bRMotor.setPower(.5);
+        /*while(time.seconds() <= runtime)
+        {
+            telemetry.addData("Path0",  "Current Pos %7d :%7d :%7d :%7d",
+                    robot.fLMotor.getCurrentPosition(),
+                    robot.fRMotor.getCurrentPosition(),
+                    robot.bLMotor.getCurrentPosition(),
+                    robot.bRMotor.getCurrentPosition());
+            telemetry.update();
+        }
+        robot.fLMotor.setPower(0);
+        robot.bLMotor.setPower(0);
+        robot.fRMotor.setPower(0);
+        robot.bRMotor.setPower(0);*/
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);// S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  90,  90, 5.0);// S1: Forward 47 Inches with 5 Sec timeout
+
     //    encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
      //   encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
@@ -142,7 +165,7 @@ public class EncoderTestMecanum extends LinearOpMode {
         int newRightTarget;
 
         // Ensure that the opmode is still active
-        //if (opModeIsActive()) {
+        if (opModeIsActive()) {
 
 
             // Determine new target position, and pass to motor controller
@@ -160,7 +183,7 @@ public class EncoderTestMecanum extends LinearOpMode {
             robot.bRMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
-            //runtime.reset();
+            runtime.reset();
             robot.fLMotor.setPower(Math.abs(speed));
             robot.bLMotor.setPower(Math.abs(speed));
             robot.fRMotor.setPower(Math.abs(speed));
@@ -172,13 +195,11 @@ public class EncoderTestMecanum extends LinearOpMode {
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
-           while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (robot.fLMotor.isBusy() && robot.fRMotor.isBusy())) {
+           while (opModeIsActive() && (runtime.seconds() <= timeoutS) && (robot.fLMotor.isBusy() && robot.fRMotor.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-                telemetry.addData("Path2",  "Running at %7d :%7d",
+                telemetry.addData("Path1",  "Running to %7d :%7d fL: %7d", newLeftTarget,  newRightTarget, robot.fLMotor.getTargetPosition());
+                telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d",
                                             robot.fLMotor.getCurrentPosition(),
                                             robot.bLMotor.getCurrentPosition(),
                                             robot.fRMotor.getCurrentPosition(),
@@ -200,6 +221,6 @@ public class EncoderTestMecanum extends LinearOpMode {
 
             //  sleep(250);   // optional pause after each move
 
-        //}
+        }
     }
 }

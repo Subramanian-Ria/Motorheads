@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -46,22 +47,33 @@ public class MecanumHardware
         bLMotor = hwMap.get(DcMotor.class, "bLMotor");
 
         //Setting Motor Directions
-        fLMotor.setDirection(DcMotor.Direction.REVERSE); //right and left should be correct
-        fRMotor.setDirection(DcMotor.Direction.FORWARD);
-        bLMotor.setDirection(DcMotor.Direction.REVERSE);
-        bRMotor.setDirection(DcMotor.Direction.FORWARD);
+        //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct
+        //fRMotor.setDirection(DcMotor.Direction.FORWARD);
+        //bLMotor.setDirection(DcMotor.Direction.REVERSE);
+        //bRMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
 
-        fRMotor.setPower(0);
+        fLMotor.setPower(0);
         bLMotor.setPower(0);
+        fRMotor.setPower(0);
         bRMotor.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        fLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        fRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        fLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        fLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        fLMotor.setDirection(DcMotor.Direction.REVERSE); //right and left should be correct
+        fRMotor.setDirection(DcMotor.Direction.REVERSE);
+        bLMotor.setDirection(DcMotor.Direction.FORWARD);
+        bRMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 }
