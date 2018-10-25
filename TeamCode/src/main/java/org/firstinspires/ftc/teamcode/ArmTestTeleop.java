@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,12 +7,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="MecanumTankTeleop", group="MecanumBot")
+@TeleOp(name="ArmTestTeleop", group="ArmTestBot")
 //@Disabled
 
-public class MecanumTankTeleop extends OpMode {
+public class ArmTestTeleop extends OpMode {
 
-    MecanumHardware robot = new MecanumHardware();
+    ArmTestHardware robot = new ArmTestHardware();
     ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder TODO: CHECK THIS
@@ -25,6 +24,9 @@ public class MecanumTankTeleop extends OpMode {
 
     private float pLim = 1f; //power multiplier that acts as a limit
     private float tHold = .1f; //lowest threshold for it to register
+    boolean flipMode = false;
+
+    //reference position for the arm flip
 
     @Override
     public void init() {
@@ -34,39 +36,9 @@ public class MecanumTankTeleop extends OpMode {
         robot.init(hardwareMap);
     }
 
+
     @Override
     public void loop() {
-        //variables
-        float FL;
-        float BL;
-        float FR;
-        float BR;
-
-        //assignment to allow for standard tank drive and strafing
-        FL = gamepad1.left_stick_y + gamepad1.left_stick_x; //TODO: CHECK +- ON ROBOT
-        BL = gamepad1.left_stick_y - gamepad1.left_stick_x;
-        FR = gamepad1.right_stick_y - gamepad1.left_stick_x;
-        BR = gamepad1.right_stick_y + gamepad1.left_stick_x;
-
-        //ensures values stay within -pLim and pLim
-        FL = Range.clip(FL, -pLim, pLim);
-        BL = Range.clip(BL, -pLim, pLim);
-        FR = Range.clip(FR, -pLim, pLim);
-        BR = Range.clip(BR, -pLim, pLim);
-
-        //ensures values do not fall between -tHold and tHold
-        if (Math.abs(FL) < tHold) {
-            FL = 0;
-        }
-        if (Math.abs(BL) < tHold) {
-            BL = 0;
-        }
-        if (Math.abs(FR) < tHold) {
-            FR = 0;
-        }
-        if (Math.abs(BR) < tHold) {
-            BR = 0;
-        }
 
         //horizontal arm movement
         while(gamepad1.dpad_right) {
@@ -83,36 +55,41 @@ public class MecanumTankTeleop extends OpMode {
             robot.intake.setPower(pLim);
         }
         robot.intake.setPower(0);
+        while(gamepad1.x) {
+            robot.intake.setPower(-pLim);
+        }
+        robot.intake.setPower(0);
 
-        while(gamepad1.dpad_up) {
+        /*while(gamepad1.dpad_up) {
             robot.elevator.setPower(pLim);
         }
         robot.elevator.setPower(0);
         while(gamepad1.dpad_down) {
             robot.elevator.setPower(-pLim);
         }
-        robot.elevator.setPower(0);
+        robot.elevator.setPower(0);*/
 
         if(gamepad1.a) {
-            encoderMove(12, 5); //TODO: CHECK VALUES & SEE IF IT EVEN WORKS
+            flipMode = true;
         }
 
-        //assigns powers for driving
-        robot.fLMotor.setPower(FL);
-        robot.bLMotor.setPower(BL);
-        robot.fRMotor.setPower(FR);
-        robot.bRMotor.setPower(BR);
+        while(flipMode) {
+            encoderMove(10, 20, 0); //TODO: CHECK VALUES & SEE IF IT EVEN WORKS
+            if(gamepad1.y) {
+                flipMode = false;
+            }
+        }
 
         //TODO: RESEARCH INTO BETTER CONTROL SCHEMES TO ALLOW FOR DIAGONAL MOVEMENT (POST SCRIMMAGE)
         //TODO: EVALUATE VIABILITY OF TANK DRIVE OVER THE LONG TERM
         //TODO: LOOK INTO PID BASED CONTROL SYSTEM
     }
 
-    public void encoderMove(double inches, double timeoutS) {
+    public void encoderMove(double inches, double timeoutS, int ref) {
 
         int target;
         // Determine new target position, and pass to motor controller
-        target = robot.armFlip.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+        target = ref + (int) (inches * COUNTS_PER_INCH);
         robot.armFlip.setTargetPosition(target);
 
         // Turn On RUN_TO_POSITION

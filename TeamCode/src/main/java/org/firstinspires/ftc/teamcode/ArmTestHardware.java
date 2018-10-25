@@ -2,32 +2,21 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 //@Disabled
 
 
-public class MecanumHardware
+public class ArmTestHardware
 {
     /* Public OpMode members. */
     //Initialize everything
-    public DcMotor fLMotor;
-    public DcMotor fRMotor;
-    public DcMotor bLMotor;
-    public DcMotor bRMotor;
-
     public DcMotor armEx;
     public DcMotor armFlip;
 
     public  DcMotor intake;
 
-    public DcMotor elevator;
+    //public DcMotor elevator;
 
 
     //declaring values for use with encoders
@@ -48,17 +37,12 @@ public class MecanumHardware
         hwMap = ahwMap;
 
         // Define Motors
-        fLMotor = hwMap.get(DcMotor.class, "fLMotor");
-        fRMotor = hwMap.get(DcMotor.class, "fRMotor");
-        bRMotor = hwMap.get(DcMotor.class, "bRMotor");
-        bLMotor = hwMap.get(DcMotor.class, "bLMotor");
-
         armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
 
         intake = hwMap.get(DcMotor.class, "intake");
 
-        elevator = hwMap.get(DcMotor.class, "ele");
+        //elevator = hwMap.get(DcMotor.class, "ele");
 
         //Setting Motor Directions
         //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct
@@ -66,56 +50,34 @@ public class MecanumHardware
         //bLMotor.setDirection(DcMotor.Direction.REVERSE);
         //bRMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        // Set all motors to zero power
-
-        fLMotor.setPower(0);
-        bLMotor.setPower(0);
-        fRMotor.setPower(0);
-        bRMotor.setPower(0);
-
         armEx.setPower(0);
         armFlip.setPower(0);
 
         intake.setPower(0);
 
-        elevator.setPower(0);
+        //elevator.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        fLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        fRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         armEx.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        fLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         armEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        fLMotor.setDirection(DcMotor.Direction.REVERSE); //Should technically have been forward but it was weird so
-        fRMotor.setDirection(DcMotor.Direction.REVERSE);
-        bLMotor.setDirection(DcMotor.Direction.FORWARD);
-        bRMotor.setDirection(DcMotor.Direction.REVERSE);
-
+        //elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armEx.setDirection(DcMotor.Direction.FORWARD);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
 
         intake.setDirection(DcMotor.Direction.FORWARD);
 
-        elevator.setDirection(DcMotor.Direction.FORWARD);
+        //elevator.setDirection(DcMotor.Direction.FORWARD);
     }
 }
