@@ -60,14 +60,14 @@ public class ArmTestTeleop extends OpMode {
         }
         robot.intake.setPower(0);
 
-        /*while(gamepad1.dpad_up) {
+        while(gamepad1.dpad_up) {
             robot.elevator.setPower(pLim);
         }
         robot.elevator.setPower(0);
         while(gamepad1.dpad_down) {
             robot.elevator.setPower(-pLim);
         }
-        robot.elevator.setPower(0);*/
+        robot.elevator.setPower(0);
 
         if(gamepad1.a) {
             flipMode = true;
@@ -81,8 +81,7 @@ public class ArmTestTeleop extends OpMode {
         }
 
         //TODO: RESEARCH INTO BETTER CONTROL SCHEMES TO ALLOW FOR DIAGONAL MOVEMENT (POST SCRIMMAGE)
-        //TODO: EVALUATE VIABILITY OF TANK DRIVE OVER THE LONG TERM
-        //TODO: LOOK INTO PID BASED CONTROL SYSTEM
+        //TODO: LOOK INTO PID BASED CONTROL SYSTEM/MANUAL-WRITE  CORRECTION USING GYRO
     }
 
     public void encoderMove(double inches, double timeoutS, int ref) {

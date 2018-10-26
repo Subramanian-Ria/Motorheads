@@ -13,10 +13,9 @@ public class ArmTestHardware
     //Initialize everything
     public DcMotor armEx;
     public DcMotor armFlip;
-
     public  DcMotor intake;
 
-    //public DcMotor elevator;
+    public DcMotor elevator;
 
 
     //declaring values for use with encoders
@@ -39,10 +38,9 @@ public class ArmTestHardware
         // Define Motors
         armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
-
         intake = hwMap.get(DcMotor.class, "intake");
 
-        //elevator = hwMap.get(DcMotor.class, "ele");
+        elevator = hwMap.get(DcMotor.class, "ele");
 
         //Setting Motor Directions
         //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct
@@ -52,32 +50,31 @@ public class ArmTestHardware
 
         armEx.setPower(0);
         armFlip.setPower(0);
-
         intake.setPower(0);
 
-        //elevator.setPower(0);
+        elevator.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
 
         armEx.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        //setting 0 power behavior to brake
         armEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //set directions
         armEx.setDirection(DcMotor.Direction.FORWARD);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
-
         intake.setDirection(DcMotor.Direction.FORWARD);
 
-        //elevator.setDirection(DcMotor.Direction.FORWARD);
+        elevator.setDirection(DcMotor.Direction.FORWARD);
     }
 }
