@@ -58,7 +58,7 @@ public class MecanumHardware
 
         intake = hwMap.get(DcMotor.class, "intake");
 
-        elevator = hwMap.get(DcMotor.class, "ele");
+        elevator = hwMap.get(DcMotor.class, "elevator");
 
         //Setting Motor Directions
         //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct

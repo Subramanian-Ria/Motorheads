@@ -83,18 +83,25 @@ public class MecanumTankTeleop extends OpMode {
             robot.intake.setPower(pLim);
         }
         robot.intake.setPower(0);
+        while(gamepad1.x) {
+            robot.intake.setPower(-pLim);
+        }
+        robot.intake.setPower(0);
 
+        //elevator controls
         while(gamepad1.dpad_up) {
-            robot.elevator.setPower(pLim);
+            encoderMove(robot.elevator, 100, 20, 0, pLim);
         }
-        robot.elevator.setPower(0);
         while(gamepad1.dpad_down) {
-            robot.elevator.setPower(-pLim);
+            encoderMove(robot.elevator, -100 , 20, robot.elevator.getCurrentPosition(), -pLim);//TODO: CHECK REF VALUE
         }
-        robot.elevator.setPower(0);
 
+        //arm flip controls
         if(gamepad1.a) {
-            encoderMove(12, 5); //TODO: CHECK VALUES & SEE IF IT EVEN WORKS
+            encoderMove(robot.armFlip, 11, 20, 0, pLim);
+        }
+        if(gamepad1.y) {
+            encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);//TODO: CHECK REF VALUE
         }
 
         //assigns powers for driving
@@ -108,19 +115,17 @@ public class MecanumTankTeleop extends OpMode {
         //TODO: LOOK INTO PID BASED CONTROL SYSTEM
     }
 
-    public void encoderMove(double inches, double timeoutS) {
-
-        int target;
+    public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
         // Determine new target position, and pass to motor controller
-        target = robot.armFlip.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
-        robot.armFlip.setTargetPosition(target);
+        int target = ref + (int) (inches * COUNTS_PER_INCH);
+        motor.setTargetPosition(target);
 
         // Turn On RUN_TO_POSITION
-        robot.armFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // reset the timeout time and start motion.
         runtime.reset();
-        robot.armFlip.setPower(Math.abs(pLim));//math.abs for armFlip?? TODO:TEST ON ARM FLIP TO SEE IF IT NEEDS TO BE CHANGED
+        motor.setPower(power);//math.abs for armFlip?? TODO:TEST ON ARM FLIP TO SEE IF IT NEEDS TO BE CHANGED
 
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -132,19 +137,15 @@ public class MecanumTankTeleop extends OpMode {
 
             // Display it for the driver.
             telemetry.addData("Path1", "Running to %7d", target);
-            telemetry.addData("Path2", "Running at %7d", robot.armFlip.getCurrentPosition());
+            telemetry.addData("Path2", "Running at %7d", motor.getCurrentPosition());
             telemetry.update();
         }
 
         // Stop all motion;
-        robot.armFlip.setPower(0);
+        motor.setPower(0);
 
         // Turn off RUN_TO_POSITION
-        robot.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //sleep(250); optional pause after each move
-
-
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
 
