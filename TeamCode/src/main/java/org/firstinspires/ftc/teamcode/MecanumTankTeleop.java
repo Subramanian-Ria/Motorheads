@@ -90,11 +90,13 @@ public class MecanumTankTeleop extends OpMode {
 
         //elevator controls
         while(gamepad1.dpad_up) {
-            encoderMove(robot.elevator, 100, 20, 0, pLim);
+            robot.elevator.setPower(1);
         }
+        robot.elevator.setPower(0);
         while(gamepad1.dpad_down) {
-            encoderMove(robot.elevator, -100 , 20, robot.elevator.getCurrentPosition(), -pLim);//TODO: CHECK REF VALUE
+            robot.elevator.setPower(-1);
         }
+        robot.elevator.setPower(0);
 
         //arm flip controls
         if(gamepad1.a) {
@@ -105,10 +107,10 @@ public class MecanumTankTeleop extends OpMode {
         }
 
         //assigns powers for driving
-        robot.fLMotor.setPower(FL);
-        robot.bLMotor.setPower(BL);
-        robot.fRMotor.setPower(FR);
-        robot.bRMotor.setPower(BR);
+        robot.fLMotor.setPower(-FL);
+        robot.bLMotor.setPower(-BL);
+        robot.fRMotor.setPower(-FR);
+        robot.bRMotor.setPower(-BR);
 
         //TODO: RESEARCH INTO BETTER CONTROL SCHEMES TO ALLOW FOR DIAGONAL MOVEMENT (POST SCRIMMAGE)
         //TODO: EVALUATE VIABILITY OF TANK DRIVE OVER THE LONG TERM
