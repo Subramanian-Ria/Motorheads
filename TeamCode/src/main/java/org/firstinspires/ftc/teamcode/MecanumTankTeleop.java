@@ -100,12 +100,12 @@ public class MecanumTankTeleop extends OpMode {
         robot.elevator.setPower(0);
 
         //arm flip controls TODO: FIX STUCK IN LOOP OR REPLACE
-        if(gamepad1.a) {
+        /*if(gamepad1.a) {
             encoderMove(robot.armFlip, 11, 20, 0, pLim);
         }
         if(gamepad1.y) {
             encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);
-        }
+        }*/
 
         //manual movement of the arm flip- may replace encoder movement
         while(gamepad1.left_bumper) {
@@ -114,6 +114,16 @@ public class MecanumTankTeleop extends OpMode {
         robot.armFlip.setPower(0);
         while(gamepad1.right_bumper) {
             robot.armFlip.setPower(pSlow);
+        }
+        robot.armFlip.setPower(0);
+
+        //faster arm movement
+        while(gamepad1.left_trigger > tHold) {
+            robot.armFlip.setPower(pLim);
+        }
+        robot.armFlip.setPower(0);
+        while(gamepad1.right_trigger > tHold) {
+            robot.armFlip.setPower(pLim);
         }
         robot.armFlip.setPower(0);
 
