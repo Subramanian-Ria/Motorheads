@@ -25,6 +25,7 @@ public class MecanumTankTeleop extends OpMode {
 
     private float pLim = 1f; //power multiplier that acts as a limit
     private float tHold = .1f; //lowest threshold for it to register
+    private float pSlow = .2f;
 
     @Override
     public void init() {
@@ -105,6 +106,15 @@ public class MecanumTankTeleop extends OpMode {
         if(gamepad1.y) {
             encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);//TODO: CHECK REF VALUE
         }
+
+        while(gamepad1.left_bumper) {
+            robot.armFlip.setPower(-pSlow);
+        }
+        robot.armFlip.setPower(0);
+        while(gamepad1.right_bumper) {
+            robot.armFlip.setPower(pSlow);
+        }
+        robot.armFlip.setPower(0);
 
         //assigns powers for driving
         robot.fLMotor.setPower(-FL);
