@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,14 +9,14 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name="ArmTestTeleop", group="ArmTestBot")
-//@Disabled
+@Disabled
 
 public class ArmTestTeleop extends OpMode {
 
     ArmTestHardware robot = new ArmTestHardware();
     ElapsedTime runtime = new ElapsedTime();
 
-    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder TODO: CHECK THIS
+    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
@@ -64,7 +65,7 @@ public class ArmTestTeleop extends OpMode {
             encoderMove(robot.elevator, 100, 20, 0, pLim);
         }
         while(gamepad1.dpad_down) {
-            encoderMove(robot.elevator, -100 , 20, 0, -pLim);//TODO: CHECK REF VALUE
+            encoderMove(robot.elevator, -100 , 20, 0, -pLim);
         }
 
         //arm flip controls
@@ -74,9 +75,6 @@ public class ArmTestTeleop extends OpMode {
         if(gamepad1.y) {
             encoderMove(robot.armFlip, -10, 20, 0, -pLim);//TODO: CHECK REF VALUE
         }
-
-        //TODO: RESEARCH INTO BETTER CONTROL SCHEMES TO ALLOW FOR DIAGONAL MOVEMENT (POST SCRIMMAGE)
-        //TODO: LOOK INTO PID BASED CONTROL SYSTEM/MANUAL-WRITE  CORRECTION USING GYRO
     }
 
     public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
@@ -89,7 +87,7 @@ public class ArmTestTeleop extends OpMode {
 
         // reset the timeout time and start motion.
         runtime.reset();
-        motor.setPower(power);//math.abs for armFlip?? TODO:TEST ON ARM FLIP TO SEE IF IT NEEDS TO BE CHANGED
+        motor.setPower(power);
 
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits

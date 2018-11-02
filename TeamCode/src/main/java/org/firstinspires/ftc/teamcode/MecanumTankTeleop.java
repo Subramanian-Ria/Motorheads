@@ -16,7 +16,7 @@ public class MecanumTankTeleop extends OpMode {
     MecanumHardware robot = new MecanumHardware();
     ElapsedTime runtime = new ElapsedTime();
 
-    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder TODO: CHECK THIS
+    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
@@ -44,7 +44,7 @@ public class MecanumTankTeleop extends OpMode {
         float BR;
 
         //assignment to allow for standard tank drive and strafing
-        FL = gamepad1.left_stick_y + gamepad1.left_stick_x; //TODO: CHECK +- ON ROBOT
+        FL = gamepad1.left_stick_y + gamepad1.left_stick_x;
         BL = gamepad1.left_stick_y - gamepad1.left_stick_x;
         FR = gamepad1.right_stick_y - gamepad1.left_stick_x;
         BR = gamepad1.right_stick_y + gamepad1.left_stick_x;
@@ -99,14 +99,15 @@ public class MecanumTankTeleop extends OpMode {
         }
         robot.elevator.setPower(0);
 
-        //arm flip controls
+        //arm flip controls TODO: FIX STUCK IN LOOP OR REPLACE
         if(gamepad1.a) {
             encoderMove(robot.armFlip, 11, 20, 0, pLim);
         }
         if(gamepad1.y) {
-            encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);//TODO: CHECK REF VALUE
+            encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);
         }
 
+        //manual movement of the arm flip- may replace encoder movement
         while(gamepad1.left_bumper) {
             robot.armFlip.setPower(-pSlow);
         }
@@ -121,10 +122,6 @@ public class MecanumTankTeleop extends OpMode {
         robot.bLMotor.setPower(-BL);
         robot.fRMotor.setPower(-FR);
         robot.bRMotor.setPower(-BR);
-
-        //TODO: RESEARCH INTO BETTER CONTROL SCHEMES TO ALLOW FOR DIAGONAL MOVEMENT (POST SCRIMMAGE)
-        //TODO: EVALUATE VIABILITY OF TANK DRIVE OVER THE LONG TERM
-        //TODO: LOOK INTO PID BASED CONTROL SYSTEM
     }
 
     public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
@@ -137,7 +134,7 @@ public class MecanumTankTeleop extends OpMode {
 
         // reset the timeout time and start motion.
         runtime.reset();
-        motor.setPower(power);//math.abs for armFlip?? TODO:TEST ON ARM FLIP TO SEE IF IT NEEDS TO BE CHANGED
+        motor.setPower(power);
 
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
