@@ -119,7 +119,7 @@ public class MecanumTankTeleop extends OpMode {
 
         //faster arm movement
         while(gamepad1.left_trigger > tHold) {
-            robot.armFlip.setPower(pLim);
+            robot.armFlip.setPower(-pLim);
         }
         robot.armFlip.setPower(0);
         while(gamepad1.right_trigger > tHold) {
