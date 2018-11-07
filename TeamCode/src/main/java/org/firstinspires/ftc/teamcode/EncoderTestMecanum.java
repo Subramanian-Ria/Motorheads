@@ -65,7 +65,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="EncoderTestMecanum", group="MecanumBot")
-//@Disabled
+@Disabled
 public class EncoderTestMecanum extends LinearOpMode {
 
     /* Declare OpMode members. */

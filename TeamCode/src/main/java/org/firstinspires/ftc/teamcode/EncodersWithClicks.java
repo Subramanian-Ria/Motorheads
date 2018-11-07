@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 
     @Autonomous(name="EncodersWithClicks", group="Pushbot")
-    //@Disabled
+    @Disabled
     public class EncodersWithClicks extends LinearOpMode{
 
         /* Declare OpMode members. */

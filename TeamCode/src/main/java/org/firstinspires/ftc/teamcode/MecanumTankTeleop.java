@@ -129,12 +129,12 @@ public class MecanumTankTeleop extends OpMode {
 
         //assigns powers for driving
         robot.fLMotor.setPower(-FL);
-        robot.bLMotor.setPower(-BL);
+        robot.bLMotor.setPower(BL);
         robot.fRMotor.setPower(-FR);
         robot.bRMotor.setPower(-BR);
     }
 
-    public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
+    /*public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
         // Determine new target position, and pass to motor controller
         int target = ref + (int) (inches * COUNTS_PER_INCH);
         motor.setTargetPosition(target);
@@ -165,7 +165,7 @@ public class MecanumTankTeleop extends OpMode {
 
         // Turn off RUN_TO_POSITION
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
+    }*/
 }
 
 
