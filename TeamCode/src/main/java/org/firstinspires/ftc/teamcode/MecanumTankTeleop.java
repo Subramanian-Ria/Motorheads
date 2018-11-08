@@ -99,7 +99,7 @@ public class MecanumTankTeleop extends OpMode {
         }
         robot.elevator.setPower(0);
 
-        //arm flip controls TODO: FIX STUCK IN LOOP OR REPLACE
+        //arm flip controls
         /*if(gamepad1.a) {
             encoderMove(robot.armFlip, 11, 20, 0, pLim);
         }
