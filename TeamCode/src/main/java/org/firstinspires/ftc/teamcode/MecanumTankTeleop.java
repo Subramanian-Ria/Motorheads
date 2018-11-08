@@ -37,6 +37,78 @@ public class MecanumTankTeleop extends OpMode {
 
     @Override
     public void loop() {
+
+        //horizontal arm movement
+        while(gamepad1.dpad_right) {
+            robot.armEx.setPower(pLim);
+            mecanumMove();
+        }
+        robot.armEx.setPower(0);
+        while(gamepad1.dpad_left) {
+            robot.armEx.setPower(-pLim);
+            mecanumMove();
+        }
+        robot.armEx.setPower(0);
+
+        //intake control
+        while(gamepad1.b) {
+            robot.intake.setPower(pLim);
+            mecanumMove();
+        }
+        robot.intake.setPower(0);
+        while(gamepad1.x) {
+            robot.intake.setPower(-pLim);
+            mecanumMove();
+        }
+        robot.intake.setPower(0);
+
+        //elevator controls
+        while(gamepad1.dpad_up) {
+            robot.elevator.setPower(1);
+            mecanumMove();
+        }
+        robot.elevator.setPower(0);
+        while(gamepad1.dpad_down) {
+            robot.elevator.setPower(-1);
+            mecanumMove();
+        }
+        robot.elevator.setPower(0);
+
+        //arm flip controls
+        /*if(gamepad1.a) {
+            encoderMove(robot.armFlip, 11, 20, 0, pLim);
+        }
+        if(gamepad1.y) {
+            encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);
+        }*/
+
+        //manual movement of the arm flip- may replace encoder movement
+        while(gamepad1.left_bumper) {
+            robot.armFlip.setPower(-pSlow);
+            mecanumMove();
+        }
+        robot.armFlip.setPower(0);
+        while(gamepad1.right_bumper) {
+            robot.armFlip.setPower(pSlow);
+            mecanumMove();
+        }
+        robot.armFlip.setPower(0);
+
+        //faster arm movement
+        while(gamepad1.left_trigger > tHold) {
+            robot.armFlip.setPower(-pLim);
+            mecanumMove();
+        }
+        robot.armFlip.setPower(0);
+        while(gamepad1.right_trigger > tHold) {
+            robot.armFlip.setPower(pLim);
+            mecanumMove();
+        }
+        robot.armFlip.setPower(0);
+
+        mecanumMove();
+    }
+    public void mecanumMove() {
         //variables
         float FL;
         float BL;
@@ -69,65 +141,6 @@ public class MecanumTankTeleop extends OpMode {
             BR = 0;
         }
 
-        //horizontal arm movement
-        while(gamepad1.dpad_right) {
-            robot.armEx.setPower(pLim);
-        }
-        robot.armEx.setPower(0);
-        while(gamepad1.dpad_left) {
-            robot.armEx.setPower(-pLim);
-        }
-        robot.armEx.setPower(0);
-
-        //intake control
-        while(gamepad1.b) {
-            robot.intake.setPower(pLim);
-        }
-        robot.intake.setPower(0);
-        while(gamepad1.x) {
-            robot.intake.setPower(-pLim);
-        }
-        robot.intake.setPower(0);
-
-        //elevator controls
-        while(gamepad1.dpad_up) {
-            robot.elevator.setPower(1);
-        }
-        robot.elevator.setPower(0);
-        while(gamepad1.dpad_down) {
-            robot.elevator.setPower(-1);
-        }
-        robot.elevator.setPower(0);
-
-        //arm flip controls
-        /*if(gamepad1.a) {
-            encoderMove(robot.armFlip, 11, 20, 0, pLim);
-        }
-        if(gamepad1.y) {
-            encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);
-        }*/
-
-        //manual movement of the arm flip- may replace encoder movement
-        while(gamepad1.left_bumper) {
-            robot.armFlip.setPower(-pSlow);
-        }
-        robot.armFlip.setPower(0);
-        while(gamepad1.right_bumper) {
-            robot.armFlip.setPower(pSlow);
-        }
-        robot.armFlip.setPower(0);
-
-        //faster arm movement
-        while(gamepad1.left_trigger > tHold) {
-            robot.armFlip.setPower(-pLim);
-        }
-        robot.armFlip.setPower(0);
-        while(gamepad1.right_trigger > tHold) {
-            robot.armFlip.setPower(pLim);
-        }
-        robot.armFlip.setPower(0);
-
-        //assigns powers for driving
         robot.fLMotor.setPower(-FL);
         robot.bLMotor.setPower(BL);
         robot.fRMotor.setPower(-FR);
