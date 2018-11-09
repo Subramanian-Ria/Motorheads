@@ -37,6 +37,9 @@ public class MecanumTankTeleop extends OpMode {
 
     @Override
     public void loop() {
+        /*if((gamepad1.left_stick_x != 0f) || (gamepad1.left_stick_y != 0) || (gamepad1.right_stick_x != 0) || (gamepad1.right_stick_y)) {
+
+        }*/
 
         //horizontal arm movement
         while(gamepad1.dpad_right) {
