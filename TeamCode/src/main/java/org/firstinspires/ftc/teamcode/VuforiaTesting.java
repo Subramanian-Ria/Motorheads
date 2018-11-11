@@ -27,7 +27,7 @@ import legacy.FoOHardware;
  * Created by coolb on 12/20/2017
  */
 
-@Disabled
+//@Disabled
 @Autonomous(name = "Vuforia", group = "insertName")
 public class VuforiaTesting extends LinearOpMode
 {
@@ -56,7 +56,7 @@ public class VuforiaTesting extends LinearOpMode
     OpenGLMatrix phoneLocation;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException{
 
         setupVuforia();
 
