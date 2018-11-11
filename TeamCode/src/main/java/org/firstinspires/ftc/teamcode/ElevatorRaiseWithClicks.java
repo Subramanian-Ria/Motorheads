@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="ElevatorWithClicks", group="MecanumBot")
+@Autonomous(name="ElevatorRaiseWithClicks", group="MecanumBot")
 //@Disabled
-public class  ElevatorWithClicks extends LinearOpMode{
+public class ElevatorRaiseWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
     MecanumHardware         robot   = new MecanumHardware();   // Use a Pushbot's hardware
@@ -49,9 +49,8 @@ public class  ElevatorWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, -7.7,40);//-7.4 FINAL ENCODER VALUE
+        encoderElevator(1, 7.4,40);//-7.4 FINAL ENCODER VALUE
         telemetry.update();
-        encoderDrive(100,100, 100, 100, 5, .8);
    //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");
         //telemetry.update();
@@ -72,10 +71,10 @@ public class  ElevatorWithClicks extends LinearOpMode{
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            TargetFL = robot.fLMotor.getCurrentPosition() + (int)FLInch;
-            TargetFR = robot.fRMotor.getCurrentPosition() + (int)FRInch;
-            TargetBL = robot.fRMotor.getCurrentPosition() + (int)BLInch;
-            TargetBR = robot.fRMotor.getCurrentPosition() + (int)BRInch;
+            TargetFL = robot.fLMotor.getCurrentPosition() + (int)( FLInch* COUNTS_PER_INCH);
+            TargetFR = robot.fRMotor.getCurrentPosition() + (int)( FRInch* COUNTS_PER_INCH);
+            TargetBL = robot.fRMotor.getCurrentPosition() + (int)( BLInch* COUNTS_PER_INCH);
+            TargetBR = robot.fRMotor.getCurrentPosition() + (int)( BRInch* COUNTS_PER_INCH);
 
             robot.fLMotor.setTargetPosition(TargetFL);
             robot.fRMotor.setTargetPosition(TargetFR);
