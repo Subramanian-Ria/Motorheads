@@ -28,7 +28,7 @@ import legacy.FoOHardware;
  */
 
 //@Disabled
-@Autonomous(name = "Vuforia", group = "insertName")
+@Autonomous(name = "VuforiaTesting", group = "insertName")
 public class VuforiaTesting extends LinearOpMode
 {
     /* Declare OpMode members. */
@@ -38,7 +38,7 @@ public class VuforiaTesting extends LinearOpMode
     //Vuforia Setup
     public static final String TAG = "Vuforia VuMark Sample";
     VuforiaLocalizer vuforia;
-    VuforiaTrackables roverTrackables = this.vuforia.loadTrackablesFromAsset("RoverRuckus");
+    VuforiaTrackables roverTrackables;
     VuforiaTrackable bluePerimeter;
     VuforiaTrackable redPerimeter;
     VuforiaTrackable frontPerimeter;
@@ -170,11 +170,11 @@ public class VuforiaTesting extends LinearOpMode
          * but differ in their instance id information.
          * @see VuMarkInstanceId
          */
-        VuforiaTrackables roverTrackables = this.vuforia.loadTrackablesFromAsset("RoverRuckus");
-        VuforiaTrackable bluePerimeter = roverTrackables.get(0);
-        VuforiaTrackable redPerimeter = roverTrackables.get(1);
-        VuforiaTrackable frontPerimeter = roverTrackables.get(2);
-        VuforiaTrackable backPerimeter = roverTrackables.get(3);
+        roverTrackables = this.vuforia.loadTrackablesFromAsset("RoverRuckus");
+        bluePerimeter = roverTrackables.get(0);
+        redPerimeter = roverTrackables.get(1);
+        frontPerimeter = roverTrackables.get(2);
+        backPerimeter = roverTrackables.get(3);
 
         bluePerimeter.setName("bluePerimeter"); // can help in debugging; otherwise not necessary
         redPerimeter.setName("redPerimeter");
