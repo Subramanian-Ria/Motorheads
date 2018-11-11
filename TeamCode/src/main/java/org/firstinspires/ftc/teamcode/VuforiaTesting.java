@@ -49,7 +49,10 @@ public class VuforiaTesting extends LinearOpMode
     VuforiaTrackableDefaultListener frontListener;
     VuforiaTrackableDefaultListener backListener;
 
-    OpenGLMatrix lastKnownLocation;
+    OpenGLMatrix blueLastKnownLocation;
+    OpenGLMatrix redLastKnownLocation;
+    OpenGLMatrix frontLastKnownLocation;
+    OpenGLMatrix backLastKnownLocation;
     OpenGLMatrix phoneLocation;
 
     @Override
@@ -57,7 +60,10 @@ public class VuforiaTesting extends LinearOpMode
 
         setupVuforia();
 
-        lastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
+        blueLastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
+        redLastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
+        frontLastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
+        backLastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -75,10 +81,31 @@ public class VuforiaTesting extends LinearOpMode
 
             if(blueLatestLocation != null)
             {
-                lastKnownLocation = blueLatestLocation;
+                blueLastKnownLocation = blueLatestLocation;
+            }
+            else if(redLatestLocation != null)
+            {
+                redLastKnownLocation = redLatestLocation;
+            }
+            else if(frontLatestLocation != null)
+            {
+                frontLastKnownLocation = frontLatestLocation;
+            }
+            else if(backLatestLocation != null)
+            {
+                backLastKnownLocation = blueLatestLocation;
             }
             telemetry.addData("Tracking " + bluePerimeter.getName(), blueListener.isVisible());
-            telemetry.addData("Last Known Location", formatMatrix(lastKnownLocation));
+            telemetry.addData("Blue Last Known Location", formatMatrix(blueLastKnownLocation));
+
+            telemetry.addData("Tracking " + redPerimeter.getName(), redListener.isVisible());
+            telemetry.addData("Red Last Known Location", formatMatrix(redLastKnownLocation));
+
+            telemetry.addData("Tracking " + frontPerimeter.getName(), frontListener.isVisible());
+            telemetry.addData("Front Last Known Location", formatMatrix(frontLastKnownLocation));
+
+            telemetry.addData("Tracking " + backPerimeter.getName(), backListener.isVisible());
+            telemetry.addData("Back Last Known Location", formatMatrix(backLastKnownLocation));
 
             /*glypos = Vuforia(perimeter);
             bluePerimeterPos = Vuforia(bluePerimeter);
