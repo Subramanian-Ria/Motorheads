@@ -2,18 +2,16 @@
 
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="StrafeTestAuton", group="MecanumBot")
+@Autonomous(name="IntakeTestAuton", group="MecanumBot")
 //@Disabled
-public class StrafeTestAuton extends LinearOpMode{
+public class IntakeTestAuton extends LinearOpMode{
 
     /* Declare OpMode members. */
-    StrafeTestHardware robot   = new StrafeTestHardware();   // Use a Pushbot's hardware
+    MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     CLICKS    = 1120 ;    // Andymark 40...  TETRIX Motor Encoder = 1440
@@ -36,12 +34,9 @@ public class StrafeTestAuton extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.bLMotor.setPower(.5);
-        robot.bRMotor.setPower(-.5);
-        robot.fRMotor.setPower(-.5);
-        robot.fLMotor.setPower(.5);
-        sleep(500);
-        setDrivePower(0);
+     robot.intake.setPower(-1);
+     sleep(1000);
+     robot.intake.setPower(0);
     }
     public void setDrivePower(double power) {
         robot.bLMotor.setPower(power);

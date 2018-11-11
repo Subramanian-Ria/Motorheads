@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="EncodersWithClicks", group="Pushbot")
+@Autonomous(name="ElevatorWithClicks", group="MecanumBot")
 //@Disabled
-public class ElevatorWithClicks extends LinearOpMode{
+public class  ElevatorWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
     MecanumHardware         robot   = new MecanumHardware();   // Use a Pushbot's hardware
@@ -38,7 +38,7 @@ public class ElevatorWithClicks extends LinearOpMode{
         robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
+        telemetry.addData("Path0",  "Starting at %7d",
                 robot.elevator.getCurrentPosition());
         telemetry.update();
 
@@ -47,7 +47,7 @@ public class ElevatorWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED, 18,5);
+        encoderDrive(1, 28,40);//29.25 final encoder value
         telemetry.update();
    //     encoderTurn(TURN_SPEED, 4.0);
         telemetry.addData("Turn", "Complete");
@@ -63,7 +63,7 @@ public class ElevatorWithClicks extends LinearOpMode{
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
             // Determine new target position, and pass to motor controller
-            newElevatorTarget = robot.elevator.getCurrentPosition() + (int)(3*CLICKS);
+            newElevatorTarget = robot.elevator.getCurrentPosition() + (int)(distance*CLICKS);
             robot.elevator.setTargetPosition(newElevatorTarget);
 
             // Turn On RUN_TO_POSITION
@@ -84,8 +84,8 @@ public class ElevatorWithClicks extends LinearOpMode{
                     (robot.elevator.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newElevatorTarget);
-                telemetry.addData("Path2",  "Running at %7d :%7d",
+                telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
+                telemetry.addData("Path2",  "Running at %7d",
                         robot.elevator.getCurrentPosition());
                 telemetry.update();
             }

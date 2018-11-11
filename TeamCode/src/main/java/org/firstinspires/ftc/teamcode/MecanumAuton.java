@@ -38,15 +38,15 @@ public class MecanumAuton extends LinearOpMode
     public float WEST;
     public float SOUTH;
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // Currently: Andymark Neverest 40
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP //On OUR CENTER MOTOR THE GEAR REDUCTION IS .5
+    static final double     COUNTS_PER_MOTOR_REV = 1120 ;    // Currently: Andymark Neverest 40
+    static final double     DRIVE_GEAR_REDUCTION = 2.0 ;     // This is < 1.0 if geared UP //On OUR CENTER MOTOR THE GEAR REDUCTION IS .5
     static final double     DRIVE_GEAR_REDUCTION_CM = 0.5 ;
-    static final double     WHEEL_DIAMETER_INCHES   = 3.54331;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double     WHEEL_DIAMETER_INCHES = 3.54331;     // For figuring circumference
+    static final double     COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     COUNTS_PER_INCH_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
+    static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = .4;
+    static final double     DRIVE_SPEED = .4;
     static final double TURN_SPEED = .11;
 
     //Encoder position tracking variables
@@ -78,7 +78,23 @@ public class MecanumAuton extends LinearOpMode
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
+        //run using and stop and reset encoders for all relevant motors
+        stopAndReset();
 
+        waitForStart();
+        encoderElevator(DRIVE_SPEED, 29.50,30);
+    }
+    public void stopAndReset() {
+        robot.fLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.fLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.bLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.bLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.fRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.fRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.bRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void encoderDrive(double FLInch, double FRInch, double BLInch, double BRInch, double timeoutS, double Speed)
     {
@@ -254,5 +270,46 @@ public class MecanumAuton extends LinearOpMode
         robot.bLMotor.setPower(0);
         robot.fRMotor.setPower(0);
         robot.bRMotor.setPower(0);
+    }
+    public void encoderElevator(double speed,double distance, double timeoutS) {
+        int newElevatorTarget;
+
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+            // Determine new target position, and pass to motor controller
+            newElevatorTarget = robot.elevator.getCurrentPosition() + (int)(distance*COUNTS_PER_MOTOR_REV);
+            robot.elevator.setTargetPosition(newElevatorTarget);
+
+            // Turn On RUN_TO_POSITION
+            robot.elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            robot.elevator.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+            // its target position, the motion will stop.  This is "safer" in the event that the robot will
+            // always end the motion as soon as possible.
+            // However, if you require that BOTH motors have finished their moves before the robot continues
+            // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.elevator.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
+                telemetry.addData("Path2",  "Running at %7d",
+                        robot.elevator.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            robot.elevator.setPower(0);
+
+            // Reset encoders
+            robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //  sleep(250);   // optional pause after each move
+        }
     }
 }
