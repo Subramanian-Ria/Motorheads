@@ -2,18 +2,13 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 //@Disabled
 
 
-public class MecanumHardware
+public class StrafeTestHardware
 {
     /* Public OpMode members. */
     //Initialize everything
@@ -106,10 +101,10 @@ public class MecanumHardware
 
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        fLMotor.setDirection(DcMotor.Direction.REVERSE); //Should technically have been forward but it was weird so
-        fRMotor.setDirection(DcMotor.Direction.REVERSE);
+        fLMotor.setDirection(DcMotor.Direction.FORWARD); //Should technically have been forward but it was weird so
+        fRMotor.setDirection(DcMotor.Direction.FORWARD);
         bLMotor.setDirection(DcMotor.Direction.FORWARD);
-        bRMotor.setDirection(DcMotor.Direction.REVERSE);
+        bRMotor.setDirection(DcMotor.Direction.FORWARD);
 
         armEx.setDirection(DcMotor.Direction.FORWARD);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
