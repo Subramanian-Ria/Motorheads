@@ -93,7 +93,7 @@ public class VuforiaTesting extends LinearOpMode
             }
             else if(backLatestLocation != null)
             {
-                backLastKnownLocation = blueLatestLocation;
+                backLastKnownLocation = backLatestLocation;
             }
             telemetry.addData("Tracking " + bluePerimeter.getName(), blueListener.isVisible());
             telemetry.addData("Blue Last Known Location", formatMatrix(blueLastKnownLocation));
