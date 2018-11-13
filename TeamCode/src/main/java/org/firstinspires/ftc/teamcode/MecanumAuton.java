@@ -9,6 +9,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
+import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -27,6 +32,9 @@ public class MecanumAuton extends LinearOpMode
 
     // The IMU sensor object
     BNO055IMU imu;
+
+    // Detector object
+    private GoldAlignDetector detector;
 
     // State used for updating telemetry
     Orientation angles;
@@ -60,29 +68,86 @@ public class MecanumAuton extends LinearOpMode
     public void runOpMode()
     {
         robot.init(hardwareMap);
+        boolean mincap = false;
 
-        // Set up the parameters with which we will use our IMU. Note that integration
-        // algorithm here just reports accelerations to the logcat log; it doesn't actually
-        // provide positional information.
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-
-        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
-        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
-        // and named "imu".
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
 
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
+
+        //first lower
         encoderElevator(DRIVE_SPEED, 29.50,30);
+
+        //init gyro callibration
+        imuinit();
+
+        //Drive sideways to unhook
+
+        //Do sampling detection
+
+        //1st init detector
+        detectinit();
+
+        //mtd 1 test sampling detector to see if it works
+        //mtd 2 do a sweep, start right and go left until gold align is true
+        //mtd 3 Combine both, use sample detector 1st and use that as initial guess
+        //TODO discuss using a color sensor on the botttom of the robot rather hardcode for zone
+
+        //check center first
+        if(detector.getAligned())
+        {
+            //drive to hit the mineral
+            encoderDrive(20,20,20,20,5,DRIVE_SPEED);
+            mincap = true;
+
+            //drive forward and drop the boi
+            encoderDrive(10,10,10,10,5,DRIVE_SPEED);
+            dropAmerica();
+        }
+
+        //if center dosen't work go right
+        else if(mincap == false)
+        {
+            turnDegrees(30, TURN_SPEED, 2); //TODO test all values
+            if(detector.getAligned() == true)
+            {
+                encoderDrive(25, 25, 25, 25, 5, DRIVE_SPEED);
+                mincap = true;
+            }
+
+            turnDegrees(270, TURN_SPEED, 2); //
+            //turn to wall(assuming EAST rn) drive forward drop the boi
+            encoderDrive(10,10,10,10,5,DRIVE_SPEED);
+            dropAmerica();
+
+
+
+        }
+
+        //if right dosen't work go left
+        else if(mincap == false)
+        {
+            turnDegrees(-60, TURN_SPEED, 2); //TODO test all values
+            if(detector.getAligned() == true)
+            {
+                encoderDrive(25, 25, 25, 25, 5, DRIVE_SPEED);
+                mincap = true;
+            }
+
+            //turn to wall(assuming NORTH rn) drive forward drop the boi
+            turnDegrees(90, TURN_SPEED, 2); //
+            //turn to wall(assuming EAST rn) drive forward drop the boi
+            encoderDrive(10,10,10,10,5,DRIVE_SPEED);
+            dropAmerica();
+        }
+
+
+        //Next drop the sample into the zone
+
+        //Park(Maybe): might not be work since we don't know if we'll get out, lets figure out where we want to end later
+
+
     }
     public void stopAndReset() {
         robot.fLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -311,5 +376,55 @@ public class MecanumAuton extends LinearOpMode
             robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             //  sleep(250);   // optional pause after each move
         }
+    }
+
+    public void detectinit()
+    {
+        telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
+
+        // Set up detector
+        detector = new GoldAlignDetector(); // Create detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+        detector.useDefaults(); // Set detector to use default settings
+
+        // Optional tuning
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005; //
+
+        detector.ratioScorer.weight = 5; //
+        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        detector.enable(); // Start the detector!
+
+    }
+    public void imuinit()
+    {
+        // Set up the parameters with which we will use our IMU. Note that integration
+        // algorithm here just reports accelerations to the logcat log; it doesn't actually
+        // provide positional information.
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
+    }
+    public void dropAmerica()
+    {
+        robot.intake.setPower(1);
+        sleep(1500);
+        robot.intake.setPower(0);
     }
 }
