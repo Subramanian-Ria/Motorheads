@@ -51,7 +51,7 @@ public class  ElevatorWithClicks extends LinearOpMode{
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderElevator(1, -7.7,40);//-7.4 FINAL ENCODER VALUE
         telemetry.update();
-        encoderDrive(100,100, 100, 100, 5, .8);
+        encoderDrive(100,100, 100, 100, 5, .5);
    //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");
         //telemetry.update();
