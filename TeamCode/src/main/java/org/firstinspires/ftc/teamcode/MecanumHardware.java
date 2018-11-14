@@ -29,6 +29,7 @@ public class MecanumHardware
 
     public DcMotor elevator;
 
+    public ColorSensor sensorCol;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -117,5 +118,8 @@ public class MecanumHardware
         intake.setDirection(DcMotor.Direction.FORWARD);
 
         elevator.setDirection(DcMotor.Direction.FORWARD);
+
+        sensorCol = hwMap.get(ColorSensor.class, "sensorCol");
+        sensorCol.enableLed(false);
     }
 }

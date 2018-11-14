@@ -161,6 +161,7 @@ public class MecanumAuton extends LinearOpMode
         robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
     public void encoderDrive(double FLInch, double FRInch, double BLInch, double BRInch, double timeoutS, double Speed)
     {
 
@@ -336,6 +337,35 @@ public class MecanumAuton extends LinearOpMode
         robot.fRMotor.setPower(0);
         robot.bRMotor.setPower(0);
     }
+    public void colorSensor() {
+        float alpha;
+        float red;
+        float green;
+        float blue;
+        float redDifGreen;
+        float redDifBlue;
+        float blueDifGreen;
+        float blueDifRed;
+
+        alpha = robot.sensorCol.alpha();
+        red = robot.sensorCol.red();
+        green = robot.sensorCol.green();
+        blue = robot.sensorCol.blue();
+
+        redDifGreen = red - green;
+        redDifBlue = red - blue;
+        blueDifGreen = blue - green;
+        blueDifRed = blue - red;
+
+        if (redDifBlue > 100) && (redDifGreen > 100) {
+
+        }
+
+        if (blueDifRed > 100) && (blueDifGreen > 100) {
+
+        }
+    }
+
     public void encoderElevator(double speed,double distance, double timeoutS) {
         int newElevatorTarget;
 
@@ -375,6 +405,7 @@ public class MecanumAuton extends LinearOpMode
             // Reset encoders
             robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             //  sleep(250);   // optional pause after each move
+
         }
     }
 
