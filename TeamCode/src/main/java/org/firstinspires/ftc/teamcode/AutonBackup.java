@@ -23,8 +23,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
-@Autonomous(name = "AutonTest", group = "Testing")
-public class MecanumAuton extends LinearOpMode
+@Autonomous(name = "AutonBackup", group = "Testing")
+public class AutonBackup extends LinearOpMode
 {
     MecanumHardware robot = new MecanumHardware();
     private ElapsedTime runtime = new ElapsedTime();
@@ -55,7 +55,7 @@ public class MecanumAuton extends LinearOpMode
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED = .4;
-    static final double TURN_SPEED = .11;
+    static final double TURN_SPEED = .2;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -87,60 +87,44 @@ public class MecanumAuton extends LinearOpMode
         //Do sampling detection
 
         //1st init detector
-        detectinit();
+        //detectinit();
 
         //mtd 1 test sampling detector to see if it works
         //mtd 2 do a sweep, start right and go left until gold align is true
         //mtd 3 Combine both, use sample detector 1st and use that as initial guess
         //TODO discuss using a color sensor on the botttom of the robot rather hardcode for zone
 
-        //check center first
-        if(detector.getAligned())
-        {
-            //drive to hit the mineral
-            encoderDrive(20,20,20,20,5,DRIVE_SPEED);
-            mincap = true;
+        encoderDrive(10, "f", 10, DRIVE_SPEED);
 
-            //drive forward and drop the boi
-            encoderDrive(10,10,10,10,5,DRIVE_SPEED);
-            dropAmerica();
-        }
+        sleep(2000);
 
-        //if center dosen't work go right
-        else if(mincap == false)
-        {
-            turnDegrees(30, TURN_SPEED, 2); //TODO test all values
-            if(detector.getAligned() == true)
-            {
-                encoderDrive(25, 25, 25, 25, 5, DRIVE_SPEED);
-                mincap = true;
-            }
-
-            turnDegrees(270, TURN_SPEED, 2); //
-            //turn to wall(assuming EAST rn) drive forward drop the boi
-            encoderDrive(10,10,10,10,5,DRIVE_SPEED);
-            dropAmerica();
+        encoderDrive(10, "b", 10, DRIVE_SPEED);
 
 
+        sleep(2000);
 
-        }
+        encoderDrive(10, "l", 10, DRIVE_SPEED);
 
-        //if right dosen't work go left
-        else if(mincap == false)
-        {
-            turnDegrees(-60, TURN_SPEED, 2); //TODO test all values
-            if(detector.getAligned() == true)
-            {
-                encoderDrive(25, 25, 25, 25, 5, DRIVE_SPEED);
-                mincap = true;
-            }
 
-            //turn to wall(assuming NORTH rn) drive forward drop the boi
-            turnDegrees(90, TURN_SPEED, 2); //
-            //turn to wall(assuming EAST rn) drive forward drop the boi
-            encoderDrive(10,10,10,10,5,DRIVE_SPEED);
-            dropAmerica();
-        }
+        sleep(2000);
+
+        encoderDrive(10, "r", 10, DRIVE_SPEED);
+
+
+        sleep(2000);
+
+        turnDegrees(90,TURN_SPEED, 5);
+
+        sleep(2000);
+
+        turnDegrees(-90,TURN_SPEED, 5);
+        /*
+        robot.bRMotor.setPower(.5);
+        robot.bLMotor.setPower(.5);
+        robot.fRMotor.setPower(.5);
+        robot.fRMotor.setPower(.5);
+        */
+        sleep(10000);
 
 
         //Next drop the sample into the zone
@@ -161,22 +145,56 @@ public class MecanumAuton extends LinearOpMode
         robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void encoderDrive(double FLInch, double FRInch, double BLInch, double BRInch, double timeoutS, double Speed)
+    public void encoderDrive(double inches, String direction, double timeoutS, double Speed)
     {
 
-        int TargetFL;
-        int TargetFR;
-        int TargetBL;
-        int TargetBR;
+        int TargetFL = 0;
+        int TargetFR = 0;
+        int TargetBL = 0;
+        int TargetBR = 0;
+
+        String heading = direction;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
+            if(heading == "f")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+            }
+
+            else if(heading == "b")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+            }
+
+            else if(heading == "l")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+            }
+
+            else if(heading == "r")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+            }
+
+            else
+            {
+                telemetry.addData("not a valid direction", heading );
+            }
 
             // Determine new target position, and pass to motor controller
-            TargetFL = robot.fLMotor.getCurrentPosition() + (int)( FLInch* COUNTS_PER_INCH);
-            TargetFR = robot.fRMotor.getCurrentPosition() + (int)( FRInch* COUNTS_PER_INCH);
-            TargetBL = robot.fRMotor.getCurrentPosition() + (int)( BLInch* COUNTS_PER_INCH);
-            TargetBR = robot.fRMotor.getCurrentPosition() + (int)( BRInch* COUNTS_PER_INCH);
 
             robot.fLMotor.setTargetPosition(TargetFL);
             robot.fRMotor.setTargetPosition(TargetFR);
@@ -307,27 +325,28 @@ public class MecanumAuton extends LinearOpMode
 
             telemetry.addData("error", error);
             telemetry.update();
-            if(error > 0)
-            {
-                //right motors one way...
-                robot.fRMotor.setPower(powerScaled);
-                robot.bRMotor.setPower(powerScaled);
-
-                //left motors the other...
-                robot.fLMotor.setPower(-powerScaled);
-                robot.bLMotor.setPower(-powerScaled);
-            }
-            else if(error < 0)
+            if(error > 0) //assuming CCW
             {
                 //right motors one way...
                 robot.fRMotor.setPower(-powerScaled);
                 robot.bRMotor.setPower(-powerScaled);
 
+                //left motors the other...
+                robot.fLMotor.setPower(+powerScaled);
+                robot.bLMotor.setPower(-powerScaled);
+            }
+            else if(error < 0) //assuming CW
+            {
+                //right motors one way...
+                robot.fRMotor.setPower(powerScaled);
+                robot.bRMotor.setPower(powerScaled);
+
 
                 //left motors the other...
                 robot.fLMotor.setPower(powerScaled);
-                robot.bLMotor.setPower(powerScaled);
+                robot.bLMotor.setPower(-powerScaled);
             }
+
         }
         while ((errorAbs > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
 
@@ -428,3 +447,4 @@ public class MecanumAuton extends LinearOpMode
         robot.intake.setPower(0);
     }
 }
+
