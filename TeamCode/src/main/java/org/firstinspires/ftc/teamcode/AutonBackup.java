@@ -32,7 +32,6 @@ public class AutonBackup extends LinearOpMode
 
     // The IMU sensor object
     BNO055IMU imu;
-
     // Detector object
     private GoldAlignDetector detector;
 
@@ -82,6 +81,12 @@ public class AutonBackup extends LinearOpMode
         //init gyro callibration
         imuinit();
 
+        //fix this later but scrappy fix
+        robot.fLMotor.setDirection(DcMotor.Direction.REVERSE); //Should technically have been forward but it was weird so
+        robot.fRMotor.setDirection(DcMotor.Direction.REVERSE);
+        robot.bLMotor.setDirection(DcMotor.Direction.FORWARD);
+        robot.bRMotor.setDirection(DcMotor.Direction.REVERSE);
+
         //Drive sideways to unhook
 
         //Do sampling detection
@@ -94,24 +99,24 @@ public class AutonBackup extends LinearOpMode
         //mtd 3 Combine both, use sample detector 1st and use that as initial guess
         //TODO discuss using a color sensor on the botttom of the robot rather hardcode for zone
 
-        encoderDrive(10, "f", 10, DRIVE_SPEED);
+        //encoderDrive(10, "f", 10, DRIVE_SPEED);
 
-        sleep(2000);
+        //sleep(2000);
 
-        encoderDrive(10, "b", 10, DRIVE_SPEED);
-
-
-        sleep(2000);
-
-        encoderDrive(10, "l", 10, DRIVE_SPEED);
+        //encoderDrive(10, "b", 10, DRIVE_SPEED);
 
 
-        sleep(2000);
+        //sleep(2000);
 
-        encoderDrive(10, "r", 10, DRIVE_SPEED);
+        //encoderDrive(10, "l", 10, DRIVE_SPEED);
 
 
-        sleep(2000);
+        //sleep(2000);
+
+        //encoderDrive(10, "r", 10, DRIVE_SPEED);
+
+
+        //sleep(2000);
 
         turnDegrees(90,TURN_SPEED, 5);
 
@@ -153,6 +158,7 @@ public class AutonBackup extends LinearOpMode
         int TargetBL = 0;
         int TargetBR = 0;
 
+
         String heading = direction;
 
         // Ensure that the opmode is still active
@@ -161,32 +167,38 @@ public class AutonBackup extends LinearOpMode
             {
                 TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
                 TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+
             }
 
             else if(heading == "b")
             {
                 TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
                 TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+
+
             }
 
             else if(heading == "l")
             {
                 TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
                 TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); //weird should be +
+
+
             }
 
             else if(heading == "r")
             {
                 TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
                 TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); // weird should be +
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+
             }
 
             else
@@ -198,8 +210,8 @@ public class AutonBackup extends LinearOpMode
 
             robot.fLMotor.setTargetPosition(TargetFL);
             robot.fRMotor.setTargetPosition(TargetFR);
-            robot.bRMotor.setTargetPosition(TargetFR);
-            robot.bLMotor.setTargetPosition(TargetFR);
+            robot.bRMotor.setTargetPosition(TargetBR);
+            robot.bLMotor.setTargetPosition(TargetBL);
 
 
             // Turn On RUN_TO_POSITION
@@ -228,9 +240,10 @@ public class AutonBackup extends LinearOpMode
             {
 
                 //Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d", TargetBL,  TargetBR, TargetFL, TargetFR);
+                telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d", TargetFL,  TargetFR, TargetBL, TargetBR);
 
                 telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d", robot.fLMotor.getCurrentPosition(), robot.fRMotor.getCurrentPosition(), robot.bLMotor.getCurrentPosition(), robot.bRMotor.getCurrentPosition());
+                //telemetry.addData("speeds",  "Running to %7f :%7f :%7f :%7f", speedfL,  speedfR, speedfL, speedbR);
                 telemetry.update();
             }
 
@@ -332,8 +345,8 @@ public class AutonBackup extends LinearOpMode
                 robot.bRMotor.setPower(-powerScaled);
 
                 //left motors the other...
-                robot.fLMotor.setPower(+powerScaled);
-                robot.bLMotor.setPower(-powerScaled);
+                robot.fLMotor.setPower(-powerScaled);
+                robot.bLMotor.setPower(powerScaled);
             }
             else if(error < 0) //assuming CW
             {

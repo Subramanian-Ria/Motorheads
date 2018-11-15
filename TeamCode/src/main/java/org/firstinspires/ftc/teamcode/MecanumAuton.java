@@ -194,10 +194,10 @@ public class MecanumAuton extends LinearOpMode
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot.fLMotor.setPower(Math.abs(Speed));
-            robot.fRMotor.setPower(Math.abs(Speed));
-            robot.bRMotor.setPower(Math.abs(Speed));
-            robot.bLMotor.setPower(Math.abs(Speed));
+            robot.fLMotor.setPower(Speed);
+            robot.fRMotor.setPower(Speed);
+            robot.bRMotor.setPower(Speed);
+            robot.bLMotor.setPower(Speed);
 
 
             // keep looping while we are still active, and there is time left, and both motors are running.
@@ -321,13 +321,13 @@ public class MecanumAuton extends LinearOpMode
             else if(error < 0)
             {
                 //right motors one way...
-                robot.fRMotor.setPower(-powerScaled);
-                robot.bRMotor.setPower(-powerScaled);
+                robot.fRMotor.setPower(powerScaled);
+                robot.bRMotor.setPower(powerScaled);
 
 
                 //left motors the other...
-                robot.fLMotor.setPower(powerScaled);
-                robot.bLMotor.setPower(powerScaled);
+                robot.fLMotor.setPower(-powerScaled);
+                robot.bLMotor.setPower(-powerScaled);
             }
         }
         while ((errorAbs > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
@@ -347,16 +347,16 @@ public class MecanumAuton extends LinearOpMode
         float blueDifGreen;
         float blueDifRed;
 
-        alpha = robot.sensorCol.alpha();
-        red = robot.sensorCol.red();
-        green = robot.sensorCol.green();
-        blue = robot.sensorCol.blue();
+       // alpha = robot.sensorCol.alpha();
+        //red = robot.sensorCol.red();
+       // green = robot.sensorCol.green();
+        //blue = robot.sensorCol.blue();
 
-        redDifGreen = red - green;
-        redDifBlue = red - blue;
-        blueDifGreen = blue - green;
-        blueDifRed = blue - red;
-
+        //redDifGreen = red - green;
+        //redDifBlue = red - blue;
+        //blueDifGreen = blue - green;
+        //blueDifRed = blue - red;
+    /*
         if (redDifBlue > 100) && (redDifGreen > 100) {
 
         }
@@ -364,6 +364,7 @@ public class MecanumAuton extends LinearOpMode
         if (blueDifRed > 100) && (blueDifGreen > 100) {
 
         }
+        */
     }
 
     public void encoderElevator(double speed,double distance, double timeoutS) {
