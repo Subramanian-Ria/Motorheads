@@ -23,8 +23,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
-@Autonomous(name = "AutonBackup", group = "Testing")
-public class AutonBackup extends LinearOpMode
+@Autonomous(name = "LeftandRightTest", group = "Testing")
+public class LeftandRightTest extends LinearOpMode
 {
     MecanumHardware robot = new MecanumHardware();
     private ElapsedTime runtime = new ElapsedTime();
@@ -112,11 +112,12 @@ public class AutonBackup extends LinearOpMode
         encoderDrive(15,"r",5,DRIVE_SPEED);
         sleep(500);
         */
-        turnDegrees(90,TURN_SPEED,5);
-        turnDegrees(-90,TURN_SPEED,5);
+        encoderDrive(10,"r",5,DRIVE_SPEED);
+        encoderDrive(10,"l",5,DRIVE_SPEED);
 
 
-        //Next drop the sample into the zone
+
+        //Next drop thzzze sample into the zone
 
         //Park(Maybe): might not be work since we don't know if we'll get out, lets figure out where we want to end later
 
@@ -387,6 +388,7 @@ public class AutonBackup extends LinearOpMode
 
             // Stop all motion;
             robot.elevator.setPower(0);
+
 
             // Reset encoders
             robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
