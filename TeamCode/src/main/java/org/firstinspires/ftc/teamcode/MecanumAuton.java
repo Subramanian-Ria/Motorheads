@@ -282,7 +282,7 @@ public class MecanumAuton extends LinearOpMode
         float blueDifGreen;
         float blueDifRed;
 
-        alpha = robot.sensorCol.alpha();
+        /*alpha = robot.sensorCol.alpha();
         red = robot.sensorCol.red();
         green = robot.sensorCol.green();
         blue = robot.sensorCol.blue();
@@ -292,13 +292,13 @@ public class MecanumAuton extends LinearOpMode
         blueDifGreen = blue - green;
         blueDifRed = blue - red;
 
-        if (redDifBlue > 100) && (redDifGreen > 100) {
+        if ((redDifBlue > 100) && (redDifGreen > 100)) {
 
         }
 
-        if (blueDifRed > 100) && (blueDifGreen > 100) {
+        if ((blueDifRed > 100) && (blueDifGreen > 100)) {
 
-        }
+        }*/
     }
 
     public void encoderElevator(double speed,double distance, double timeoutS) {
