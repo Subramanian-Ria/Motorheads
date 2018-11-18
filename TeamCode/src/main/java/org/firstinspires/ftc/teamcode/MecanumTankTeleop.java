@@ -24,8 +24,12 @@ public class MecanumTankTeleop extends OpMode {
     static final double TURN_SPEED = 0.5;
 
     private float pLim = 1f; //power multiplier that acts as a limit
+    private float drive = .6f;
     private float tHold = .1f; //lowest threshold for it to register
     private float pSlow = .2f;
+
+    //boolean intakeFor = false;
+    //boolean intakeBack = false;
 
     @Override
     public void init() {
@@ -33,6 +37,7 @@ public class MecanumTankTeleop extends OpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+        robot.intake.setPower(0);
     }
 
     @Override
@@ -40,36 +45,35 @@ public class MecanumTankTeleop extends OpMode {
 
         //horizontal arm movement
         while(gamepad1.dpad_right) {
-            robot.armEx.setPower(pLim);
+            robot.armEx.setPower(-pLim);
             mecanumMove();
         }
         robot.armEx.setPower(0);
         while(gamepad1.dpad_left) {
-            robot.armEx.setPower(-pLim);
+            robot.armEx.setPower(pLim);
             mecanumMove();
         }
         robot.armEx.setPower(0);
 
         //intake control
-        while(gamepad1.b) {
+        if(gamepad1.x) {
             robot.intake.setPower(pLim);
-            mecanumMove();
         }
-        robot.intake.setPower(0);
-        while(gamepad1.x) {
-            robot.intake.setPower(-pLim);
-            mecanumMove();
+        else if(gamepad1.b) {
+            robot.intake.setPower(-.8);
         }
-        robot.intake.setPower(0);
+        else if(gamepad1.y) {
+            robot.intake.setPower(0);
+        }
 
         //elevator controls
         while(gamepad1.dpad_up) {
-            robot.elevator.setPower(1);
+            robot.elevator.setPower(-1);
             mecanumMove();
         }
         robot.elevator.setPower(0);
         while(gamepad1.dpad_down) {
-            robot.elevator.setPower(-1);
+            robot.elevator.setPower(1);
             mecanumMove();
         }
         robot.elevator.setPower(0);
@@ -84,13 +88,23 @@ public class MecanumTankTeleop extends OpMode {
 
         //manual movement of the arm flip- may replace encoder movement
         while(gamepad1.left_bumper) {
+            //runtime.reset();
+            //while(runtime.seconds() < 2) {
+                //robot.armFlip.setPower(-pSlow);
+                //mecanumMove();`
+            //}
             robot.armFlip.setPower(-pSlow);
             mecanumMove();
         }
         robot.armFlip.setPower(0);
         while(gamepad1.right_bumper) {
-            robot.armFlip.setPower(pSlow);
-            mecanumMove();
+            //runtime.reset();
+            //while(runtime.seconds() < 2) {
+                robot.armFlip.setPower(pSlow);
+                mecanumMove();
+            //}
+            //robot.armFlip.setPower(0);
+            //mecanumMove();
         }
         robot.armFlip.setPower(0);
 
@@ -116,16 +130,16 @@ public class MecanumTankTeleop extends OpMode {
         float BR;
 
         //assignment to allow for standard tank drive and strafing
-        FL = gamepad1.left_stick_y + gamepad1.left_stick_x;
-        BL = gamepad1.left_stick_y - gamepad1.left_stick_x;
-        FR = gamepad1.right_stick_y - gamepad1.left_stick_x;
-        BR = gamepad1.right_stick_y + gamepad1.left_stick_x;
+        FL = gamepad1.right_stick_y + gamepad1.left_stick_x;
+        BL = gamepad1.right_stick_y - gamepad1.left_stick_x;
+        FR = gamepad1.left_stick_y - gamepad1.left_stick_x;
+        BR = gamepad1.left_stick_y + gamepad1.left_stick_x;
 
         //ensures values stay within -pLim and pLim
-        FL = Range.clip(FL, -pLim, pLim);
-        BL = Range.clip(BL, -pLim, pLim);
-        FR = Range.clip(FR, -pLim, pLim);
-        BR = Range.clip(BR, -pLim, pLim);
+        FL = Range.clip(FL, -drive, drive);
+        BL = Range.clip(BL, -drive, drive);
+        FR = Range.clip(FR, -drive, drive);
+        BR = Range.clip(BR, -drive, drive);
 
         //ensures values do not fall between -tHold and tHold
         if (Math.abs(FL) < tHold) {
