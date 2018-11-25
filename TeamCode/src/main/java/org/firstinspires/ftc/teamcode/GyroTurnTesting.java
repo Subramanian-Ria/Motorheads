@@ -139,7 +139,10 @@ public class GyroTurnTesting extends LinearOpMode {
         robot.fLMotor.setPower(.5);
         robot.bLMotor.setPower(.5);
         sleep(1000);*/
-        turnDegrees(90, .1, 10);
+        telemetry.addData("NORTH", NORTH);
+        telemetry.update();
+        sleep(500);
+        turnDegrees(-90, .1, 30);//negative target for clockwise turn
 
 
         //keep in mind that the robot reads the jewel behind it
@@ -160,9 +163,15 @@ public class GyroTurnTesting extends LinearOpMode {
         //Write code to correct to a target position (NOT FINISHED)
         runtime.reset();
         updateAngles(); //variable for gyro correction around z axis
+        if(target > 0) {//this fixes a problem where the turn undershoots by 6ish degrees for some reason
+            target += 6;
+        }
+        else if(target < 0){
+            target -= 6;
+        }
+        //target += 6;
         double error = angles.firstAngle - target;
         double errorAbs = Math.abs(error);
-
         //wrapping error to have it remain in the field
         if (error > 180)  error -= 360;
         if (error <= -180) error += 360;
@@ -179,6 +188,8 @@ public class GyroTurnTesting extends LinearOpMode {
                 powerScaled /= 2;
             }
             telemetry.addData("error", error);
+            telemetry.addData("NORTH", NORTH);
+            telemetry.addData("angle", angles.firstAngle);
             telemetry.update();
             if(error > 0)
             {
@@ -195,7 +206,7 @@ public class GyroTurnTesting extends LinearOpMode {
                 robot.bLMotor.setPower(powerScaled);
             }
         }
-        while ((errorAbs > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
+        while ((Math.abs(error) > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
 
         robot.fRMotor.setPower(0);
         robot.bRMotor.setPower(0);
