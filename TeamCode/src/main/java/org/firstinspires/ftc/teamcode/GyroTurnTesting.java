@@ -142,9 +142,9 @@ public class GyroTurnTesting extends LinearOpMode {
         telemetry.addData("NORTH", NORTH);
         telemetry.update();
         sleep(500);
-        turnDegrees(-90, .1, 30);//positive target for clockwise turn
+        turnDegrees(90, .1, 30);//positive target for clockwise turn
 
-        encoderDrive(10, 10, 20, .1);
+        //encoderDrive(10, 10, 20, .1);
 
 
         //keep in mind that the robot reads the jewel behind it
@@ -160,12 +160,12 @@ public class GyroTurnTesting extends LinearOpMode {
         turnDegrees(target, DRIVE_SPEED, 5);
     }*/
 
-    public void turnDegrees(double target, double power, double timeoutS) //logic checked out with Albert -- testing right now
+    public void turnDegrees(double target, double power, double timeoutS)
     {
         //Write code to correct to a target position (NOT FINISHED)
         runtime.reset();
         updateAngles(); //variable for gyro correction around z axis
-        target *= -1;
+        target *= -1;//switches clockwise and counterclockwise directions
         if(target > 0) {//this fixes a problem where the turn undershoots by 6ish degrees for some reason
             target += 6;
         }
@@ -174,7 +174,7 @@ public class GyroTurnTesting extends LinearOpMode {
         }
         //target += 6;
         double error = angles.firstAngle - target;
-        double errorAbs = Math.abs(error);
+        double errorAbs;
         //wrapping error to have it remain in the field
         if (error > 180)  error -= 360;
         if (error <= -180) error += 360;
