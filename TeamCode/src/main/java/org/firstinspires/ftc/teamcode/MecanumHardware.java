@@ -107,9 +107,9 @@ public class MecanumHardware
 
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        fLMotor.setDirection(DcMotor.Direction.FORWARD); //Should technically have been forward but it was weird so
+        fLMotor.setDirection(DcMotor.Direction.FORWARD);
         fRMotor.setDirection(DcMotor.Direction.REVERSE);
-        bLMotor.setDirection(DcMotor.Direction.REVERSE);
+        bLMotor.setDirection(DcMotor.Direction.FORWARD);
         bRMotor.setDirection(DcMotor.Direction.REVERSE);
 
         armEx.setDirection(DcMotor.Direction.FORWARD);
