@@ -155,10 +155,10 @@ public class MecanumTankTeleop extends OpMode {
             BR = 0;
         }
 
-        robot.fLMotor.setPower(-FL);
+        robot.fLMotor.setPower(FL);
         robot.bLMotor.setPower(BL);
-        robot.fRMotor.setPower(-FR);
-        robot.bRMotor.setPower(-BR);
+        robot.fRMotor.setPower(FR);
+        robot.bRMotor.setPower(BR);
     }
 
     /*public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
