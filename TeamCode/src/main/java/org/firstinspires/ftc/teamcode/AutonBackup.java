@@ -9,10 +9,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import com.disnodeteam.dogecv.CameraViewDisplay;
+/*import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
-import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
+import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;*/
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -34,7 +34,7 @@ public class AutonBackup extends LinearOpMode
     BNO055IMU imu;
 
     // Detector object
-    private GoldAlignDetector detector;
+    //private GoldAlignDetector detector;
 
     // State used for updating telemetry
     Orientation angles;
@@ -397,6 +397,7 @@ public class AutonBackup extends LinearOpMode
         }
     }
 
+    /*
     public void detectinit()
     {
         telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
@@ -419,7 +420,7 @@ public class AutonBackup extends LinearOpMode
         detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
 
         detector.enable(); // Start the detector!
-
+    */
     }
     public void imuinit()
     {

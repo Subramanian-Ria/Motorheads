@@ -357,11 +357,11 @@ public class MecanumAuton extends LinearOpMode
         blueDifGreen = blue - green;
         blueDifRed = blue - red;
 
-        if (redDifBlue > 100) && (redDifGreen > 100) {
+        if (redDifBlue > 100 && redDifGreen > 100) {
 
         }
 
-        if (blueDifRed > 100) && (blueDifGreen > 100) {
+        if (blueDifRed > 100 && blueDifGreen > 100) {
 
         }
     }
@@ -408,7 +408,7 @@ public class MecanumAuton extends LinearOpMode
 
         }
     }
-
+    /*
     public void detectinit()
     {
         telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
@@ -431,7 +431,7 @@ public class MecanumAuton extends LinearOpMode
         detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
 
         detector.enable(); // Start the detector!
-
+    */
     }
     public void imuinit()
     {
