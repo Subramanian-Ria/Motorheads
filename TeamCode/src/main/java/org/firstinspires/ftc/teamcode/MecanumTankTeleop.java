@@ -33,7 +33,6 @@ public class MecanumTankTeleop extends OpMode {
 
     @Override
     public void init() {
-
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
@@ -88,13 +87,13 @@ public class MecanumTankTeleop extends OpMode {
 
         //intake control
         if(gamepad1.x) {
-            robot.intake.setPower(pLim);
+            moveMotor(robot.intake, pLim);
         }
         else if(gamepad1.b) {
-            robot.intake.setPower(-.8);
+            moveMotor(robot.intake, -.8f);
         }
         else if(gamepad1.y) {
-            robot.intake.setPower(0);
+            moveMotor(robot.intake, 0);
         }
 
         //elevator controls
@@ -117,11 +116,11 @@ public class MecanumTankTeleop extends OpMode {
 
         //manual movement of the arm flip- may replace encoder movement
         while(gamepad1.left_bumper) {
-            moveMotor(robot.armFlip, pSlow);
+            moveMotor(robot.armFlip, -pSlow);
         }
         robot.armFlip.setPower(0);
         while(gamepad1.right_bumper) {
-                moveMotor(robot.armFlip, -pSlow);
+            moveMotor(robot.armFlip, pSlow);
         }
         robot.armFlip.setPower(0);
 
@@ -135,14 +134,12 @@ public class MecanumTankTeleop extends OpMode {
         }
         robot.armFlip.setPower(0);
 
-        robot.fLMotor.setPower(FL);
-        robot.bLMotor.setPower(BL);
-        robot.fRMotor.setPower(FR);
-        robot.bRMotor.setPower(BR);
     }
+
     public void moveMotor(DcMotor motor, float power) {
         motor.setPower(power);
     }
+
 }
 
 
