@@ -31,8 +31,8 @@ import java.util.Locale;
  * Created by WillieShi on 10/2/2017.
  */
 
-@Autonomous(name = "gyrotest2", group = "Force of Haskins")
-@Disabled
+@Autonomous(name = "GyroTest2", group = "GyroTest")
+//@Disabled
 public class gyrotest2 extends LinearOpMode
 {
     /* Declare OpMode members. */

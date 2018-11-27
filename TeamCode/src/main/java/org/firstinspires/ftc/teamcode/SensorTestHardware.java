@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  *   As the arm servo approaches 0, the arm position moves up (away from the floor).
  *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-@Disabled
+//@Disabled
 public class SensorTestHardware
 {
     /* Public OpMode members. */
@@ -62,9 +62,9 @@ public class SensorTestHardware
     public DcMotor rightMotor;
 
     //sensors
-    public DistanceSensor sensorDis;
+    //public DistanceSensor sensorDis;
     public ColorSensor sensorCol;
-    public DigitalChannel sensorMag;
+    //public DigitalChannel sensorMag;
 
     //various sensors for autonomous and their servos
     //reading jewel colors  v
@@ -89,9 +89,9 @@ public class SensorTestHardware
         rightMotor = hwMap.get(DcMotor.class, "rightMotor");
 
         //sensors
-        sensorDis = hwMap.get(DistanceSensor.class, "sensorDis");
+        //sensorDis = hwMap.get(DistanceSensor.class, "sensorDis");
         sensorCol = hwMap.get(ColorSensor.class, "sensorCol");
-        sensorMag = hwMap.get(DigitalChannel.class, "sensorMag");
+        //sensorMag = hwMap.get(DigitalChannel.class, "sensorMag");
         sensorCol.enableLed(false);
 
         //Setting Motor Directions
