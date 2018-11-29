@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.vuforia.HINT;
+import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -32,8 +34,8 @@ import legacy.FoOHardware;
 public class VuforiaTesting extends LinearOpMode
 {
     /* Declare OpMode members. */
-    HardwarePushbot2 robot   = new HardwarePushbot2();   // Use a Pushbot's hardware
-    private ElapsedTime runtime = new ElapsedTime();
+    //MecanumHardware robot   = new MecanumHardware();   // Use a Mecanum's hardware
+    //private ElapsedTime runtime = new ElapsedTime();
 
     //Vuforia Setup
     public static final String TAG = "Vuforia VuMark Sample";
@@ -54,6 +56,10 @@ public class VuforiaTesting extends LinearOpMode
     OpenGLMatrix frontLastKnownLocation;
     OpenGLMatrix backLastKnownLocation;
     OpenGLMatrix phoneLocation;
+    OpenGLMatrix bluePose;
+    OpenGLMatrix redPose;
+    OpenGLMatrix frontPose;
+    OpenGLMatrix backPose;
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -64,20 +70,19 @@ public class VuforiaTesting extends LinearOpMode
         redLastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
         frontLastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
         backLastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
-
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         roverTrackables.activate();
 
         //Vuforia
-        runtime.reset();
+        //runtime.reset();
         while(opModeIsActive())
         {
             OpenGLMatrix blueLatestLocation = blueListener.getUpdatedRobotLocation();
-            OpenGLMatrix redLatestLocation = blueListener.getUpdatedRobotLocation();
-            OpenGLMatrix frontLatestLocation = blueListener.getUpdatedRobotLocation();
-            OpenGLMatrix backLatestLocation = blueListener.getUpdatedRobotLocation();
+            OpenGLMatrix redLatestLocation = redListener.getUpdatedRobotLocation();
+            OpenGLMatrix frontLatestLocation = frontListener.getUpdatedRobotLocation();
+            OpenGLMatrix backLatestLocation = backListener.getUpdatedRobotLocation();
 
             if(blueLatestLocation != null)
             {
@@ -97,15 +102,22 @@ public class VuforiaTesting extends LinearOpMode
             }
             telemetry.addData("Tracking " + bluePerimeter.getName(), blueListener.isVisible());
             telemetry.addData("Blue Last Known Location", formatMatrix(blueLastKnownLocation));
+            telemetry.addData("Blue Pose", format(bluePose));
 
             telemetry.addData("Tracking " + redPerimeter.getName(), redListener.isVisible());
             telemetry.addData("Red Last Known Location", formatMatrix(redLastKnownLocation));
+            telemetry.addData("Red Pose", format(redPose));
 
             telemetry.addData("Tracking " + frontPerimeter.getName(), frontListener.isVisible());
             telemetry.addData("Front Last Known Location", formatMatrix(frontLastKnownLocation));
+            telemetry.addData("Front Pose", format(frontPose));
 
             telemetry.addData("Tracking " + backPerimeter.getName(), backListener.isVisible());
             telemetry.addData("Back Last Known Location", formatMatrix(backLastKnownLocation));
+            telemetry.addData("Back Pose", format(backPose));
+
+            telemetry.update();
+            idle();
 
             /*glypos = Vuforia(perimeter);
             bluePerimeterPos = Vuforia(bluePerimeter);
@@ -128,18 +140,18 @@ public class VuforiaTesting extends LinearOpMode
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-        robot.init(hardwareMap);
+        //robot.init(hardwareMap);
 
         // Set up the parameters with which we will use our IMU. Note that integration
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
 
         //Vuforia Message storage do know what glpyh to put it in
-        String bluePerimeterPos = "not visible";
+        /*
         String redPerimeterPos = "not visible";
         String frontPerimeterPos = "not visible";
         String backPerimeterPos = "not visible";
-
+        */
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
@@ -149,10 +161,12 @@ public class VuforiaTesting extends LinearOpMode
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
          * If no camera monitor is desired, use the parameterless constructor instead (commented out below).
          */
+        /*
         int cameraMonitorViewId = hardwareMap.appContext
                 .getResources()
                 .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters VFparameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        */
+        VuforiaLocalizer.Parameters VFparameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
 
         VFparameters.vuforiaLicenseKey = "AXmdhMT/////AAAAGUaKcDAl00pauYqirixLh78YyL/PVKTvRqpancjUCke/xBIuz3p6PjSEmnZ8DShA1mjtzBSG6T9q6JvzM4ARnrGyi4pTQnVUGYgUs8HglThicDhm1xQRvQD3eckc2yjOfC591Bmq1hC4IOGgcMEsOCGPEwgTFKFoZh+c5z/P0Ta6H7S8k1X0Igx9DbLp1/DxU7nsxBKCmOyjsy1kcdB+6zbUiY3CQKqbLYjNEQWs7sStW8+lWtQZ/LA1JBpdXxuZ//68iAjhMVlaojy5nLG3QvcGUZRHSXa3fFyvOcHCYWLfqWzVrUawbj4zVkPQ4LrDdLHPrIviWE+YdgF4mWLvfPOxqzkqMMwmWnnKxMtKqpoG";
 
@@ -162,7 +176,7 @@ public class VuforiaTesting extends LinearOpMode
          * for a competition robot, the front camera might be more convenient.
          */
         VFparameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
-        this.vuforia = ClassFactory.createVuforiaLocalizer(VFparameters);
+        vuforia = ClassFactory.createVuforiaLocalizer(VFparameters);
 
         /**
          * Load the data set containing the VuMarks for Relic Recovery. There's only one trackable
@@ -170,7 +184,8 @@ public class VuforiaTesting extends LinearOpMode
          * but differ in their instance id information.
          * @see VuMarkInstanceId
          */
-        roverTrackables = this.vuforia.loadTrackablesFromAsset("RoverRuckus");
+        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
+        roverTrackables = vuforia.loadTrackablesFromAsset("RoverRuckus");
         bluePerimeter = roverTrackables.get(0);
         redPerimeter = roverTrackables.get(1);
         frontPerimeter = roverTrackables.get(2);
@@ -181,14 +196,22 @@ public class VuforiaTesting extends LinearOpMode
         frontPerimeter.setName("frontPerimeter");
         backPerimeter.setName("backPerimeter");
 
-        bluePerimeter.setLocation(createMatrix(0, 0, 0, 0, 0, 0));
+        bluePerimeter.setLocation(createMatrix(0, 0, 0, 90, 0, 90));
+        redPerimeter.setLocation(createMatrix(0, 0, 0, 90, 0, 90));
+        frontPerimeter.setLocation(createMatrix(0, 0, 0, 90, 0, 90));
+        backPerimeter.setLocation(createMatrix(0, 0, 0, 90, 0, 90));
 
-        phoneLocation = createMatrix(0, 0, 0, 0, 0, 0);
+        phoneLocation = createMatrix(0, 0, 0, 90, 0, 0);
 
         blueListener = (VuforiaTrackableDefaultListener) bluePerimeter.getListener();
-        redListener = (VuforiaTrackableDefaultListener) bluePerimeter.getListener();
-        frontListener = (VuforiaTrackableDefaultListener) bluePerimeter.getListener();
-        backListener = (VuforiaTrackableDefaultListener) bluePerimeter.getListener();
+        redListener = (VuforiaTrackableDefaultListener) redPerimeter.getListener();
+        frontListener = (VuforiaTrackableDefaultListener) frontPerimeter.getListener();
+        backListener = (VuforiaTrackableDefaultListener) backPerimeter.getListener();
+
+        bluePose = blueListener.getPose();
+        redPose = redListener.getPose();
+        frontPose = frontListener.getPose();
+        backPose = backListener.getPose();
 
         blueListener.setPhoneInformation(phoneLocation, VFparameters.cameraDirection);
         redListener.setPhoneInformation(phoneLocation, VFparameters.cameraDirection);
