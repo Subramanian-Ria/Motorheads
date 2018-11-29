@@ -27,7 +27,7 @@ import java.util.Locale;
  */
 
 @Autonomous(name = "gyrotest2", group = "Force of Haskins")
-//@Disabled
+@Disabled
 public class gyrotest2 extends LinearOpMode
 {
     /* Declare OpMode members. */
