@@ -335,6 +335,7 @@ public class MecanumAuton extends LinearOpMode
         robot.fLMotor.setPower(0);
         robot.bLMotor.setPower(0);
     }
+    /*
     public void colorSensor() {
         float alpha;
         float red;
@@ -363,7 +364,7 @@ public class MecanumAuton extends LinearOpMode
 
         }
     }
-
+    */
     public void encoderElevator(double speed,double distance, double timeoutS) {
         int newElevatorTarget;
 

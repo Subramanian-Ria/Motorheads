@@ -47,8 +47,11 @@ public class MecanumTeleop extends OpMode {
         if (gamepad1.dpad_right) {
             robot.armEx.setPower(-pLim);
         }
-        if (gamepad1.dpad_left) {
+        else if (gamepad1.dpad_left) {
             robot.armEx.setPower(pLim);
+        }
+        else {
+            robot.armEx.setPower(0);
         }
 
 
@@ -65,8 +68,11 @@ public class MecanumTeleop extends OpMode {
         if (gamepad1.dpad_up) {
             robot.elevator.setPower(-1);
         }
-        if (gamepad1.dpad_down) {
+        else if (gamepad1.dpad_down) {
             robot.elevator.setPower(1);
+        }
+        else {
+            robot.elevator.setPower(0);
         }
 
 
@@ -87,7 +93,7 @@ public class MecanumTeleop extends OpMode {
             //}
             robot.armFlip.setPower(-pSlow);
         }
-        if (gamepad1.right_bumper) {
+        else if (gamepad1.right_bumper) {
             //runtime.reset();
             //while(runtime.seconds() < 2) {
             robot.armFlip.setPower(pSlow);
@@ -95,18 +101,15 @@ public class MecanumTeleop extends OpMode {
             //robot.armFlip.setPower(0);
             //mecanumMove();
         }
-
-
-        //faster arm movement
-        if (gamepad1.left_trigger > tHold) {
+        else if (gamepad1.left_trigger > tHold) {
             robot.armFlip.setPower(-pLim);
         }
-        if (gamepad1.right_trigger > tHold) {
+        else if (gamepad1.right_trigger > tHold) {
             robot.armFlip.setPower(pLim);
         }
-        robot.armFlip.setPower(0);
-        robot.elevator.setPower(0);
-        robot.armEx.setPower(0);
+        else {
+            robot.armFlip.setPower(0);
+        }
         mecanumMove();
     }
 
