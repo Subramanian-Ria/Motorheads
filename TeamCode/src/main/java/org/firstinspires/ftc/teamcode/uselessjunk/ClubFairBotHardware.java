@@ -1,7 +1,7 @@
 //RENAME THE ROBOT TO SOMETHING MORE CREATIVE -PULKIT 9/27/2017
 // A most amazing and thought provoking Idea - Naren Ram
  
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.uselessjunk;
  
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;

@@ -219,6 +219,51 @@ public class ElevatorRaiseWithClicks extends LinearOpMode{
 //                //  sleep(250);   // optional pause after each move
 //            }
 //        }
+
+    @Autonomous(name="IntakeTestAuton", group="MecanumBot")
+    //@Disabled
+    public static class IntakeTestAuton extends LinearOpMode{
+
+        /* Declare OpMode members. */
+        MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
+        private ElapsedTime     runtime = new ElapsedTime();
+
+        static final double     CLICKS    = 1120 ;    // Andymark 40...  TETRIX Motor Encoder = 1440
+        static final double     DMT       = 3.98;     // Diameter of the wheel
+        static final double     DRIVE_SPEED             = 0.6;
+        static final double     TURN_SPEED              = 0.5;
+
+        @Override
+        public void runOpMode() {
+
+            /*
+             * Initialize the drive system variables.
+             * The init() method of the hardware class does all the work here
+             */
+            robot.init(hardwareMap);
+
+            // Send telemetry message to signify robot waiting;
+            // Wait for the game to start (driver presses PLAY)
+            waitForStart();
+
+            // Step through each leg of the path,
+            // Note: Reverse movement is obtained by setting a negative distance (not speed)
+         robot.intake.setPower(-1);
+         sleep(1000);
+         robot.intake.setPower(0);
+        }
+        public void setDrivePower(double power) {
+            robot.bLMotor.setPower(power);
+            robot.bRMotor.setPower(power);
+            robot.fRMotor.setPower(power);
+            robot.fLMotor.setPower(power);
+        }
+
+        /*
+         This is the method to drive straight either forward or backward
+         */
+
+        }
 }
 
 

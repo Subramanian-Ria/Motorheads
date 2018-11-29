@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-@Disabled
+
 
 
 
@@ -64,25 +64,45 @@ public class MecanumAuton extends LinearOpMode
         // Set up the parameters with which we will use our IMU. Note that integration
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        BNO055IMU.Parameters Gparameters = new BNO055IMU.Parameters();
+        Gparameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        Gparameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        Gparameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        Gparameters.loggingEnabled = true;
+        Gparameters.loggingTag = "IMU";
+        Gparameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
         // and named "imu".
         imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
+        imu.initialize(Gparameters);
+
+        updateAngles();
+        NORTH = angles.firstAngle;
 
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
-        encoderElevator(DRIVE_SPEED, 29.50,30);
+        //encoderElevator(DRIVE_SPEED, -29.50,30);
+        encoderDrive(1,"b",10, DRIVE_SPEED);
+        sleep(500);
+        encoderDrive(4.5,"r",10, DRIVE_SPEED);
+        sleep(500);
+        encoderDrive(1,"f",5, DRIVE_SPEED);
+        sleep(500);
+        encoderDrive(29,"r",10, DRIVE_SPEED);
+        sleep(500);
+        turnDegrees(-160,TURN_SPEED,5);
+        encoderDrive(6,"l",10,DRIVE_SPEED);
+        dropAmerica();
+        sleep(500);
+        encoderDrive(40,"f", 15,.6);
+
+
+
+
     }
     public void stopAndReset() {
         robot.fLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -97,27 +117,68 @@ public class MecanumAuton extends LinearOpMode
         robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void encoderDrive(double FLInch, double FRInch, double BLInch, double BRInch, double timeoutS, double Speed)
+    public void encoderDrive(double inches, String direction, double timeoutS, double Speed)
     {
 
-        int TargetFL;
-        int TargetFR;
-        int TargetBL;
-        int TargetBR;
+        int TargetFL = 0;
+        int TargetFR = 0;
+        int TargetBL = 0;
+        int TargetBR = 0;
+
+
+        String heading = direction;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
+            if(heading == "f")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+
+            }
+
+            else if(heading == "b")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+
+
+            }
+
+            else if(heading == "r")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); //weird should be +
+
+
+            }
+
+            else if(heading == "l")
+            {
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); // weird should be +
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+
+            }
+
+            else
+            {
+                telemetry.addData("not a valid direction", heading );
+            }
 
             // Determine new target position, and pass to motor controller
-            TargetFL = robot.fLMotor.getCurrentPosition() + (int)( FLInch* COUNTS_PER_INCH);
-            TargetFR = robot.fRMotor.getCurrentPosition() + (int)( FRInch* COUNTS_PER_INCH);
-            TargetBL = robot.fRMotor.getCurrentPosition() + (int)( BLInch* COUNTS_PER_INCH);
-            TargetBR = robot.fRMotor.getCurrentPosition() + (int)( BRInch* COUNTS_PER_INCH);
 
             robot.fLMotor.setTargetPosition(TargetFL);
             robot.fRMotor.setTargetPosition(TargetFR);
-            robot.bRMotor.setTargetPosition(TargetFR);
-            robot.bLMotor.setTargetPosition(TargetFR);
+            robot.bRMotor.setTargetPosition(TargetBR);
+            robot.bLMotor.setTargetPosition(TargetBL);
 
 
             // Turn On RUN_TO_POSITION
@@ -146,9 +207,10 @@ public class MecanumAuton extends LinearOpMode
             {
 
                 //Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d", TargetBL,  TargetBR, TargetFL, TargetFR);
+                telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d", TargetFL,  TargetFR, TargetBL, TargetBR);
 
                 telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d", robot.fLMotor.getCurrentPosition(), robot.fRMotor.getCurrentPosition(), robot.bLMotor.getCurrentPosition(), robot.bRMotor.getCurrentPosition());
+                //telemetry.addData("speeds",  "Running to %7f :%7f :%7f :%7f", speedfL,  speedfR, speedfL, speedbR);
                 telemetry.update();
             }
 
@@ -217,17 +279,24 @@ public class MecanumAuton extends LinearOpMode
             return 0;
         }
     }
-    public void turnDegrees(double target, double power, double timeoutS) //logic checked out with Albert -- testing right now
+    public void turnDegrees(double target, double power, double timeoutS)
     {
         //Write code to correct to a target position (NOT FINISHED)
         runtime.reset();
         updateAngles(); //variable for gyro correction around z axis
+        target *= -1;//switches clockwise and counterclockwise directions
+        if(target > 0) {//this fixes a problem where the turn undershoots by 6ish degrees for some reason
+            target += 6;
+        }
+        else if(target < 0){
+            target -= 6;
+        }
+        //target += 6;
         double error = angles.firstAngle - target;
-        double errorAbs = Math.abs(error);
-
+        double errorAbs;
         //wrapping error to have it remain in the field
         if (error > 180)  error -= 360;
-        if (error < -180) error += 360;
+        if (error <= -180) error += 360;
 
         double powerScaled = power;
         do
@@ -238,39 +307,33 @@ public class MecanumAuton extends LinearOpMode
 
             if (errorAbs <= 10)
             {
-                powerScaled /= 1.5;
+                powerScaled /= 2;
             }
-
             telemetry.addData("error", error);
+            telemetry.addData("NORTH", NORTH);
+            telemetry.addData("angle", angles.firstAngle);
             telemetry.update();
             if(error > 0)
             {
-                //right motors one way...
                 robot.fRMotor.setPower(powerScaled);
                 robot.bRMotor.setPower(powerScaled);
-
-                //left motors the other...
                 robot.fLMotor.setPower(-powerScaled);
                 robot.bLMotor.setPower(-powerScaled);
             }
             else if(error < 0)
             {
-                //right motors one way...
                 robot.fRMotor.setPower(-powerScaled);
                 robot.bRMotor.setPower(-powerScaled);
-
-
-                //left motors the other...
                 robot.fLMotor.setPower(powerScaled);
                 robot.bLMotor.setPower(powerScaled);
             }
         }
-        while ((errorAbs > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
+        while ((Math.abs(error) > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
 
-        robot.fLMotor.setPower(0);
-        robot.bLMotor.setPower(0);
         robot.fRMotor.setPower(0);
         robot.bRMotor.setPower(0);
+        robot.fLMotor.setPower(0);
+        robot.bLMotor.setPower(0);
     }
     public void colorSensor() {
         float alpha;
@@ -342,5 +405,12 @@ public class MecanumAuton extends LinearOpMode
             //  sleep(250);   // optional pause after each move
 
         }
+    }
+
+    public void dropAmerica()
+    {
+        robot.intake.setPower(-.5);
+        sleep(1500);
+        robot.intake.setPower(0);
     }
 }
