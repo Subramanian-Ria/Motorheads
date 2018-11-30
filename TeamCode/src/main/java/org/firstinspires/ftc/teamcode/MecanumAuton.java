@@ -61,31 +61,12 @@ public class MecanumAuton extends LinearOpMode
     {
         robot.init(hardwareMap);
 
-        // Set up the parameters with which we will use our IMU. Note that integration
-        // algorithm here just reports accelerations to the logcat log; it doesn't actually
-        // provide positional information.
-        BNO055IMU.Parameters Gparameters = new BNO055IMU.Parameters();
-        Gparameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        Gparameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        Gparameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        Gparameters.loggingEnabled = true;
-        Gparameters.loggingTag = "IMU";
-        Gparameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-
-        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
-        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
-        // and named "imu".
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(Gparameters);
-
-        updateAngles();
-        NORTH = angles.firstAngle;
-
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
-        //encoderElevator(DRIVE_SPEED, -29.50,30);
+        encoderElevator(1, -7.5,40);
+        gyroinit();
         encoderDrive(1,"b",10, DRIVE_SPEED);
         sleep(500);
         encoderDrive(4.5,"r",10, DRIVE_SPEED);
@@ -413,5 +394,28 @@ public class MecanumAuton extends LinearOpMode
         robot.intake.setPower(-.5);
         sleep(1500);
         robot.intake.setPower(0);
+    }
+    public void gyroinit()
+    {
+
+        // Set up the parameters with which we will use our IMU. Note that integration
+        // algorithm here just reports accelerations to the logcat log; it doesn't actually
+        // provide positional information.
+        BNO055IMU.Parameters Gparameters = new BNO055IMU.Parameters();
+        Gparameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        Gparameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        Gparameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        Gparameters.loggingEnabled = true;
+        Gparameters.loggingTag = "IMU";
+        Gparameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(Gparameters);
+
+        updateAngles();
+        NORTH = angles.firstAngle;
     }
 }
