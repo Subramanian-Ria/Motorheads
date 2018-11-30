@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
-@Autonomous(name = "AutonTest", group = "Testing")
+@Autonomous(name = "MecanumAuton", group = "Testing")
 public class MecanumAuton extends LinearOpMode
 {
     MecanumHardware robot = new MecanumHardware();
@@ -67,19 +67,24 @@ public class MecanumAuton extends LinearOpMode
         waitForStart();
         encoderElevator(1, -7.5,40);
         gyroinit();
+        //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
-        sleep(500);
+        sleep(200);
         encoderDrive(4.5,"r",10, DRIVE_SPEED);
-        sleep(500);
-        encoderDrive(1,"f",5, DRIVE_SPEED);
-        sleep(500);
+        sleep(200);
+        encoderDrive(.7,"f",5, DRIVE_SPEED);
+        sleep(200);
+        //Knocks out center mineral
         encoderDrive(29,"r",10, DRIVE_SPEED);
-        sleep(500);
-        turnDegrees(-160,TURN_SPEED,5);
+        sleep(200);
+        //turns/moves to deposit marker
+        turnDegrees(-120,TURN_SPEED,5);
         encoderDrive(6,"l",10,DRIVE_SPEED);
         dropAmerica();
-        sleep(500);
-        encoderDrive(40,"f", 15,.6);
+        turnDegrees(-30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
+        /*sleep(500);
+        //drive to crater
+        encoderDrive(40,"f", 15,.6);*/
 
 
 
