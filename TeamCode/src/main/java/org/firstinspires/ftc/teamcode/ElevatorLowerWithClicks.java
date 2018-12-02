@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="ElevatorRaiseWithClicks", group="MecanumBot")
+@Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot")
 //@Disabled
-public class ElevatorRaiseWithClicks extends LinearOpMode{
+public class ElevatorLowerWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
     MecanumHardware         robot   = new MecanumHardware();   // Use a Pushbot's hardware
@@ -49,7 +49,7 @@ public class ElevatorRaiseWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, -1.9,40);
+        encoderElevator(1, -9.6,40);
         telemetry.update();
    //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");

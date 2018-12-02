@@ -7,15 +7,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.firstinspires.ftc.teamcode.uselessjunk.HardwarePushbot2;
 
 
-    @Autonomous(name="EncodersWithClicks", group="Pushbot")
+@Autonomous(name="EncodersWithClicks", group="Pushbot")
     @Disabled
     public class EncodersWithClicks extends LinearOpMode{
 
         /* Declare OpMode members. */
-        HardwarePushbot2         robot   = new HardwarePushbot2();   // Use a Pushbot's hardware
+        HardwarePushbot2 robot   = new HardwarePushbot2();   // Use a Pushbot's hardware
         private ElapsedTime     runtime = new ElapsedTime();
 
         static final double     CLICKS    = 1120 ;    // Andymark 40...  TETRIX Motor Encoder = 1440

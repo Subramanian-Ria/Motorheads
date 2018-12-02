@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.uselessjunk;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -7,11 +7,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.MecanumHardware;
 
-@TeleOp(name="MecanumTeleop", group="MecanumBot")
-//@Disabled
 
-public class MecanumTeleop extends OpMode {
+@TeleOp(name="MecanumTankTeleop", group="MecanumBot")
+@Disabled
+
+public class MecanumTankTeleop extends OpMode {
 
     MecanumHardware robot = new MecanumHardware();
     ElapsedTime runtime = new ElapsedTime();
@@ -38,22 +40,17 @@ public class MecanumTeleop extends OpMode {
          */
         robot.init(hardwareMap);
         robot.intake.setPower(0);
-        robot.armFlip.setPower(0);
     }
 
     @Override
     public void loop() {
-        robot.armFlip.setPower(0);
 
         //horizontal arm movement
         if (gamepad1.dpad_right) {
             robot.armEx.setPower(-pLim);
         }
-        else if (gamepad1.dpad_left) {
+        if (gamepad1.dpad_left) {
             robot.armEx.setPower(pLim);
-        }
-        else {
-            robot.armEx.setPower(0);
         }
 
 
@@ -70,11 +67,8 @@ public class MecanumTeleop extends OpMode {
         if (gamepad1.dpad_up) {
             robot.elevator.setPower(-1);
         }
-        else if (gamepad1.dpad_down) {
+        if (gamepad1.dpad_down) {
             robot.elevator.setPower(1);
-        }
-        else {
-            robot.elevator.setPower(0);
         }
 
 
@@ -95,7 +89,7 @@ public class MecanumTeleop extends OpMode {
             //}
             robot.armFlip.setPower(-pSlow);
         }
-        else if (gamepad1.right_bumper) {
+        if (gamepad1.right_bumper) {
             //runtime.reset();
             //while(runtime.seconds() < 2) {
             robot.armFlip.setPower(pSlow);
@@ -103,15 +97,18 @@ public class MecanumTeleop extends OpMode {
             //robot.armFlip.setPower(0);
             //mecanumMove();
         }
-        else if (gamepad1.left_trigger > tHold) {
+
+
+        //faster arm movement
+        if (gamepad1.left_trigger > tHold) {
             robot.armFlip.setPower(-pLim);
         }
-        else if (gamepad1.right_trigger > tHold) {
+        if (gamepad1.right_trigger > tHold) {
             robot.armFlip.setPower(pLim);
         }
-        else {
-            robot.armFlip.setPower(0);
-        }
+        robot.armFlip.setPower(0);
+        robot.elevator.setPower(0);
+        robot.armEx.setPower(0);
         mecanumMove();
     }
 
