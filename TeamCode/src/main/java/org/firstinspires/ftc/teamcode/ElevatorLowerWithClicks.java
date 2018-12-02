@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="ElevatorRaiseWithClicks", group="MecanumBot")
+@Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot")
 //@Disabled
 public class ElevatorLowerWithClicks extends LinearOpMode{
 

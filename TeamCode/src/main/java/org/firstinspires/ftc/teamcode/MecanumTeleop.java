@@ -38,10 +38,12 @@ public class MecanumTeleop extends OpMode {
          */
         robot.init(hardwareMap);
         robot.intake.setPower(0);
+        robot.armFlip.setPower(0);
     }
 
     @Override
     public void loop() {
+        robot.armFlip.setPower(0);
 
         //horizontal arm movement
         if (gamepad1.dpad_right) {
