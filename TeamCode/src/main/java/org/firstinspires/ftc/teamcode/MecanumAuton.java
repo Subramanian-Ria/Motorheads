@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
@@ -78,13 +79,21 @@ public class MecanumAuton extends LinearOpMode
         encoderDrive(29,"r",10, DRIVE_SPEED);
         sleep(200);
         //turns/moves to deposit marker
-        turnDegrees(-120,TURN_SPEED,5);
+        turnDegrees(-200,TURN_SPEED,5);
         encoderDrive(6,"l",10,DRIVE_SPEED);
         dropAmerica();
-        turnDegrees(-30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
+        //turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
         /*sleep(500);
         //drive to crater
         encoderDrive(40,"f", 15,.6);*/
+        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 3)
+        {
+            robot.fLMotor.setPower(.5);
+            robot.fRMotor.setPower(-.5);
+            robot.bLMotor.setPower(-.5); // weird should be +
+            robot.bRMotor.setPower(.5);
+
+        }
 
 
 
