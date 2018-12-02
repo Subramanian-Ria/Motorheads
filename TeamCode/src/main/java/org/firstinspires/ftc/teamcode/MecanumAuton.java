@@ -43,9 +43,9 @@ public class MecanumAuton extends LinearOpMode
     static final double     DRIVE_GEAR_REDUCTION_CM = 0.5 ;
     static final double     WHEEL_DIAMETER_INCHES = 3.54331;     // For figuring circumference
     static final double     COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * Math.PI);
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * Math.PI);
     static final double     DRIVE_SPEED = .4;
     static final double TURN_SPEED = .11;
 
@@ -65,7 +65,7 @@ public class MecanumAuton extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.5,40);
+        encoderElevator(1, -7.7,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
@@ -74,13 +74,23 @@ public class MecanumAuton extends LinearOpMode
         sleep(200);
         encoderDrive(.7,"f",5, DRIVE_SPEED);
         sleep(200);
+
+        turnDegrees(90,TURN_SPEED,10);
         //Knocks out center mineral
-        encoderDrive(29,"r",10, DRIVE_SPEED);
+        //encoderDrive(7,"r",10, DRIVE_SPEED);//29 inches
         sleep(200);
+        //encoderDrive(29, "f", 10, DRIVE_SPEED );
+        gyroZDrive(DRIVE_SPEED, 29, 20);
+        /*encoderDrive(7,"r",10, DRIVE_SPEED);//29 inches
+        sleep(200);
+        encoderDrive(7,"r",10, DRIVE_SPEED);//29 inches
+        sleep(200);
+        encoderDrive(8,"r",10, DRIVE_SPEED);//29 inches
+        sleep(200);*/
         //turns/moves to deposit marker
         turnDegrees(-120,TURN_SPEED,5);
         encoderDrive(6,"l",10,DRIVE_SPEED);
-        dropAmerica();
+        //dropAmerica();
         turnDegrees(-30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
         /*sleep(500);
         //drive to crater
@@ -422,5 +432,47 @@ public class MecanumAuton extends LinearOpMode
 
         updateAngles();
         NORTH = angles.firstAngle;
+    }
+    public void gyroZDrive(double power, double inches, int timeoutSeconds) {
+        updateAngles();
+        double target = robot.fLMotor.getCurrentPosition() + inches;
+        //relTarget (relative target) = target - current
+        //  This variable stores how many angles away the target is, relative to the current position
+        //ang1 = initial angle
+        //angRel = current angle (zeroed at ang1). So true angle - ang1
+        //relTarget = -ang1 + target
+        //WORKS UNTIL true angle REACHES +/-180
+        double ang1 = readAngle("x");
+        double angle = readAngle("x");
+        double reltarget = target - angle;
+
+        while(opModeIsActive() && ((reltarget >1 ) || (reltarget < -1))) {
+            telemetry.addData("ang1", ang1);
+            telemetry.addData("angle", angle);
+            telemetry.addData("reltarget", reltarget);
+            telemetry.addData("X: ", angles.firstAngle);
+            telemetry.update();
+            angle = readAngle("x");
+            reltarget = target - angle;
+            if(reltarget < 0) {
+                normalDrive(-power, power);
+            }
+            else if(reltarget > 0) {
+                normalDrive(power, -power);
+            }
+        }
+    }
+
+    public void normalDrive(double lpower, double rpower) {
+        if (opModeIsActive()) {
+            robot.fLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.fRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.bLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.fLMotor.setPower(lpower);
+            robot.bLMotor.setPower(lpower);
+            robot.fRMotor.setPower(-rpower);
+            robot.bRMotor.setPower(-rpower);
+        }
     }
 }
