@@ -47,8 +47,8 @@ public class MecanumAuton extends LinearOpMode
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED = .4;
-    static final double TURN_SPEED = .11;
+    static final double     DRIVE_SPEED = .5;
+    static final double TURN_SPEED = .2;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -79,21 +79,64 @@ public class MecanumAuton extends LinearOpMode
         encoderDrive(29,"r",10, DRIVE_SPEED);
         sleep(200);
         //turns/moves to deposit marker
-        turnDegrees(-200,TURN_SPEED,5);
-        encoderDrive(6,"l",10,DRIVE_SPEED);
-        dropAmerica();
+        turnDegrees(-133,TURN_SPEED,5.5);
+
+        //dropAmerica();
         //turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
         /*sleep(500);
         //drive to crater
         encoderDrive(40,"f", 15,.6);*/
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 3)
+        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 5.2)
         {
-            robot.fLMotor.setPower(.5);
-            robot.fRMotor.setPower(-.5);
-            robot.bLMotor.setPower(-.5); // weird should be +
-            robot.bRMotor.setPower(.5);
+            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
+            robot.fLMotor.setPower(.2);
+            robot.fRMotor.setPower(-.2);
+            robot.bLMotor.setPower(-.2);
+            robot.bRMotor.setPower(.2);
 
         }
+        robot.fLMotor.setPower(0);
+        robot.fRMotor.setPower(0);
+        robot.bLMotor.setPower(0);
+        robot.bRMotor.setPower(0);
+        sleep(100);
+        runtime.reset();
+        //encoderDrive(30,"f", 15,DRIVE_SPEED);
+        while(runtime.seconds() < 9)
+        {
+            telemetry.addData("time", runtime.seconds());
+            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
+            if(robot.sensordist.getDistance(DistanceUnit.INCH) > 5)
+            {
+
+                telemetry.addData("C1:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                //foward
+                robot.fLMotor.setPower(-.5);
+                robot.fRMotor.setPower(-.5);
+                robot.bLMotor.setPower(-.5);
+                robot.bRMotor.setPower(-.5);
+            }
+            else
+            {
+                telemetry.addData("C2:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                //right?
+                robot.fRMotor.setPower(.1);
+                robot.bRMotor.setPower(.1);
+                robot.fLMotor.setPower(-.1);
+                robot.bLMotor.setPower(-.1);
+            }
+
+        }
+        robot.fLMotor.setPower(0);
+        robot.fRMotor.setPower(0);
+        robot.bLMotor.setPower(0);
+        robot.bRMotor.setPower(0);
+        sleep(100);
+
 
 
 
