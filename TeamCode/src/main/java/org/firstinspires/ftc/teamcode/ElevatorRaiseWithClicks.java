@@ -220,7 +220,7 @@ public class ElevatorRaiseWithClicks extends LinearOpMode{
 //            }
 //        }
 
-    @Autonomous(name="IntakeTestAuton", group="MecanumBot")
+    @Autonomous(name="nou", group="MecanumBot")
     //@Disabled
     public static class IntakeTestAuton extends LinearOpMode{
 

@@ -1,13 +1,13 @@
 
 
-package org.firstinspires.ftc.teamcode;
+package legacy.uselessjunk;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.uselessjunk.HardwarePushbot2;
+import legacy.uselessjunk.HardwarePushbot2;
 
 
 @Autonomous(name="EncodersWithClicks", group="Pushbot")

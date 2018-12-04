@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.uselessjunk;
+package legacy.uselessjunk;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

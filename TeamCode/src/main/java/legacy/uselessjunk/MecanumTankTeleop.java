@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.uselessjunk;
+package legacy.uselessjunk;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -10,10 +10,10 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.MecanumHardware;
 
 
-@TeleOp(name="MecanumPCTeleop", group="MecanumBot")
-//@Disabled
+@TeleOp(name="MecanumTankTeleop", group="MecanumBot")
+@Disabled
 
-public class MecanumPCTeleop extends OpMode {
+public class MecanumTankTeleop extends OpMode {
 
     MecanumHardware robot = new MecanumHardware();
     ElapsedTime runtime = new ElapsedTime();

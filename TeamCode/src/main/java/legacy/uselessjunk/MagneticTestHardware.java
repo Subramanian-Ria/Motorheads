@@ -27,36 +27,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.uselessjunk;
+package legacy.uselessjunk;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@Autonomous(name="MagneticTestAuton", group="MagneticTest")
 @Disabled
-public class MagneticTestAuton extends LinearOpMode {
+public class MagneticTestHardware
+{
+    /* Public OpMode members. */
+    //motors
+    public DcMotor magMotor;
 
-    MagneticTestHardware         robot   = new MagneticTestHardware();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
+    //sensors
+    public DigitalChannel sensorMag;
 
-    @Override
-    public void runOpMode() {
+    //Local OpMode members.
+    HardwareMap hwMap  = null;
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
+    /* Initialize standard Hardware interfaces */
+    public void init(HardwareMap ahwMap) {
+        // save reference to HW Map
+        hwMap = ahwMap;
 
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        if (robot.sensorMag.getState()){
-            robot.magMotor.setPower(0);
-        }
-        else {
-            robot.magMotor.setPower(1);
-        }
+        // Define Motors
+        magMotor = hwMap.get(DcMotor.class, "rightMotor");
+
+        //sensors
+        sensorMag = hwMap.get(DigitalChannel.class, "sensorMag");
+
+        //Setting Motor Directions
+        magMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        // Set all motors to zero power
+        magMotor.setPower(0);
+
+        // Set all motors to run without encoders.
+        // May want to use RUN_USING_ENCODERS if encoders are installed.
+        magMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }

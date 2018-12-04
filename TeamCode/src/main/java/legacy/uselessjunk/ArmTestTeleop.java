@@ -1,21 +1,20 @@
-package org.firstinspires.ftc.teamcode.uselessjunk;
+package legacy.uselessjunk;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.MecanumHardware;
+import legacy.uselessjunk.ArmTestHardware;
 
 
-@TeleOp(name="MecanumTankTeleop", group="MecanumBot")
+@TeleOp(name="ArmTestTeleop", group="ArmTestBot")
 @Disabled
 
-public class MecanumTankTeleop extends OpMode {
+public class ArmTestTeleop extends OpMode {
 
-    MecanumHardware robot = new MecanumHardware();
+    ArmTestHardware robot = new ArmTestHardware();
     ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
@@ -26,12 +25,10 @@ public class MecanumTankTeleop extends OpMode {
     static final double TURN_SPEED = 0.5;
 
     private float pLim = 1f; //power multiplier that acts as a limit
-    private float drive = .6f;
     private float tHold = .1f; //lowest threshold for it to register
-    private float pSlow = .2f;
+    boolean flipMode = false;
 
-    //boolean intakeFor = false;
-    //boolean intakeBack = false;
+    //reference position for the arm flip
 
     @Override
     public void init() {
@@ -39,96 +36,49 @@ public class MecanumTankTeleop extends OpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        robot.intake.setPower(0);
     }
+
 
     @Override
     public void loop() {
-
         //horizontal arm movement
-        if (gamepad1.dpad_right) {
-            robot.armEx.setPower(-pLim);
-        }
-        if (gamepad1.dpad_left) {
+        while(gamepad1.dpad_right) {
             robot.armEx.setPower(pLim);
         }
-
+        robot.armEx.setPower(0);
+        while(gamepad1.dpad_left) {
+            robot.armEx.setPower(-pLim);
+        }
+        robot.armEx.setPower(0);
 
         //intake control
-        if (gamepad1.x) {
+        while(gamepad1.b) {
             robot.intake.setPower(pLim);
-        } else if (gamepad1.b) {
-            robot.intake.setPower(-.8);
-        } else if (gamepad1.y) {
-            robot.intake.setPower(0);
         }
+        robot.intake.setPower(0);
+        while(gamepad1.x) {
+            robot.intake.setPower(-pLim);
+        }
+        robot.intake.setPower(0);
 
         //elevator controls
-        if (gamepad1.dpad_up) {
-            robot.elevator.setPower(-1);
+        while(gamepad1.dpad_up) {
+            encoderMove(robot.elevator, 100, 20, 0, pLim);
         }
-        if (gamepad1.dpad_down) {
-            robot.elevator.setPower(1);
+        while(gamepad1.dpad_down) {
+            encoderMove(robot.elevator, -100 , 20, 0, -pLim);
         }
-
 
         //arm flip controls
-        /*if(gamepad1.a) {
+        if(gamepad1.a) {
             encoderMove(robot.armFlip, 11, 20, 0, pLim);
         }
         if(gamepad1.y) {
-            encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);
-        }*/
-
-        //manual movement of the arm flip- may replace encoder movement
-        if (gamepad1.left_bumper) {
-            //runtime.reset();
-            //while(runtime.seconds() < 2) {
-            //robot.armFlip.setPower(-pSlow);
-            //mecanumMove();`
-            //}
-            robot.armFlip.setPower(-pSlow);
+            encoderMove(robot.armFlip, -10, 20, 0, -pLim);//TODO: CHECK REF VALUE
         }
-        if (gamepad1.right_bumper) {
-            //runtime.reset();
-            //while(runtime.seconds() < 2) {
-            robot.armFlip.setPower(pSlow);
-            //}
-            //robot.armFlip.setPower(0);
-            //mecanumMove();
-        }
-
-
-        //faster arm movement
-        if (gamepad1.left_trigger > tHold) {
-            robot.armFlip.setPower(-pLim);
-        }
-        if (gamepad1.right_trigger > tHold) {
-            robot.armFlip.setPower(pLim);
-        }
-        robot.armFlip.setPower(0);
-        robot.elevator.setPower(0);
-        robot.armEx.setPower(0);
-        mecanumMove();
     }
 
-    public void mecanumMove() {
-        //variables
-        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-        double rightX = gamepad1.right_stick_x;
-        final double v1 = r * Math.cos(robotAngle) + rightX;
-        final double v2 = r * Math.sin(robotAngle) - rightX;
-        final double v3 = r * Math.sin(robotAngle) + rightX;
-        final double v4 = r * Math.cos(robotAngle) - rightX;
-
-        robot.fLMotor.setPower(v1);
-        robot.fRMotor.setPower(v2);
-        robot.bLMotor.setPower(v3);
-        robot.bRMotor.setPower(v4);
-
-
-    /*public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
+    public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
         // Determine new target position, and pass to motor controller
         int target = ref + (int) (inches * COUNTS_PER_INCH);
         motor.setTargetPosition(target);
@@ -159,6 +109,8 @@ public class MecanumTankTeleop extends OpMode {
 
         // Turn off RUN_TO_POSITION
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }*/
     }
 }
+
+
+

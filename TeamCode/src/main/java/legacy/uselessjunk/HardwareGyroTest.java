@@ -27,69 +27,51 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.uselessjunk;
+package legacy.uselessjunk;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+/**
+ * This is NOT an opmode.
+ *
+ * This class can be used to define all the specific hardware for a single robot.
+ * In this case that robot is a K9 robot.
+ *
+ * This hardware class assumes the following device names have been configured on the robot:
+ * Note:  All names are lower case and some have single spaces between words.
+ *
+ * Motor channel:  Left  drive motor:        "left_drive"
+ * Motor channel:  Right drive motor:        "right_drive"
+ * Servo channel:  Servo to raise/lower arm: "arm"
+ * Servo channel:  Servo to open/close claw: "claw"
+ *
+ * Note: the configuration of the servos is such that:
+ *   As the arm servo approaches 0, the arm position moves up (away from the floor).
+ *   As the claw servo approaches 0, the claw opens up (drops the game element).
+ */
 @Disabled
-public class TankTestHardware
+public class HardwareGyroTest
 {
     /* Public OpMode members. */
-    public DcMotor leftMotor;
-    public DcMotor rightMotor;
-
-    //sensors
-    /*public DistanceSensor sensorDis;
-    public ColorSensor sensorCol;
-    public DigitalChannel sensorMag;*/
-
-    //various sensors for autonomous and their servos
-    //reading jewel colors  v
-
-    //detecting columns
-    /*
-    public Servo touchArm;
-    public DigitalChannel touchRed; //to use in red autonomous
-    public DigitalChannel touchBlue; //to use in blue autonomous
-    */
 
     /* Local OpMode members. */
     HardwareMap hwMap  = null;
+    private ElapsedTime period  = new ElapsedTime();
+
+    /* Constructor */
+    public HardwareGyroTest() {
+    }
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
         // save reference to HW Map
         hwMap = ahwMap;
 
-        // Define Motors
-        leftMotor = hwMap.get(DcMotor.class, "leftMotor");
-        rightMotor = hwMap.get(DcMotor.class, "rightMotor");
+        // Define and Initialize Motors
 
-        //sensors
-        /*sensorDis = hwMap.get(DistanceSensor.class, "sensorDis");
-        sensorCol = hwMap.get(ColorSensor.class, "sensorCol");
-        sensorMag = hwMap.get(DigitalChannel.class, "sensorMag");
-        sensorCol.enableLed(false);*/
-
-        //Setting Motor Directions
-        rightMotor.setDirection(DcMotor.Direction.FORWARD);
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-
-        // Set all motors to zero power
-        rightMotor.setPower(0);
-        leftMotor.setPower(0);
-
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }

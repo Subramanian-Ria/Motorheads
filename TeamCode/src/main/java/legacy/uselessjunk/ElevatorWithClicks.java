@@ -1,10 +1,12 @@
 
 
-package org.firstinspires.ftc.teamcode;
+package legacy.uselessjunk;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.MecanumHardware;
 
 
 @Autonomous(name="ElevatorWithClicks", group="MecanumBot")
@@ -12,7 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class  ElevatorWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
-    MecanumHardware         robot   = new MecanumHardware();   // Use a Pushbot's hardware
+    MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 
