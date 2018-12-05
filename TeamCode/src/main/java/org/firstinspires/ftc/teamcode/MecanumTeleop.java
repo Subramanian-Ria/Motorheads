@@ -29,7 +29,9 @@ public class MecanumTeleop extends OpMode {
     private float pSlow = .2f;
 
     //boolean intakeFor = false;
+    boolean intakeOn = false;
     //boolean intakeBack = false;
+    int armFlipRef = 0;//TODO: FIND VALUE
 
     @Override
     public void init() {
@@ -56,15 +58,29 @@ public class MecanumTeleop extends OpMode {
             robot.armEx.setPower(0);
         }
 
-        //TODO: 3 POS INTAKE & AUTO RISE WITH ARM FLIP
-        //intake control
-        /*if (gamepad1.x) {//OLD INTAKE CODE
-            robot.intake.setPower(pLim);
-        } else if (gamepad1.b) {
-            robot.intake.setPower(-.8);
-        } else if (gamepad1.y) {
-            robot.intake.setPower(0);
-        }*/
+        if(gamepad1.x) {
+            if(intakeOn) {
+                robot.intake.setPower(1);
+                intakeOn = false;
+            }
+            else {
+                robot.intake.setPower(0);
+                intakeOn = true;
+            }
+        }
+
+        if(gamepad1.y) {
+            robot.bucket.setPosition(1);//flat position
+        }
+        else if(gamepad1.a) {
+            robot.bucket.setPosition(0);//cube position
+        }
+        else if(robot.armFlip.getCurrentPosition() >= armFlipRef && robot.bucket.getPosition() != .5) {
+            robot.bucket.setPosition(.5);//hold postion
+        }
+        else if(robot.bucket.getPosition() != 1) {
+            robot.bucket.setPosition(1);//flat postion
+        }
 
         //elevator controls
         if (gamepad1.dpad_up) {

@@ -35,6 +35,7 @@ public class MecanumHardware
     public DistanceSensor sensordist;
 
     public CRServo intake;
+    public Servo bucket;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -67,6 +68,7 @@ public class MecanumHardware
         elevator = hwMap.get(DcMotor.class, "elevator");
 
         intake = hwMap.get(CRServo.class, "intake");
+        bucket = hwMap.get(Servo.class, "bucket");
 
         //Setting Motor Directions
         //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct
@@ -89,6 +91,7 @@ public class MecanumHardware
         elevator.setPower(0);
 
         intake.setPower(0);
+        bucket.setPosition(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.

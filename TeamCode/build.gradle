@@ -15,4 +15,5 @@ dependencies {
     //implementation project(':openCVLibrary3')
     implementation project(':openCVLibrary3')
     implementation project(':DogeCV')
+    implementation project(':FtcRobotController')
 }
