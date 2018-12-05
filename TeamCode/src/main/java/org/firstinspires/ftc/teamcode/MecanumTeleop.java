@@ -37,7 +37,7 @@ public class MecanumTeleop extends OpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        robot.intake.setPower(0);
+        //robot.intake.setPower(0);
         robot.armFlip.setPower(0);
     }
 
@@ -56,15 +56,15 @@ public class MecanumTeleop extends OpMode {
             robot.armEx.setPower(0);
         }
 
-
+        //TODO: 3 POS INTAKE & AUTO RISE WITH ARM FLIP
         //intake control
-        if (gamepad1.x) {
+        /*if (gamepad1.x) {//OLD INTAKE CODE
             robot.intake.setPower(pLim);
         } else if (gamepad1.b) {
             robot.intake.setPower(-.8);
         } else if (gamepad1.y) {
             robot.intake.setPower(0);
-        }
+        }*/
 
         //elevator controls
         if (gamepad1.dpad_up) {
@@ -125,10 +125,10 @@ public class MecanumTeleop extends OpMode {
         final double v3 = r * Math.sin(robotAngle) + rightX;
         final double v4 = r * Math.cos(robotAngle) - rightX;
 
-        robot.fLMotor.setPower(v1);
-        robot.fRMotor.setPower(v2);
-        robot.bLMotor.setPower(v3);
-        robot.bRMotor.setPower(v4);
+        robot.fLMotor.setPower(drive * v1);
+        robot.fRMotor.setPower(drive * v2);
+        robot.bLMotor.setPower(drive * v3);
+        robot.bRMotor.setPower(drive * v4);
 
 
     /*public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {

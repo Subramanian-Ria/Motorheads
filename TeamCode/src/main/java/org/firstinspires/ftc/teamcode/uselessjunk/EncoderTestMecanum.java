@@ -66,6 +66,7 @@ import org.firstinspires.ftc.teamcode.MecanumHardware;
  */
 
 @Autonomous(name="EncoderTestMecanum", group="MecanumBot")
+@Disabled
 
 public class EncoderTestMecanum extends LinearOpMode {
 

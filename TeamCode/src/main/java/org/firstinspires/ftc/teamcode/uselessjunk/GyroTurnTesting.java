@@ -28,7 +28,7 @@ import legacy.ForceofHaskinsHardware;
  */
 
 @Autonomous(name = "GyroTurnTesting", group = "Testing")
-//@Disabled
+@Disabled
 public class GyroTurnTesting extends LinearOpMode {
     /* Declare OpMode members. */
     MecanumHardware robot = new MecanumHardware();   // Use a Pushbot's hardware

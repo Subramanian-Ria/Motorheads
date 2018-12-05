@@ -3,6 +3,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -25,13 +26,15 @@ public class MecanumHardware
     public DcMotor armEx;
     public DcMotor armFlip;
 
-    public  DcMotor intake;
+    //public  DcMotor intake;
 
     public DcMotor elevator;
 
     public ColorSensor sensorCol1;
     public ColorSensor sensorCol2;
     public DistanceSensor sensordist;
+
+    public CRServo intake;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -59,9 +62,11 @@ public class MecanumHardware
         armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
 
-        intake = hwMap.get(DcMotor.class, "intake");
+        //intake = hwMap.get(DcMotor.class, "intake");
 
         elevator = hwMap.get(DcMotor.class, "elevator");
+
+        intake = hwMap.get(CRServo.class, "intake");
 
         //Setting Motor Directions
         //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct
@@ -79,9 +84,11 @@ public class MecanumHardware
         armEx.setPower(0);
         armFlip.setPower(0);
 
-        intake.setPower(0);
+        //intake.setPower(0);
 
         elevator.setPower(0);
+
+        intake.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -93,7 +100,7 @@ public class MecanumHardware
         armEx.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -105,7 +112,7 @@ public class MecanumHardware
         armEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -114,10 +121,12 @@ public class MecanumHardware
         bLMotor.setDirection(DcMotor.Direction.FORWARD);
         bRMotor.setDirection(DcMotor.Direction.REVERSE);
 
+        intake.setDirection(CRServo.Direction.FORWARD);
+
         armEx.setDirection(DcMotor.Direction.FORWARD);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
 
-        intake.setDirection(DcMotor.Direction.FORWARD);
+        //intake.setDirection(DcMotor.Direction.FORWARD);
 
         elevator.setDirection(DcMotor.Direction.FORWARD);
 

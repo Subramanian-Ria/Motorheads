@@ -248,9 +248,9 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 
             // Step through each leg of the path,
             // Note: Reverse movement is obtained by setting a negative distance (not speed)
-         robot.intake.setPower(-1);
+         //robot.intake.setPower(-1);
          sleep(1000);
-         robot.intake.setPower(0);
+         //robot.intake.setPower(0);
         }
         public void setDrivePower(double power) {
             robot.bLMotor.setPower(power);

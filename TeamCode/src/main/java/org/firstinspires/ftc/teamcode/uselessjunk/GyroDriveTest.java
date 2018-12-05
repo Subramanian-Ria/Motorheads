@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.uselessjunk;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  */
 
 @Autonomous(name = "GyroDriveTest", group = "GyroTest")
-//@Disabled
+@Disabled
 public class GyroDriveTest extends LinearOpMode
 {
     /* Declare OpMode members. */

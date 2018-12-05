@@ -1,7 +1,8 @@
 //THIS IS A MOTORHEADS PROGRAM
 
-package org.firstinspires.ftc.teamcode.uselessjunk;
+package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;

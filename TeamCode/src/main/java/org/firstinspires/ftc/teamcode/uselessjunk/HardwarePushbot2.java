@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.uselessjunk;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -48,7 +49,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-//@Disabled
+@Disabled
 public class HardwarePushbot2
 {
     /* Public OpMode members. */

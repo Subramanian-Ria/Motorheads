@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.MecanumHardware;
 
 
 @TeleOp(name="MecanumPCTeleop", group="MecanumBot")
-//@Disabled
+@Disabled
 
 public class MecanumPCTeleop extends OpMode {
 

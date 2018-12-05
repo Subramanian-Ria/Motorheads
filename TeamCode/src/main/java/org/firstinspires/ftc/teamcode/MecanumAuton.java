@@ -448,9 +448,9 @@ public class MecanumAuton extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.intake.setPower(-.5);
+        //robot.intake.setPower(-.5);
         sleep(1500);
-        robot.intake.setPower(0);
+        //robot.intake.setPower(0);
     }
     public void gyroinit()
     {

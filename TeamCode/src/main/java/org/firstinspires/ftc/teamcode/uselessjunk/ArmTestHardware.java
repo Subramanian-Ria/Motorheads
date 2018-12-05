@@ -2,9 +2,10 @@
 
 package org.firstinspires.ftc.teamcode.uselessjunk;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-//@Disabled
+@Disabled
 
 
 public class ArmTestHardware
