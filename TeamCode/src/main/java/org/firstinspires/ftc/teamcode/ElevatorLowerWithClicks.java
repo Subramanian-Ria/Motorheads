@@ -49,9 +49,9 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, -9.6,40);
+        encoderElevator(1, 9.4,40);
         telemetry.update();
-   //     encoderTurn(TURN_SPEED, 4.0
+        //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");
         //telemetry.update();
     }
@@ -220,7 +220,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 //            }
 //        }
 
-    @Autonomous(name="no", group="MecanumBot")
+    @Autonomous(name="IntakeTestAuton", group="MecanumBot")
     //@Disabled
     public static class IntakeTestAuton extends LinearOpMode{
 
@@ -248,9 +248,9 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 
             // Step through each leg of the path,
             // Note: Reverse movement is obtained by setting a negative distance (not speed)
-         robot.intake.setPower(-1);
-         sleep(1000);
-         robot.intake.setPower(0);
+            //robot.intake.setPower(-1);
+            sleep(1000);
+            //robot.intake.setPower(0);
         }
         public void setDrivePower(double power) {
             robot.bLMotor.setPower(power);
@@ -263,7 +263,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
          This is the method to drive straight either forward or backward
          */
 
-        }
+    }
 }
 
 
