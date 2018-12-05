@@ -71,15 +71,19 @@ public class MecanumTeleop extends OpMode {
 
         if(gamepad1.y) {
             robot.bucket.setPosition(1);//flat position
+            //TODO: CHECK VALUE
         }
         else if(gamepad1.a) {
             robot.bucket.setPosition(0);//cube position
+            //TODO: CHECK VALUE
         }
         else if(robot.armFlip.getCurrentPosition() >= armFlipRef && robot.bucket.getPosition() != .5) {
             robot.bucket.setPosition(.5);//hold postion
+            //TODO: CHECK VALUE
         }
         else if(robot.bucket.getPosition() != 1) {
             robot.bucket.setPosition(1);//flat postion
+            //TODO: CHECK VALUE
         }
 
         //elevator controls
