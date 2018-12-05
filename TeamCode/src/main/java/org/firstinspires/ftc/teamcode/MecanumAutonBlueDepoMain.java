@@ -66,7 +66,7 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.5,40);
+        encoderElevator(1, -7.7,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);

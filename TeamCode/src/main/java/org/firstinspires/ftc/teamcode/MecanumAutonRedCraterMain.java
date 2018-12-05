@@ -66,7 +66,7 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.5,40);
+        encoderElevator(1, -7.7,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
@@ -76,24 +76,24 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
         encoderDrive(.7,"f",5, DRIVE_SPEED);
         sleep(200);
         //Knocks out center mineral
-        encoderDrive(29,"r",10, DRIVE_SPEED);
+        encoderDrive(13,"r",10, DRIVE_SPEED);
+        sleep(200);
+        //backout
+        encoderDrive(5,"l",10, DRIVE_SPEED);
         sleep(200);
         //turns/moves to deposit marker
-        turnDegrees(-43,TURN_SPEED,2.2);
-
-        //dropAmerica();
-        //turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
-        /*sleep(500);
-        //drive to crater
-        encoderDrive(40,"f", 15,.6);*/
+        encoderDrive(20,"f",10, DRIVE_SPEED);
+        sleep(200);
+        turnDegrees(-133,TURN_SPEED,2.2);
+        sleep(200);
         while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.6)
         {
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            robot.fLMotor.setPower(-.2);
-            robot.fRMotor.setPower(.2);
-            robot.bLMotor.setPower(.2);
-            robot.bRMotor.setPower(-.2);
+            robot.fLMotor.setPower(.2);
+            robot.fRMotor.setPower(-.2);
+            robot.bLMotor.setPower(-.2);
+            robot.bRMotor.setPower(.2);
 
         }
         robot.fLMotor.setPower(0);
@@ -106,7 +106,11 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
         telemetry.addData("x", readAngle("x"));
         telemetry.update();
         runtime.reset();
-        //encoderDrive(30,"f", 15,DRIVE_SPEED);
+        encoderDrive(30,"b", 15,DRIVE_SPEED);
+        dropAmerica();
+
+
+
         while(runtime.seconds() < 7)
         {
             telemetry.addData("Z", readAngle("z"));
