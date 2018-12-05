@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.uselessjunk.HardwarePushbot2;
 
 
-@Autonomous(name="EncodersWithClicks", group="Pushbot")
+@Autonomous(name="EncodersWithClicks", group="Testing")
     @Disabled
     public class EncodersWithClicks extends LinearOpMode{
 

@@ -12,7 +12,7 @@ import java.util.Locale;
 
 //import legacy.FoOHardware;
 
-@TeleOp(name="SensorTest", group="SensorTestBot")
+@TeleOp(name="SensorTest", group="Testing")
 //@Disabled
 public class SensorTest extends OpMode {
 

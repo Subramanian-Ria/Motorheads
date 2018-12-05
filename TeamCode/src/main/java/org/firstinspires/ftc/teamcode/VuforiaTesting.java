@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.uselessjunk.HardwarePushbot2;
  */
 
 @Disabled
-@Autonomous(name = "Vuforia", group = "insertName")
+@Autonomous(name = "Vuforia", group = "Testing")
 public class VuforiaTesting extends LinearOpMode
 {
     /* Declare OpMode members. */
