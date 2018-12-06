@@ -106,9 +106,9 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         telemetry.addData("y", readAngle("y"));
         telemetry.addData("x", readAngle("x"));
         telemetry.update();
-        runtime.reset();
+
         //encoderDrive(30,"f", 15,DRIVE_SPEED);
-        while(runtime.seconds() < 7)
+        while(readAngle("x") < .5)
         {
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
