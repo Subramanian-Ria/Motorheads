@@ -32,6 +32,7 @@ public class MecanumTeleop extends OpMode {
     boolean intakeOn = false;
     //boolean intakeBack = false;
     int armFlipRef = 0;//TODO: FIND VALUE
+    int count = 0;
 
     @Override
     public void init() {
@@ -79,6 +80,17 @@ public class MecanumTeleop extends OpMode {
         }
         if(gamepad1.b) {
             robot.bucket.setPosition(.25);
+        }
+        if(gamepad1.x) {
+
+            if(robot.intake.getPower() > 0)
+            {
+                robot.intake.setPower(0);
+            }
+            else
+            {
+                robot.intake.setPower(.6);
+            }
         }
         /*else if(robot.armFlip.getCurrentPosition() >= armFlipRef && robot.bucket.getPosition() != .5) {
             robot.bucket.setPosition(.5);//hold postion
