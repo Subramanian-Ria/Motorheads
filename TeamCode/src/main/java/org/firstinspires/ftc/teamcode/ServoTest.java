@@ -5,15 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import legacy.uselessjunk.StrafeTestHardware;
 
-
-@Autonomous(name="StrafeTestAuton", group="Testing")
+@Autonomous(name="ServoTest", group="Testing")
 //@Disabled
-public class StrafeTestAuton extends LinearOpMode{
+public class ServoTest extends LinearOpMode{
 
     /* Declare OpMode members. */
-    StrafeTestHardware robot   = new StrafeTestHardware();   // Use a Pushbot's hardware
+    MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     CLICKS    = 1120 ;    // Andymark 40...  TETRIX Motor Encoder = 1440
@@ -34,14 +32,14 @@ public class StrafeTestAuton extends LinearOpMode{
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.bLMotor.setPower(.5);
-        robot.bRMotor.setPower(-.5);
-        robot.fRMotor.setPower(-.5);
-        robot.fLMotor.setPower(.5);
-        sleep(500);
-        setDrivePower(0);
+        runtime.reset();
+        while(runtime.seconds() < 30) {
+            telemetry.addData("Servo", robot.bucket.getPosition());
+            telemetry.update();
+            if(runtime.seconds() == 8) {
+                robot.bucket.setPosition(.5);
+            }
+        }
     }
     public void setDrivePower(double power) {
         robot.bLMotor.setPower(power);

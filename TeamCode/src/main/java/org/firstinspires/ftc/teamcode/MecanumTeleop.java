@@ -58,7 +58,7 @@ public class MecanumTeleop extends OpMode {
             robot.armEx.setPower(0);
         }
 
-        if(gamepad1.x) {
+        /*if(gamepad1.x) {
             if(intakeOn) {
                 robot.intake.setPower(1);
                 intakeOn = false;
@@ -67,24 +67,27 @@ public class MecanumTeleop extends OpMode {
                 robot.intake.setPower(0);
                 intakeOn = true;
             }
-        }
+        }*/
 
         if(gamepad1.y) {
-            robot.bucket.setPosition(1);//flat position
+            robot.bucket.setPosition(.6);//flat position
             //TODO: CHECK VALUE
         }
-        else if(gamepad1.a) {
-            robot.bucket.setPosition(0);//cube position
+        if(gamepad1.a) {
+            robot.bucket.setPosition(.4);//cube position
             //TODO: CHECK VALUE
         }
-        else if(robot.armFlip.getCurrentPosition() >= armFlipRef && robot.bucket.getPosition() != .5) {
+        if(gamepad1.b) {
+            robot.bucket.setPosition(.25);
+        }
+        /*else if(robot.armFlip.getCurrentPosition() >= armFlipRef && robot.bucket.getPosition() != .5) {
             robot.bucket.setPosition(.5);//hold postion
             //TODO: CHECK VALUE
         }
         else if(robot.bucket.getPosition() != 1) {
             robot.bucket.setPosition(1);//flat postion
             //TODO: CHECK VALUE
-        }
+        }*/
 
         //elevator controls
         if (gamepad1.dpad_up) {
