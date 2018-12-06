@@ -128,17 +128,24 @@ public class MecanumTeleop extends OpMode {
             //robot.armFlip.setPower(-pSlow);
             //mecanumMove();`
             //}
-            robot.armFlip.setPower(-pSlow);
+            while(gamepad1.left_bumper)
+            {
+                robot.armFlip.setPower(-pSlow);
+            }
         }
         else if (gamepad1.right_bumper) {
             //runtime.reset();
             //while(runtime.seconds() < 2) {
-            robot.armFlip.setPower(pSlow);
+            while(gamepad1.right_bumper)
+            {
+                robot.armFlip.setPower(pSlow);
+            }
             //}
             //robot.armFlip.setPower(0);
             //mecanumMove();
         }
-        else if (gamepad1.left_trigger > tHold) {
+        else if (gamepad1.left_trigger > tHold)
+        {
             robot.armFlip.setPower(-pLim);
         }
         else if (gamepad1.right_trigger > tHold) {
