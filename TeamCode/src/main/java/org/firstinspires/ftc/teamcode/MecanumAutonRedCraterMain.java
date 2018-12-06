@@ -47,8 +47,8 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED = .5;
-    static final double TURN_SPEED = .2;
+    static final double     DRIVE_SPEED = .6;
+    static final double TURN_SPEED = .25;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -66,7 +66,7 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.5,40);
+        encoderElevator(1, -7.9,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
@@ -75,25 +75,29 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
         sleep(200);
         encoderDrive(.7,"f",5, DRIVE_SPEED);
         sleep(200);
-        //Knocks out center mineral
-        encoderDrive(29,"r",10, DRIVE_SPEED);
-        sleep(200);
-        //turns/moves to deposit marker
-        turnDegrees(-43,TURN_SPEED,2.2);
 
-        //dropAmerica();
-        //turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
-        /*sleep(500);
-        //drive to crater
-        encoderDrive(40,"f", 15,.6);*/
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.6)
+        //Knocks out center mineral
+        encoderDrive(13,"r",10, DRIVE_SPEED);
+        sleep(200);
+
+        //go back
+        encoderDrive(3,"l",10, DRIVE_SPEED);
+        sleep(200);
+
+        //Go to the wall
+        encoderDrive(14,"f",10, DRIVE_SPEED);
+        sleep(200);
+
+        //turns/moves to deposit marker
+        turnDegrees(133,TURN_SPEED,4.5);
+        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.9)
         {
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            robot.fLMotor.setPower(-.2);
-            robot.fRMotor.setPower(.2);
-            robot.bLMotor.setPower(.2);
-            robot.bRMotor.setPower(-.2);
+            robot.fLMotor.setPower(.35);
+            robot.fRMotor.setPower(-.35);
+            robot.bLMotor.setPower(-.35);
+            robot.bRMotor.setPower(.35);
 
         }
         robot.fLMotor.setPower(0);
@@ -105,36 +109,61 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
         telemetry.addData("y", readAngle("y"));
         telemetry.addData("x", readAngle("x"));
         telemetry.update();
-        runtime.reset();
-        //encoderDrive(30,"f", 15,DRIVE_SPEED);
-        while(runtime.seconds() < 7)
+
+        encoderDrive(18,"b",10, DRIVE_SPEED);
+        sleep(200);
+
+        //back to the wall again(avoid hitting silver)
+        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.9)
         {
+            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
+            robot.fLMotor.setPower(.35);
+            robot.fRMotor.setPower(-.35);
+            robot.bLMotor.setPower(-.35);
+            robot.bRMotor.setPower(.35);
+
+        }
+        robot.fLMotor.setPower(0);
+        robot.fRMotor.setPower(0);
+        robot.bLMotor.setPower(0);
+        robot.bRMotor.setPower(0);
+        sleep(100);
+
+        dropAmerica();
+        sleep(500);
+
+
+        while(readAngle("x") < .5)
+        {
+
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
             telemetry.addData("time", runtime.seconds());
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            if(readAngle("z") < 45)
+
+            if(Math.abs(readAngle("z")) > 130)
             {
 
                 telemetry.addData("C1:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //foward
-                robot.fLMotor.setPower(-.5);
-                robot.fRMotor.setPower(-.5);
-                robot.bLMotor.setPower(-.5);
-                robot.bRMotor.setPower(-.5);
+                robot.fLMotor.setPower(-.6);
+                robot.fRMotor.setPower(-.6);
+                robot.bLMotor.setPower(-.6);
+                robot.bRMotor.setPower(-.6);
             }
             else
             {
                 telemetry.addData("C2:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //right?
-                robot.fRMotor.setPower(.07);
-                robot.bRMotor.setPower(.07);
-                robot.fLMotor.setPower(-.07);
-                robot.bLMotor.setPower(-.07);
+                robot.fRMotor.setPower(.1);
+                robot.bRMotor.setPower(.1);
+                robot.fLMotor.setPower(-.1);
+                robot.bLMotor.setPower(-.1);
             }
 
         }
@@ -455,9 +484,8 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.intake.setPower(-.5);
-        sleep(1500);
-        robot.intake.setPower(0);
+        robot.bucket.setPosition(1);
+
     }
     public void gyroinit()
     {

@@ -29,7 +29,9 @@ public class MecanumTeleop extends OpMode {
     private float pSlow = .2f;
 
     //boolean intakeFor = false;
+    boolean intakeOn = false;
     //boolean intakeBack = false;
+    int armFlipRef = 0;//TODO: FIND VALUE
 
     @Override
     public void init() {
@@ -37,7 +39,7 @@ public class MecanumTeleop extends OpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        robot.intake.setPower(0);
+        //robot.intake.setPower(0);
         robot.armFlip.setPower(0);
     }
 
@@ -56,14 +58,32 @@ public class MecanumTeleop extends OpMode {
             robot.armEx.setPower(0);
         }
 
+        if(gamepad1.x) {
+            if(intakeOn) {
+                robot.intake.setPower(1);
+                intakeOn = false;
+            }
+            else {
+                robot.intake.setPower(0);
+                intakeOn = true;
+            }
+        }
 
-        //intake control
-        if (gamepad1.x) {
-            robot.intake.setPower(pLim);
-        } else if (gamepad1.b) {
-            robot.intake.setPower(-.8);
-        } else if (gamepad1.y) {
-            robot.intake.setPower(0);
+        if(gamepad1.y) {
+            robot.bucket.setPosition(1);//flat position
+            //TODO: CHECK VALUE
+        }
+        else if(gamepad1.a) {
+            robot.bucket.setPosition(0);//cube position
+            //TODO: CHECK VALUE
+        }
+        else if(robot.armFlip.getCurrentPosition() >= armFlipRef && robot.bucket.getPosition() != .5) {
+            robot.bucket.setPosition(.5);//hold postion
+            //TODO: CHECK VALUE
+        }
+        else if(robot.bucket.getPosition() != 1) {
+            robot.bucket.setPosition(1);//flat postion
+            //TODO: CHECK VALUE
         }
 
         //elevator controls
@@ -125,10 +145,10 @@ public class MecanumTeleop extends OpMode {
         final double v3 = r * Math.sin(robotAngle) + rightX;
         final double v4 = r * Math.cos(robotAngle) - rightX;
 
-        robot.fLMotor.setPower(v1);
-        robot.fRMotor.setPower(v2);
-        robot.bLMotor.setPower(v3);
-        robot.bRMotor.setPower(v4);
+        robot.fLMotor.setPower(drive * v1);
+        robot.fRMotor.setPower(drive * v2);
+        robot.bLMotor.setPower(drive * v3);
+        robot.bRMotor.setPower(drive * v4);
 
 
     /*public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {

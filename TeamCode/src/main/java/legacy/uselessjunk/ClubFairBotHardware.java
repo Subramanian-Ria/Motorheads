@@ -3,6 +3,7 @@
  
 package legacy.uselessjunk;
  
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
  
+@Disabled
 public class ClubFairBotHardware
 {
     /* Public OpMode members. */

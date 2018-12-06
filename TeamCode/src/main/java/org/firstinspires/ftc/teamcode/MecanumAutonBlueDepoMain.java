@@ -66,12 +66,12 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.5,40);
+        encoderElevator(1, -7.9,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
         sleep(200);
-        encoderDrive(4.5,"r",10, DRIVE_SPEED);
+        encoderDrive(4,"r",10, DRIVE_SPEED);
         sleep(200);
         encoderDrive(.7,"f",5, DRIVE_SPEED);
         sleep(200);
@@ -81,7 +81,8 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         //turns/moves to deposit marker
         turnDegrees(-43,TURN_SPEED,2.2);
 
-        //dropAmerica();
+        dropAmerica();
+        sleep(500);
         //turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
         /*sleep(500);
         //drive to crater
@@ -455,9 +456,8 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.intake.setPower(-.5);
-        sleep(1500);
-        robot.intake.setPower(0);
+        robot.bucket.setPosition(1);
+
     }
     public void gyroinit()
     {

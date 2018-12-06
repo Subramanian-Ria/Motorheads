@@ -66,7 +66,7 @@ public class MecanumAutonBlueDepoBack extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.5,40);
+        encoderElevator(1, -7.9,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
@@ -448,9 +448,8 @@ public class MecanumAutonBlueDepoBack extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.intake.setPower(-.5);
-        sleep(1500);
-        robot.intake.setPower(0);
+        robot.bucket.setPosition(1);
+
     }
     public void gyroinit()
     {
