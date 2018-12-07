@@ -87,9 +87,9 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         /*sleep(500);
         //drive to crater
         encoderDrive(40,"f", 15,.6);*/
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.6)
+        while(robot.sensordistdepo.getDistance(DistanceUnit.INCH) > 4.6)
         {
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
             telemetry.update();
             robot.fLMotor.setPower(-.2);
             robot.fRMotor.setPower(.2);
@@ -108,18 +108,18 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         telemetry.update();
 
         //encoderDrive(30,"f", 15,DRIVE_SPEED);
-        while(readAngle("x") < .5)
+        while(readAngle("x") < 1.2)
         {
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
             telemetry.addData("time", runtime.seconds());
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
             telemetry.update();
             if(readAngle("z") < 45)
             {
 
-                telemetry.addData("C1:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C1:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //foward
                 robot.fLMotor.setPower(-.5);
@@ -127,9 +127,18 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
                 robot.bLMotor.setPower(-.5);
                 robot.bRMotor.setPower(-.5);
             }
+            else if(robot.sensordistdepo.getDistance(DistanceUnit.INCH) < 3)
+            {
+                telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                robot.fLMotor.setPower(.2);
+                robot.fRMotor.setPower(-.2);
+                robot.bLMotor.setPower(-.2);
+                robot.bRMotor.setPower(.2);
+            }
             else
             {
-                telemetry.addData("C2:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C2:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //right?
                 robot.fRMotor.setPower(.07);
