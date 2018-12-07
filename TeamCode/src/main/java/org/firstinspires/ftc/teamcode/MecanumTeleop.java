@@ -27,10 +27,12 @@ public class MecanumTeleop extends OpMode {
     private float drive = .6f;
     private float tHold = .1f; //lowest threshold for it to register
     private float pSlow = .2f;
+    private float pSlowSlow = .1f;
 
     //boolean intakeFor = false;
-    boolean intakeOn = false;
-    //boolean intakeBack = false;
+    boolean intakeOld = true;
+    boolean intakeNew = false;
+    boolean PowerOn=true;
     int armFlipRef = 0;//TODO: FIND VALUE
     int count = 0;
 
@@ -46,8 +48,9 @@ public class MecanumTeleop extends OpMode {
 
     @Override
     public void loop() {
-        robot.armFlip.setPower(0);
 
+
+        //GAMEPAD1 TELE-OP
         //horizontal arm movement
         if (gamepad1.dpad_right) {
             robot.armEx.setPower(-pLim);
@@ -59,47 +62,31 @@ public class MecanumTeleop extends OpMode {
             robot.armEx.setPower(0);
         }
 
-        /*if(gamepad1.x) {
-            if(intakeOn) {
-                robot.intake.setPower(1);
-                intakeOn = false;
-            }
-            else {
-                robot.intake.setPower(0);
-                intakeOn = true;
-            }
-        }*/
-
         if(gamepad1.y) {
             robot.bucket.setPosition(.6);//flat position
-            //TODO: CHECK VALUE
         }
         if(gamepad1.a) {
-            robot.bucket.setPosition(.4);//cube position
-            //TODO: CHECK VALUE
+            robot.bucket.setPosition(.45);//cube position
         }
         if(gamepad1.b) {
-            robot.bucket.setPosition(.25);
+            robot.bucket.setPosition(.25);//armFlip position
         }
-        if(gamepad1.x) {
+        //if(gamepad1.x) {
+        intakeNew= gamepad1.x;
+        if(intakeNew != intakeOld)
+        {
+            PowerOn= !PowerOn;
+        }
+        if(PowerOn)
+        {
+            robot.intake.setPower(0.6);
+        }
+        else
+        {
+            robot.intake.setPower(0);
+        }
+        intakeOld = intakeNew;
 
-            if(robot.intake.getPower() > 0)
-            {
-                robot.intake.setPower(0);
-            }
-            else
-            {
-                robot.intake.setPower(.6);
-            }
-        }
-        /*else if(robot.armFlip.getCurrentPosition() >= armFlipRef && robot.bucket.getPosition() != .5) {
-            robot.bucket.setPosition(.5);//hold postion
-            //TODO: CHECK VALUE
-        }
-        else if(robot.bucket.getPosition() != 1) {
-            robot.bucket.setPosition(1);//flat postion
-            //TODO: CHECK VALUE
-        }*/
 
         //elevator controls
         if (gamepad1.dpad_up) {
@@ -112,43 +99,97 @@ public class MecanumTeleop extends OpMode {
             robot.elevator.setPower(0);
         }
 
-
-        //arm flip controls
-        /*if(gamepad1.a) {
-            encoderMove(robot.armFlip, 11, 20, 0, pLim);
-        }
-        if(gamepad1.y) {
-            encoderMove(robot.armFlip, -10, 20, robot.armFlip.getCurrentPosition(), -pLim);
-        }*/
-
         //manual movement of the arm flip- may replace encoder movement
         if (gamepad1.left_bumper) {
-            //runtime.reset();
-            //while(runtime.seconds() < 2) {
-            //robot.armFlip.setPower(-pSlow);
-            //mecanumMove();`
-            //}
-            while(gamepad1.left_bumper)
-            {
-                robot.armFlip.setPower(-pSlow);
-            }
+            robot.armFlip.setPower(-pSlowSlow);
         }
         else if (gamepad1.right_bumper) {
-            //runtime.reset();
-            //while(runtime.seconds() < 2) {
-            while(gamepad1.right_bumper)
-            {
-                robot.armFlip.setPower(pSlow);
-            }
-            //}
-            //robot.armFlip.setPower(0);
-            //mecanumMove();
+            robot.armFlip.setPower(pSlowSlow);
         }
+
+        //fast arm flip
         else if (gamepad1.left_trigger > tHold)
         {
             robot.armFlip.setPower(-pLim);
         }
         else if (gamepad1.right_trigger > tHold) {
+            robot.armFlip.setPower(pLim);
+        }
+        else {
+            robot.armFlip.setPower(0);
+        }
+        mecanumMove();
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //GAMEPAD2 TELE-OP
+        //horizontal arm movement
+        if (gamepad2.dpad_right) {
+            robot.armEx.setPower(-pLim);
+        }
+        else if (gamepad2.dpad_left) {
+            robot.armEx.setPower(pLim);
+        }
+        else {
+            robot.armEx.setPower(0);
+        }
+
+        //3 pos bucket
+        if(gamepad2.y) {
+            robot.bucket.setPosition(.6);//flat position
+        }
+        if(gamepad2.a) {
+            robot.bucket.setPosition(.45);//cube position
+        }
+        if(gamepad2.b) {
+            robot.bucket.setPosition(.25);//armFlip position
+        }
+        //if(gamepad1.x) {
+        //intake on/off using gamepad x
+        intakeNew= gamepad2.x;
+        if(intakeNew != intakeOld)
+        {
+            PowerOn= !PowerOn;
+        }
+        if(PowerOn)
+        {
+            robot.intake.setPower(0.6);
+        }
+        else
+        {
+            robot.intake.setPower(0);
+        }
+        intakeOld = intakeNew;
+
+        //elevator controls
+        if (gamepad2.dpad_up) {
+            robot.elevator.setPower(-1);
+        }
+        else if (gamepad2.dpad_down) {
+            robot.elevator.setPower(1);
+        }
+        else {
+            robot.elevator.setPower(0);
+        }
+        //manual movement of the arm flip- may replace encoder movement
+        if (gamepad2.left_bumper) {
+            robot.armFlip.setPower(-pSlowSlow);
+
+        }
+        else if (gamepad2.right_bumper) {
+            robot.armFlip.setPower(pSlowSlow);
+        }
+
+        //fast arm flip
+        else if (gamepad2.left_trigger > tHold)
+        {
+            robot.armFlip.setPower(-pLim);
+        }
+        else if (gamepad2.right_trigger > tHold) {
             robot.armFlip.setPower(pLim);
         }
         else {
@@ -167,10 +208,10 @@ public class MecanumTeleop extends OpMode {
         final double v3 = r * Math.sin(robotAngle) + rightX;
         final double v4 = r * Math.cos(robotAngle) - rightX;
 
-        robot.fLMotor.setPower(drive * v1);
-        robot.fRMotor.setPower(drive * v2);
-        robot.bLMotor.setPower(drive * v3);
-        robot.bRMotor.setPower(drive * v4);
+        robot.fLMotor.setPower(-drive * v1);
+        robot.fRMotor.setPower(-drive * v2);
+        robot.bLMotor.setPower(-drive * v3);
+        robot.bRMotor.setPower(-drive * v4);
 
 
     /*public void encoderMove(DcMotor motor, double inches, double timeoutS, int ref, float power) {
