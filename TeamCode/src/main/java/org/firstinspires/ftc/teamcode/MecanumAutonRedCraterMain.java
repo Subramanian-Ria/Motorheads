@@ -134,7 +134,7 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
         sleep(500);
 
 
-        while(readAngle("x") < 1.2)
+        while(readAngle("x") < 2.5)
         {
 
             telemetry.addData("Z", readAngle("z"));
@@ -155,7 +155,7 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
                 robot.bLMotor.setPower(-.6);
                 robot.bRMotor.setPower(-.6);
             }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 3)
+            else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 2.8)
             {
                 telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();

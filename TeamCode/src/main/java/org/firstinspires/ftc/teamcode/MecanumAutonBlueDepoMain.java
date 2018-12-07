@@ -108,7 +108,7 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         telemetry.update();
 
         //encoderDrive(30,"f", 15,DRIVE_SPEED);
-        while(readAngle("x") < 1.2)
+        while(readAngle("x") < 2.5)
         {
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
@@ -116,7 +116,7 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
             telemetry.addData("time", runtime.seconds());
             telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            if(readAngle("z") < 45)
+            if(readAngle("z") < 47)
             {
 
                 telemetry.addData("C1:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
@@ -127,7 +127,7 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
                 robot.bLMotor.setPower(-.5);
                 robot.bRMotor.setPower(-.5);
             }
-            else if(robot.sensordistdepo.getDistance(DistanceUnit.INCH) < 3)
+            else if(robot.sensordistdepo.getDistance(DistanceUnit.INCH) < 5)
             {
                 telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
