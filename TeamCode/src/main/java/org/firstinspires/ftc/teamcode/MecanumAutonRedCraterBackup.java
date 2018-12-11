@@ -19,8 +19,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
-@Autonomous(name = "MecanumAutonRedCraterMain", group = "Testing")
-public class MecanumAutonRedCraterMain extends LinearOpMode
+@Autonomous(name = "MecanumAutonRedCraterBackup", group = "Testing")
+public class MecanumAutonRedCraterBackup extends LinearOpMode
 {
     MecanumHardware robot = new MecanumHardware();
     private ElapsedTime runtime = new ElapsedTime();
@@ -493,16 +493,10 @@ public class MecanumAutonRedCraterMain extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.armEx.setPower(.3);
-        sleep(750);
+        robot.armEx.setPower(.5);
+        sleep(1500);
         robot.armEx.setPower(0);
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
+        robot.bucket.setPosition(1);
 
     }
     public void gyroinit()

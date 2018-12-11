@@ -49,7 +49,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, 9.4,40);
+        encoderElevator(1, 9.9,40);
         telemetry.update();
         //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");
