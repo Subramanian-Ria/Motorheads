@@ -66,7 +66,7 @@ public class MecanumAuton extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.5,40);
+        //encoderElevator(1, -7.5,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
@@ -81,8 +81,8 @@ public class MecanumAuton extends LinearOpMode
         //turns/moves to deposit marker
         turnDegrees(-200,TURN_SPEED,5);
         encoderDrive(6,"l",10,DRIVE_SPEED);
-        dropAmerica();
-        //turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
+        //dropAmerica();
+        turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
         /*sleep(500);
         //drive to crater
         encoderDrive(40,"f", 15,.6);*/
