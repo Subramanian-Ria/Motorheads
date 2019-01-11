@@ -25,10 +25,10 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
     @Override
     public void runOpMode() {
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
+            /*
+             * Initialize the drive system variables.
+             * The init() method of the hardware class does all the work here
+             */
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
@@ -49,7 +49,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, 9.4,40);
+        encoderElevator(1, 9.9,40);
         telemetry.update();
         //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");

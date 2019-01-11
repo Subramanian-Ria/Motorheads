@@ -66,7 +66,7 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        encoderElevator(1, -7.9,40);
+        encoderElevator(1, -8.4,40);
         gyroinit();
         //BACKS OUT FROM HOOK
         encoderDrive(1,"b",10, DRIVE_SPEED);
@@ -87,9 +87,9 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         /*sleep(500);
         //drive to crater
         encoderDrive(40,"f", 15,.6);*/
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.6)
+        while(robot.sensordistdepo.getDistance(DistanceUnit.INCH) > 3.5)
         {
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
             telemetry.update();
             robot.fLMotor.setPower(-.2);
             robot.fRMotor.setPower(.2);
@@ -106,20 +106,21 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
         telemetry.addData("y", readAngle("y"));
         telemetry.addData("x", readAngle("x"));
         telemetry.update();
-        runtime.reset();
+
         //encoderDrive(30,"f", 15,DRIVE_SPEED);
-        while(runtime.seconds() < 7)
+        runtime.reset();
+        while(readAngle("x") < 2.5 || runtime.seconds() < 7)
         {
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
             telemetry.addData("time", runtime.seconds());
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            if(readAngle("z") < 45)
+            if(readAngle("z") < 47)
             {
 
-                telemetry.addData("C1:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C1:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //foward
                 robot.fLMotor.setPower(-.5);
@@ -127,15 +128,33 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
                 robot.bLMotor.setPower(-.5);
                 robot.bRMotor.setPower(-.5);
             }
+            else if(robot.sensordistdepo.getDistance(DistanceUnit.INCH) < 3.5)
+            {
+                telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                robot.fLMotor.setPower(.2);
+                robot.fRMotor.setPower(-.2);
+                robot.bLMotor.setPower(-.2);
+                robot.bRMotor.setPower(.2);
+            }
+            else if(robot.sensordistdepo.getDistance(DistanceUnit.INCH) > 6)
+            {
+                telemetry.addData("dist:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                robot.fLMotor.setPower(-.2);
+                robot.fRMotor.setPower(.2);
+                robot.bLMotor.setPower(.2);
+                robot.bRMotor.setPower(-.2);
+            }
             else
             {
-                telemetry.addData("C2:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C2:",(robot.sensordistdepo.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //right?
-                robot.fRMotor.setPower(.07);
-                robot.bRMotor.setPower(.07);
-                robot.fLMotor.setPower(-.07);
-                robot.bLMotor.setPower(-.07);
+                robot.fRMotor.setPower(.2);
+                robot.bRMotor.setPower(.2);
+                robot.fLMotor.setPower(-.2);
+                robot.bLMotor.setPower(-.2);
             }
 
         }
@@ -456,7 +475,16 @@ public class MecanumAutonBlueDepoMain extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.bucket.setPosition(1);
+        robot.armEx.setPower(.3);
+        sleep( 750);
+        robot.armEx.setPower(0);
+        for(int i = 3; i <11; i++)
+        {
+            robot.bucket.setPosition(.1*i);
+            telemetry.addData("pos", .1*i);
+            telemetry.update();
+            sleep(100);
+        }
 
     }
     public void gyroinit()

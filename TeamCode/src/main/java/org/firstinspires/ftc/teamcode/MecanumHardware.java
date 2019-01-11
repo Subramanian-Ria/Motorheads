@@ -33,6 +33,7 @@ public class MecanumHardware
     public ColorSensor sensorCol1;
     public ColorSensor sensorCol2;
     public DistanceSensor sensordist;
+    public DistanceSensor sensordistdepo;
 
     public CRServo intake;
     public Servo bucket;
@@ -91,7 +92,7 @@ public class MecanumHardware
         elevator.setPower(0);
 
         intake.setPower(0);
-        bucket.setPosition(0);
+        bucket.setPosition(.5);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -136,5 +137,6 @@ public class MecanumHardware
         sensorCol1 = hwMap.get(ColorSensor.class, "sensorCol1");
         sensorCol2 = hwMap.get(ColorSensor.class, "sensorCol2");
         sensordist = hwMap.get(DistanceSensor.class, "sensorDist");
+        sensordistdepo = hwMap.get(DistanceSensor.class, "sensordistdepo");
     }
 }

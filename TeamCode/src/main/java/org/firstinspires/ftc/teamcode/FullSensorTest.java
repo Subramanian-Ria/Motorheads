@@ -85,6 +85,7 @@ public class FullSensorTest extends LinearOpMode
             telemetry.addData("Blue: ", robot.sensorCol2.blue());
 
             telemetry.addData("Distance: ", robot.sensordist.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Distance: ", robot.sensordistdepo.getDistance(DistanceUnit.INCH));
             telemetry.update();
 
         }

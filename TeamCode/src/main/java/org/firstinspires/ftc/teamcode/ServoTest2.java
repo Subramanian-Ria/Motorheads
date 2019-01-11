@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="ServoTest", group="Testing")
+@Autonomous(name="ServoTest2", group="Testing")
 //@Disabled
-public class ServoTest extends LinearOpMode{
+public class ServoTest2 extends LinearOpMode{
 
     /* Declare OpMode members. */
     MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
@@ -34,13 +34,7 @@ public class ServoTest extends LinearOpMode{
 
         runtime.reset();
 
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
+        robot.bucket.setPosition(.99);
     }
     public void setDrivePower(double power) {
         robot.bLMotor.setPower(power);
@@ -53,7 +47,7 @@ public class ServoTest extends LinearOpMode{
      This is the method to drive straight either forward or backward
      */
 
-    }
+}
 //        public void encoderTurn(double speed,double timeoutS) {
 //            int newLeftTarget;
 //            int newRightTarget;
