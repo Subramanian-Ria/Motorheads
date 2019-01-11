@@ -5,10 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.uselessjunk.StrafeTestHardware;
+import legacy.uselessjunk.StrafeTestHardware;
 
 
-@Autonomous(name="StrafeTestAuton", group="MecanumBot")
+@Autonomous(name="StrafeTestAuton", group="Testing")
 //@Disabled
 public class StrafeTestAuton extends LinearOpMode{
 

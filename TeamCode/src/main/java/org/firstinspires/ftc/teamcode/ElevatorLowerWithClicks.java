@@ -9,26 +9,26 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot")
 //@Disabled
-public class ElevatorLowerWithClicks extends LinearOpMode {
+public class ElevatorLowerWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
-    MecanumHardware robot = new MecanumHardware();   // Use a Pushbot's hardware
-    private ElapsedTime runtime = new ElapsedTime();
+    MecanumHardware         robot   = new MecanumHardware();   // Use a Pushbot's hardware
+    private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double COUNTS_PER_REV = 1120;// Andymark 40...  TETRIX Motor Encoder = 1440
-    static final double DMT = 3.98;     // Diameter of the wheel
+    static final double COUNTS_PER_REV    = 1120 ;// Andymark 40...  TETRIX Motor Encoder = 1440
+    static final double DMT       = 3.98;     // Diameter of the wheel
     static final double COUNTS_PER_INCH = COUNTS_PER_REV * Math.PI * DMT;
-    static final double DRIVE_SPEED = 0.6;
-    static final double TURN_SPEED = 0.5;
+    static final double DRIVE_SPEED             = 0.6;
+    static final double TURN_SPEED              = 0.5;
 
     @Override
     public void runOpMode() {
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
+            /*
+             * Initialize the drive system variables.
+             * The init() method of the hardware class does all the work here
+             */
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
@@ -40,7 +40,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
         robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0", "Starting at %7d",
+        telemetry.addData("Path0",  "Starting at %7d",
                 robot.elevator.getCurrentPosition());
         telemetry.update();
 
@@ -49,7 +49,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, -9.6, 40);
+        encoderElevator(1, 9.9,40);
         telemetry.update();
         //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");
@@ -59,7 +59,8 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
     /*
      This is the method to drive straight either forward or backward
      */
-    public void encoderDrive(double FLInch, double FRInch, double BLInch, double BRInch, double timeoutS, double Speed) {
+    public void encoderDrive(double FLInch, double FRInch, double BLInch, double BRInch, double timeoutS, double Speed)
+    {
 
         int TargetFL;
         int TargetFR;
@@ -70,10 +71,10 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            TargetFL = robot.fLMotor.getCurrentPosition() + (int) (FLInch * COUNTS_PER_INCH);
-            TargetFR = robot.fRMotor.getCurrentPosition() + (int) (FRInch * COUNTS_PER_INCH);
-            TargetBL = robot.fRMotor.getCurrentPosition() + (int) (BLInch * COUNTS_PER_INCH);
-            TargetBR = robot.fRMotor.getCurrentPosition() + (int) (BRInch * COUNTS_PER_INCH);
+            TargetFL = robot.fLMotor.getCurrentPosition() + (int)( FLInch* COUNTS_PER_INCH);
+            TargetFR = robot.fRMotor.getCurrentPosition() + (int)( FRInch* COUNTS_PER_INCH);
+            TargetBL = robot.fRMotor.getCurrentPosition() + (int)( BLInch* COUNTS_PER_INCH);
+            TargetBR = robot.fRMotor.getCurrentPosition() + (int)( BRInch* COUNTS_PER_INCH);
 
             robot.fLMotor.setTargetPosition(TargetFL);
             robot.fRMotor.setTargetPosition(TargetFR);
@@ -103,12 +104,13 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) && ((robot.fLMotor.isBusy() && robot.fRMotor.isBusy()) && robot.bLMotor.isBusy() && robot.bRMotor.isBusy())) {
+                    (runtime.seconds() < timeoutS) && ((robot.fLMotor.isBusy() && robot.fRMotor.isBusy()) && robot.bLMotor.isBusy() && robot.bRMotor.isBusy()))
+            {
 
                 //Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d :%7d :%7d", TargetBL, TargetBR, TargetFL, TargetFR);
+                telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d", TargetBL,  TargetBR, TargetFL, TargetFR);
 
-                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d", robot.fLMotor.getCurrentPosition(), robot.fRMotor.getCurrentPosition(), robot.bLMotor.getCurrentPosition(), robot.bRMotor.getCurrentPosition());
+                telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d", robot.fLMotor.getCurrentPosition(), robot.fRMotor.getCurrentPosition(), robot.bLMotor.getCurrentPosition(), robot.bRMotor.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -126,14 +128,13 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
-
-    public void encoderElevator(double speed, double distance, double timeoutS) {
+    public void encoderElevator(double speed,double distance, double timeoutS) {
         int newElevatorTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
             // Determine new target position, and pass to motor controller
-            newElevatorTarget = robot.elevator.getCurrentPosition() + (int) (distance * COUNTS_PER_REV);
+            newElevatorTarget = robot.elevator.getCurrentPosition() + (int)(distance*COUNTS_PER_REV);
             robot.elevator.setTargetPosition(newElevatorTarget);
 
             // Turn On RUN_TO_POSITION
@@ -154,8 +155,8 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
                     (robot.elevator.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d", newElevatorTarget);
-                telemetry.addData("Path2", "Running at %7d",
+                telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
+                telemetry.addData("Path2",  "Running at %7d",
                         robot.elevator.getCurrentPosition());
                 telemetry.update();
             }
@@ -218,6 +219,52 @@ public class ElevatorLowerWithClicks extends LinearOpMode {
 //                //  sleep(250);   // optional pause after each move
 //            }
 //        }
+
+    @Autonomous(name="IntakeTestAuton", group="MecanumBot")
+    //@Disabled
+    public static class IntakeTestAuton extends LinearOpMode{
+
+        /* Declare OpMode members. */
+        MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
+        private ElapsedTime     runtime = new ElapsedTime();
+
+        static final double     CLICKS    = 1120 ;    // Andymark 40...  TETRIX Motor Encoder = 1440
+        static final double     DMT       = 3.98;     // Diameter of the wheel
+        static final double     DRIVE_SPEED             = 0.6;
+        static final double     TURN_SPEED              = 0.5;
+
+        @Override
+        public void runOpMode() {
+
+            /*
+             * Initialize the drive system variables.
+             * The init() method of the hardware class does all the work here
+             */
+            robot.init(hardwareMap);
+
+            // Send telemetry message to signify robot waiting;
+            // Wait for the game to start (driver presses PLAY)
+            waitForStart();
+
+            // Step through each leg of the path,
+            // Note: Reverse movement is obtained by setting a negative distance (not speed)
+            //robot.intake.setPower(-1);
+            sleep(1000);
+            //robot.intake.setPower(0);
+        }
+        public void setDrivePower(double power) {
+            robot.bLMotor.setPower(power);
+            robot.bRMotor.setPower(power);
+            robot.fRMotor.setPower(power);
+            robot.fLMotor.setPower(power);
+        }
+
+        /*
+         This is the method to drive straight either forward or backward
+         */
+
+    }
 }
+
 
 

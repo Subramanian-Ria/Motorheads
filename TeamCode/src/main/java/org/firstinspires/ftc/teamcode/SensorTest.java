@@ -12,8 +12,8 @@ import java.util.Locale;
 
 //import legacy.FoOHardware;
 
-@TeleOp(name="SensorTest", group="SensorTestBot")
-//@Disabled
+@TeleOp(name="SensorTest", group="Testing")
+@Disabled
 public class SensorTest extends OpMode {
 
     MecanumHardware robot = new MecanumHardware();

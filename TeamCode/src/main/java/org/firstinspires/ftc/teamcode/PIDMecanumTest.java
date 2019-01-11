@@ -25,7 +25,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name="Drive Avoid PID", group="Exercises")
+@Autonomous(name="Drive Avoid PID", group="Testing")
 //@Disabled
 public class PIDMecanumTest extends LinearOpMode {
     MecanumHardware robot = new MecanumHardware();
