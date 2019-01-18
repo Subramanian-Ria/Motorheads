@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class MecanumTeleop extends OpMode {
 
-    MecanumHardware robot = new MecanumHardware();
+    MecanumHardware2 robot = new MecanumHardware2();
     ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder

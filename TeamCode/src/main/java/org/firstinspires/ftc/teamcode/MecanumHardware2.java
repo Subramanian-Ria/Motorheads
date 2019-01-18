@@ -1,39 +1,29 @@
-//THIS IS A MOTORHEADS PROGRAM
-
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-//@Disabled
 
-
-public class MecanumHardware
+public class MecanumHardware2
 {
-    /* Public OpMode members. */
-    //Initialize everything
     public DcMotor fLMotor;
     public DcMotor fRMotor;
     public DcMotor bLMotor;
     public DcMotor bRMotor;
 
-    public DcMotor armEx;
     public DcMotor armFlip;
-
-    //public  DcMotor intake;
-
     public DcMotor elevator;
-    public DistanceSensor sensordist;
-    public DistanceSensor sensordistdepo;
+    public DcMotor armEx;
 
     public CRServo intake;
     public Servo bucket;
+
+
+    public DistanceSensor sensordist;
+    public DistanceSensor sensordistdepo;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -60,21 +50,10 @@ public class MecanumHardware
 
         armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
-
-        //intake = hwMap.get(DcMotor.class, "intake");
-
         elevator = hwMap.get(DcMotor.class, "elevator");
 
         intake = hwMap.get(CRServo.class, "intake");
         bucket = hwMap.get(Servo.class, "bucket");
-
-        //Setting Motor Directions
-        //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct
-        //fRMotor.setDirection(DcMotor.Direction.FORWARD);
-        //bLMotor.setDirection(DcMotor.Direction.REVERSE);
-        //bRMotor.setDirection(DcMotor.Direction.FORWARD);
-
-        // Set all motors to zero power
 
         fLMotor.setPower(0);
         bLMotor.setPower(0);
@@ -83,13 +62,11 @@ public class MecanumHardware
 
         armEx.setPower(0);
         armFlip.setPower(0);
-
-        //intake.setPower(0);
-
         elevator.setPower(0);
 
         intake.setPower(0);
         bucket.setPosition(.5);
+
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -99,10 +76,7 @@ public class MecanumHardware
         bRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         armEx.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        armFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         fLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -112,24 +86,20 @@ public class MecanumHardware
 
         armEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        //intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        fLMotor.setDirection(DcMotor.Direction.FORWARD);
-        fRMotor.setDirection(DcMotor.Direction.REVERSE);
-        bLMotor.setDirection(DcMotor.Direction.FORWARD);
-        bRMotor.setDirection(DcMotor.Direction.REVERSE);
+        //flipped these 4
+        fLMotor.setDirection(DcMotor.Direction.REVERSE);
+        fRMotor.setDirection(DcMotor.Direction.FORWARD);
+        bLMotor.setDirection(DcMotor.Direction.REVERSE);
+        bRMotor.setDirection(DcMotor.Direction.FORWARD);
 
         intake.setDirection(CRServo.Direction.FORWARD);
 
-        armEx.setDirection(DcMotor.Direction.FORWARD);
+        armEx.setDirection(DcMotor.Direction.REVERSE);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
-
-        //intake.setDirection(DcMotor.Direction.FORWARD);
-
         elevator.setDirection(DcMotor.Direction.FORWARD);
+
         sensordist = hwMap.get(DistanceSensor.class, "sensorDist");
         sensordistdepo = hwMap.get(DistanceSensor.class, "sensordistdepo");
     }

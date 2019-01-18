@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
-
+@Disabled
 @Autonomous(name = "MecanumAutonRedCraterMain", group = "Testing")
 public class MecanumAutonRedCraterMain extends LinearOpMode
 {

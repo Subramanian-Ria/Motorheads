@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
-
+@Disabled
 @Autonomous(name = "MecanumAutonBlueDepoMain", group = "Testing")
 public class MecanumAutonBlueDepoMain extends LinearOpMode
 {

@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="ServoTest", group="Testing")
+@Autonomous(name="ServoTest", group="MecanumBot2")
 //@Disabled
 public class ServoTest extends LinearOpMode{
 
     /* Declare OpMode members. */
-    MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
+    MecanumHardware2 robot   = new MecanumHardware2();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     CLICKS    = 1120 ;    // Andymark 40...  TETRIX Motor Encoder = 1440

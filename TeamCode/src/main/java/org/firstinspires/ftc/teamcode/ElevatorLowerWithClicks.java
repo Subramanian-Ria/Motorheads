@@ -7,12 +7,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot")
+@Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot2")
 //@Disabled
 public class ElevatorLowerWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
-    MecanumHardware         robot   = new MecanumHardware();   // Use a Pushbot's hardware
+    MecanumHardware2         robot   = new MecanumHardware2();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 
