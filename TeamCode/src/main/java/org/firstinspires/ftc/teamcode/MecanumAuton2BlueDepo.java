@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -15,11 +16,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.Device;
+import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
 
 
 
-@Autonomous(name = "MecanumAutonBlueDepo2", group = "MecanumBot2")
+@Autonomous(name = "MecanumAuton2BlueDepo", group = "MecanumBot2")
 public class MecanumAuton2BlueDepo extends LinearOpMode
 {
     MecanumHardware2 robot = new MecanumHardware2();
@@ -28,6 +32,9 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
 
     // The IMU sensor object
     BNO055IMU imu;
+
+    //tensorflow object
+    TensorFlow tf;
 
     // State used for updating telemetry
     Orientation angles;
@@ -47,8 +54,8 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED = .6;
-    static final double TURN_SPEED = .3;
+    static final double     DRIVE_SPEED = .7;
+    static final double TURN_SPEED = .4;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -62,29 +69,61 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
     {
         robot.init(hardwareMap);
 
+        tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
 
+        tf.start();
 
-        //encoderElevator(1, -9.3,40);
-        gyroinit();
+        sleep(250);
+
+        MineralLocation goldMineralLocation;
+        encoderElevator(1, -9.55,40);
+        goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
+        sleep(1500);
+        goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
         //BACKS OUT FROM HOOK
+        tf.shutdown();
+        gyroinit();
         encoderDrive(1,"f",10, DRIVE_SPEED);
         sleep(200);
+
+
         encoderDrive(4,"l",10, DRIVE_SPEED);
         sleep(200);
         encoderDrive(1,"b",5, DRIVE_SPEED);
         sleep(200);
-        //Knocks out center mineral
-        encoderDrive(24,"l",10, DRIVE_SPEED);
-        sleep(200);
-        //turns/moves to deposit marker
-        turnDegrees(133,TURN_SPEED,3.5);
 
+        if(goldMineralLocation == MineralLocation.Left)
+        {
+            turnDegrees(-30, TURN_SPEED, 2);
+            encoderDrive(17, "l", 10, DRIVE_SPEED);
+            turnDegrees(133, TURN_SPEED, 3.5);
+            encoderDrive(10, "b", 10, DRIVE_SPEED);
+
+        }
+
+        else if(goldMineralLocation == MineralLocation.Center)
+        {
+            //Knocks out center mineral
+            encoderDrive(24, "l", 10, DRIVE_SPEED);
+            sleep(200);
+            //turns/moves to deposit marker
+            turnDegrees(133, TURN_SPEED, 3.5);
+        }
+
+        else
+        {
+            turnDegrees(30, TURN_SPEED, 2);
+            encoderDrive(17, "l", 10, DRIVE_SPEED);
+            turnDegrees(43, TURN_SPEED, 2);
+            encoderDrive(13, "b", 10, DRIVE_SPEED);
+            turnDegrees(133, TURN_SPEED, 3);
+        }
         //sleep(500);
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 1.7)
+        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 2.2)
         {
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
@@ -107,13 +146,17 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
         dropAmerica();
 
         //encoderDrive(30,"f", 15,DRIVE_SPEED);
+        telemetry.addData("runtime 1", runtime.seconds());
+        telemetry.update();
+        double x = 30 - runtime.seconds();
         runtime.reset();
-        while(readAngle("y") > -1.5 || runtime.seconds() < 7)
+        while(readAngle("y") > -1.5 || runtime.seconds() < 4 ||runtime.seconds() < x && opModeIsActive())
         {
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
             telemetry.addData("time", runtime.seconds());
+            telemetry.addData("runtime 2", x);
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
             if(readAngle("z") > -127)
@@ -134,7 +177,7 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
                 robot.fLMotor.setPower(-.25);
                 robot.bLMotor.setPower(-.25);
             }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 1.7)
+            else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 2.2)
             {
                 telemetry.addData("C2",(robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
@@ -157,10 +200,10 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
                 telemetry.addData("C4:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //foward
-                robot.fLMotor.setPower(.6);
-                robot.fRMotor.setPower(.6);
-                robot.bLMotor.setPower(.6);
-                robot.bRMotor.setPower(.6);
+                robot.fLMotor.setPower(.8);
+                robot.fRMotor.setPower(.8);
+                robot.bLMotor.setPower(.8);
+                robot.bRMotor.setPower(.8);
             }
 
         }
@@ -169,6 +212,8 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
         robot.bLMotor.setPower(0);
         robot.bRMotor.setPower(0);
         sleep(100);
+
+        tf.shutdown();
 
 
 
@@ -482,8 +527,8 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.armEx.setPower(.3);
-        sleep( 750);
+        robot.armEx.setPower(.5);
+        sleep( 875);
         robot.armEx.setPower(0);
         for(int i = 3; i <11; i++)
         {
