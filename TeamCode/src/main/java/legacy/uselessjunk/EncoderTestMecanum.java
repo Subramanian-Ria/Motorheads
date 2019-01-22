@@ -35,8 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-import org.firstinspires.ftc.teamcode.MecanumHardware;
+import legacy.servoLeftTest;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -71,7 +70,7 @@ import org.firstinspires.ftc.teamcode.MecanumHardware;
 public class EncoderTestMecanum extends LinearOpMode {
 
     /* Declare OpMode members. */
-    MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
+    servoLeftTest.MecanumHardware robot   = new servoLeftTest.MecanumHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder TODO: CHECK THIS

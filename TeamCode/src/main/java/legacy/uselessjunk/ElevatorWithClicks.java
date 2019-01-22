@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.MecanumHardware;
+import legacy.servoLeftTest;
 
 
 @Autonomous(name="ElevatorWithClicks", group="MecanumBot")
@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.MecanumHardware;
 public class  ElevatorWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
-    MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
+    servoLeftTest.MecanumHardware robot   = new servoLeftTest.MecanumHardware();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 

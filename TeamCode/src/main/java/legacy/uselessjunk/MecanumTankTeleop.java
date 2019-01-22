@@ -3,11 +3,9 @@ package legacy.uselessjunk;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.MecanumHardware;
+import legacy.servoLeftTest;
 
 
 @TeleOp(name="MecanumTankTeleop", group="MecanumBot")
@@ -15,7 +13,7 @@ import org.firstinspires.ftc.teamcode.MecanumHardware;
 
 public class MecanumTankTeleop extends OpMode {
 
-    MecanumHardware robot = new MecanumHardware();
+    servoLeftTest.MecanumHardware robot = new servoLeftTest.MecanumHardware();
     ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
