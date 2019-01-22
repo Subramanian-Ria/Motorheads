@@ -80,26 +80,26 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
         sleep(250);
 
         MineralLocation goldMineralLocation;
-        encoderElevator(1, -9.55,40);
+        encoderElevator(1, -9.542,40);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
         sleep(1500);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
         //BACKS OUT FROM HOOK
         tf.shutdown();
         gyroinit();
-        encoderDrive(1,"f",10, DRIVE_SPEED);
+        encoderDrive(2,"f",10, DRIVE_SPEED);
         sleep(200);
 
 
         encoderDrive(4,"l",10, DRIVE_SPEED);
         sleep(200);
-        encoderDrive(1,"b",5, DRIVE_SPEED);
+        encoderDrive(2,"b",5, DRIVE_SPEED);
         sleep(200);
 
         if(goldMineralLocation == MineralLocation.Left)
         {
             turnDegrees(-30, TURN_SPEED, 2);
-            encoderDrive(17, "l", 10, DRIVE_SPEED);
+            encoderDrive(17.5, "l", 10, DRIVE_SPEED);
             turnDegrees(133, TURN_SPEED, 3.5);
             encoderDrive(10, "b", 10, DRIVE_SPEED);
 
@@ -117,7 +117,7 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
         else
         {
             turnDegrees(30, TURN_SPEED, 2);
-            encoderDrive(17, "l", 10, DRIVE_SPEED);
+            encoderDrive(17.5, "l", 10, DRIVE_SPEED);
             turnDegrees(43, TURN_SPEED, 2);
             encoderDrive(13, "b", 10, DRIVE_SPEED);
             turnDegrees(133, TURN_SPEED, 3);
@@ -148,15 +148,13 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
         //encoderDrive(30,"f", 15,DRIVE_SPEED);
         telemetry.addData("runtime 1", runtime.seconds());
         telemetry.update();
-        double x = 30 - runtime.seconds();
         runtime.reset();
-        while(readAngle("y") > -1.5 || runtime.seconds() < 4 ||runtime.seconds() < x && opModeIsActive())
+        while((readAngle("y") > -1.5 || runtime.seconds() < 5) && opModeIsActive())
         {
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
             telemetry.addData("time", runtime.seconds());
-            telemetry.addData("runtime 2", x);
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
             if(readAngle("z") > -127)

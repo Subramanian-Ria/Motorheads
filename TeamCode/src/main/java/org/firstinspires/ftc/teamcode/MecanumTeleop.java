@@ -127,10 +127,10 @@ public class MecanumTeleop extends OpMode {
         //GAMEPAD2 TELE-OP
         //horizontal arm movement
         if (gamepad2.dpad_right) {
-            robot.armEx.setPower(-.8);
+            robot.armEx.setPower(.8);
         }
         else if (gamepad2.dpad_left) {
-            robot.armEx.setPower(.8);
+            robot.armEx.setPower(-.8);
         }
         else {
             robot.armEx.setPower(0);
@@ -155,7 +155,7 @@ public class MecanumTeleop extends OpMode {
         }
         if(PowerOn)
         {
-            robot.intake.setPower(0.6);
+            robot.intake.setPower(.9);
         }
         else
         {

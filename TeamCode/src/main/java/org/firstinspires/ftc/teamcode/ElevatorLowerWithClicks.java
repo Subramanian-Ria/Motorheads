@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import legacy.servoLeftTest;
+
 
 @Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot2")
 //@Disabled
@@ -49,7 +51,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, 9.9,40);
+        encoderElevator(1, 9.545,40);
         telemetry.update();
         //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");
@@ -225,7 +227,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
     public static class IntakeTestAuton extends LinearOpMode{
 
         /* Declare OpMode members. */
-        MecanumHardware robot   = new MecanumHardware();   // Use a Pushbot's hardware
+        servoLeftTest.MecanumHardware robot   = new servoLeftTest.MecanumHardware();   // Use a Pushbot's hardware
         private ElapsedTime     runtime = new ElapsedTime();
 
         static final double     CLICKS    = 1120 ;    // Andymark 40...  TETRIX Motor Encoder = 1440

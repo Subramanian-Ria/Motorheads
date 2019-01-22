@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
 
 
-
+@Disabled
 @Autonomous(name = "camtest", group = "MecanumBot2")
 public class camtest extends LinearOpMode
 {
@@ -75,122 +75,25 @@ public class camtest extends LinearOpMode
         waitForStart();
         tf.start();
         sleep(500);
-        MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Right);
-        //BACKS OUT FROM HOOK
-        encoderDrive(1,"f",10, DRIVE_SPEED);
-        sleep(200);
 
-        gyroinit();
+        MineralLocation goldMineralLocation;
+        goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
 
-        encoderDrive(4,"l",10, DRIVE_SPEED);
-        sleep(200);
-        encoderDrive(1,"b",5, DRIVE_SPEED);
-        sleep(200);
 
-        if(goldMineralLocation == MineralLocation.Left)
+        while(runtime.seconds() < 20 || opModeIsActive())
         {
-
-        }
-
-        else if(goldMineralLocation == MineralLocation.Center)
-        {
-            //Knocks out center mineral
-            encoderDrive(24, "l", 10, DRIVE_SPEED);
-            sleep(200);
-            //turns/moves to deposit marker
-            turnDegrees(133, TURN_SPEED, 3.5);
-        }
-
-        else
-        {
-
-        }
-        //sleep(500);
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 1.7)
-        {
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-            telemetry.update();
-            robot.fLMotor.setPower(.4);
-            robot.fRMotor.setPower(-.4);
-            robot.bLMotor.setPower(-.4);
-            robot.bRMotor.setPower(.4);
-
-        }
-        robot.fLMotor.setPower(0);
-        robot.fRMotor.setPower(0);
-        robot.bLMotor.setPower(0);
-        robot.bRMotor.setPower(0);
-        sleep(100);
-        telemetry.addData("Z", readAngle("z"));
-        telemetry.addData("y", readAngle("y"));
-        telemetry.addData("x", readAngle("x"));
-        telemetry.update();
-
-        dropAmerica();
-
-        //encoderDrive(30,"f", 15,DRIVE_SPEED);
-        runtime.reset();
-        while(readAngle("y") > -1.5 || runtime.seconds() < 7)
-        {
-            telemetry.addData("Z", readAngle("z"));
-            telemetry.addData("y", readAngle("y"));
-            telemetry.addData("x", readAngle("x"));
-            telemetry.addData("time", runtime.seconds());
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-            telemetry.update();
-            if(readAngle("z") > -127)
-            {
-                telemetry.addData("C1",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            if (goldMineralLocation == MineralLocation.Left) {
+                telemetry.addData("Left", (robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
-                robot.fRMotor.setPower(-.25);
-                robot.bRMotor.setPower(-.25);
-                robot.fLMotor.setPower(.25);
-                robot.bLMotor.setPower(.25);
-            }
-            else if(readAngle("z") < -144)
-            {
-                telemetry.addData("C1.2",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            } else if (goldMineralLocation == MineralLocation.Center) {
+                telemetry.addData("Center", (robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
-                robot.fRMotor.setPower(.25);
-                robot.bRMotor.setPower(.25);
-                robot.fLMotor.setPower(-.25);
-                robot.bLMotor.setPower(-.25);
-            }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 1.7)
-            {
-                telemetry.addData("C2",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            } else {
+                telemetry.addData("Right", (robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
-                robot.fLMotor.setPower(-.25);
-                robot.fRMotor.setPower(.25);
-                robot.bLMotor.setPower(.25);
-                robot.bRMotor.setPower(-.25);
             }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) > 6.5)
-            {
-                telemetry.addData("C3:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                robot.fLMotor.setPower(.25);
-                robot.fRMotor.setPower(-.25);
-                robot.bLMotor.setPower(-.25);
-                robot.bRMotor.setPower(.25);
-            }
-            else
-            {
-                telemetry.addData("C4:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                //foward
-                robot.fLMotor.setPower(.6);
-                robot.fRMotor.setPower(.6);
-                robot.bLMotor.setPower(.6);
-                robot.bRMotor.setPower(.6);
-            }
-
         }
-        robot.fLMotor.setPower(0);
-        robot.fRMotor.setPower(0);
-        robot.bLMotor.setPower(0);
-        robot.bRMotor.setPower(0);
-        sleep(100);
+        tf.shutdown();
 
 
 

@@ -1,7 +1,5 @@
-package org.firstinspires.ftc.teamcode;
+package legacy;
 
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -16,25 +14,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.TensorFlow.Device;
-import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
-import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
 
-
-
-@Autonomous(name = "MecanumAutonBlueDepo2Vision", group = "MecanumBot2")
-public class MecanumAuton2BlueDepoVision extends LinearOpMode
+@Disabled
+@Autonomous(name = "MecanumAutonBlueDepoBack", group = "Testing")
+public class MecanumAutonBlueDepoBack extends LinearOpMode
 {
-    MecanumHardware2 robot = new MecanumHardware2();
+    servoLeftTest.MecanumHardware robot = new servoLeftTest.MecanumHardware();
     private ElapsedTime runtime = new ElapsedTime();
 
 
     // The IMU sensor object
     BNO055IMU imu;
-
-    //tensorflow object
-    TensorFlow tf;
 
     // State used for updating telemetry
     Orientation angles;
@@ -54,8 +45,8 @@ public class MecanumAuton2BlueDepoVision extends LinearOpMode
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED = .6;
-    static final double TURN_SPEED = .3;
+    static final double     DRIVE_SPEED = .5;
+    static final double TURN_SPEED = .2;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -68,52 +59,39 @@ public class MecanumAuton2BlueDepoVision extends LinearOpMode
     public void runOpMode()
     {
         robot.init(hardwareMap);
-        tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
+
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
-        tf.start();
-        sleep(500);
-        MineralLocation goldMineralLocation = tf.getMineralLocation(RobotOrientation.Right);
-        //BACKS OUT FROM HOOK
-        encoderDrive(1,"f",10, DRIVE_SPEED);
-        sleep(200);
-
+        encoderElevator(1, -7.9,40);
         gyroinit();
-
-        encoderDrive(4,"l",10, DRIVE_SPEED);
+        //BACKS OUT FROM HOOK
+        encoderDrive(1,"b",10, DRIVE_SPEED);
         sleep(200);
-        encoderDrive(1,"b",5, DRIVE_SPEED);
+        encoderDrive(4.5,"r",10, DRIVE_SPEED);
         sleep(200);
+        encoderDrive(.7,"f",5, DRIVE_SPEED);
+        sleep(200);
+        //Knocks out center mineral
+        encoderDrive(29,"r",10, DRIVE_SPEED);
+        sleep(200);
+        //turns/moves to deposit marker
+        turnDegrees(-133,TURN_SPEED,5.5);
 
-        if(goldMineralLocation == MineralLocation.Left)
-        {
-
-        }
-
-        else if(goldMineralLocation == MineralLocation.Center)
-        {
-            //Knocks out center mineral
-            encoderDrive(24, "l", 10, DRIVE_SPEED);
-            sleep(200);
-            //turns/moves to deposit marker
-            turnDegrees(133, TURN_SPEED, 3.5);
-        }
-
-        else
-        {
-
-        }
-        //sleep(500);
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 1.7)
+        //dropAmerica();
+        //turnDegrees(30,TURN_SPEED, 5);//TODO: FIND OUT WHY THIS TURNS THE WRONG WAY
+        /*sleep(500);
+        //drive to crater
+        encoderDrive(40,"f", 15,.6);*/
+        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.6)
         {
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            robot.fLMotor.setPower(.4);
-            robot.fRMotor.setPower(-.4);
-            robot.bLMotor.setPower(-.4);
-            robot.bRMotor.setPower(.4);
+            robot.fLMotor.setPower(.2);
+            robot.fRMotor.setPower(-.2);
+            robot.bLMotor.setPower(-.2);
+            robot.bRMotor.setPower(.2);
 
         }
         robot.fLMotor.setPower(0);
@@ -121,68 +99,33 @@ public class MecanumAuton2BlueDepoVision extends LinearOpMode
         robot.bLMotor.setPower(0);
         robot.bRMotor.setPower(0);
         sleep(100);
-        telemetry.addData("Z", readAngle("z"));
-        telemetry.addData("y", readAngle("y"));
-        telemetry.addData("x", readAngle("x"));
-        telemetry.update();
-
-        dropAmerica();
-
-        //encoderDrive(30,"f", 15,DRIVE_SPEED);
         runtime.reset();
-        while(readAngle("y") > -1.5 || runtime.seconds() < 7)
+        //encoderDrive(30,"f", 15,DRIVE_SPEED);
+        while(runtime.seconds() < 7)
         {
-            telemetry.addData("Z", readAngle("z"));
-            telemetry.addData("y", readAngle("y"));
-            telemetry.addData("x", readAngle("x"));
             telemetry.addData("time", runtime.seconds());
             telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            if(readAngle("z") > -127)
+            if(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.5)
             {
-                telemetry.addData("C1",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+
+                telemetry.addData("C1:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
-                robot.fRMotor.setPower(-.25);
-                robot.bRMotor.setPower(-.25);
-                robot.fLMotor.setPower(.25);
-                robot.bLMotor.setPower(.25);
-            }
-            else if(readAngle("z") < -144)
-            {
-                telemetry.addData("C1.2",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                robot.fRMotor.setPower(.25);
-                robot.bRMotor.setPower(.25);
-                robot.fLMotor.setPower(-.25);
-                robot.bLMotor.setPower(-.25);
-            }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 1.7)
-            {
-                telemetry.addData("C2",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                robot.fLMotor.setPower(-.25);
-                robot.fRMotor.setPower(.25);
-                robot.bLMotor.setPower(.25);
-                robot.bRMotor.setPower(-.25);
-            }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) > 6.5)
-            {
-                telemetry.addData("C3:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                robot.fLMotor.setPower(.25);
-                robot.fRMotor.setPower(-.25);
-                robot.bLMotor.setPower(-.25);
-                robot.bRMotor.setPower(.25);
+                //foward
+                robot.fLMotor.setPower(-.5);
+                robot.fRMotor.setPower(-.5);
+                robot.bLMotor.setPower(-.5);
+                robot.bRMotor.setPower(-.5);
             }
             else
             {
-                telemetry.addData("C4:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C2:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
-                //foward
-                robot.fLMotor.setPower(.6);
-                robot.fRMotor.setPower(.6);
-                robot.bLMotor.setPower(.6);
-                robot.bRMotor.setPower(.6);
+                //right?
+                robot.fRMotor.setPower(.07);
+                robot.bRMotor.setPower(.07);
+                robot.fLMotor.setPower(-.07);
+                robot.bLMotor.setPower(-.07);
             }
 
         }
@@ -191,7 +134,6 @@ public class MecanumAuton2BlueDepoVision extends LinearOpMode
         robot.bLMotor.setPower(0);
         robot.bRMotor.setPower(0);
         sleep(100);
-
 
 
 
@@ -226,39 +168,39 @@ public class MecanumAuton2BlueDepoVision extends LinearOpMode
         if (opModeIsActive()) {
             if(heading == "f")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
 
             }
 
             else if(heading == "b")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
 
 
             }
 
             else if(heading == "r")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); //weird should be +
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); //weird should be +
 
 
             }
 
             else if(heading == "l")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); // weird should be +
-                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); // weird should be +
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
 
             }
 
@@ -409,17 +351,17 @@ public class MecanumAuton2BlueDepoVision extends LinearOpMode
             telemetry.update();
             if(error > 0)
             {
-                robot.fRMotor.setPower(-powerScaled);
-                robot.bRMotor.setPower(-powerScaled);
-                robot.fLMotor.setPower(powerScaled);
-                robot.bLMotor.setPower(powerScaled);
-            }
-            else if(error < 0)
-            {
                 robot.fRMotor.setPower(powerScaled);
                 robot.bRMotor.setPower(powerScaled);
                 robot.fLMotor.setPower(-powerScaled);
                 robot.bLMotor.setPower(-powerScaled);
+            }
+            else if(error < 0)
+            {
+                robot.fRMotor.setPower(-powerScaled);
+                robot.bRMotor.setPower(-powerScaled);
+                robot.fLMotor.setPower(powerScaled);
+                robot.bLMotor.setPower(powerScaled);
             }
         }
         while ((Math.abs(error) > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
@@ -504,19 +446,9 @@ public class MecanumAuton2BlueDepoVision extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.armEx.setPower(.3);
-        sleep( 750);
-        robot.armEx.setPower(0);
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
+        robot.bucket.setPosition(1);
 
     }
-
     public void gyroinit()
     {
 
