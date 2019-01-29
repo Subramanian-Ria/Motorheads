@@ -123,9 +123,9 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
             turnDegrees(133, TURN_SPEED, 3);
         }
         //sleep(500);
-        while(robot.sensordist.getDistance(DistanceUnit.INCH) > 2.2)
+        while(robot.sensorDist.getDistance(DistanceUnit.INCH) > 2.2)
         {
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.addData("dist:",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
             robot.fLMotor.setPower(.4);
             robot.fRMotor.setPower(-.4);
@@ -155,11 +155,11 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
             telemetry.addData("time", runtime.seconds());
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.addData("dist:",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
             if(readAngle("z") > -127)
             {
-                telemetry.addData("C1",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C1",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 robot.fRMotor.setPower(-.25);
                 robot.bRMotor.setPower(-.25);
@@ -168,25 +168,25 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
             }
             else if(readAngle("z") < -144)
             {
-                telemetry.addData("C1.2",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C1.2",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 robot.fRMotor.setPower(.25);
                 robot.bRMotor.setPower(.25);
                 robot.fLMotor.setPower(-.25);
                 robot.bLMotor.setPower(-.25);
             }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 2.2)
+            else if(robot.sensorDist.getDistance(DistanceUnit.INCH) < 2.2)
             {
-                telemetry.addData("C2",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C2",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 robot.fLMotor.setPower(-.25);
                 robot.fRMotor.setPower(.25);
                 robot.bLMotor.setPower(.25);
                 robot.bRMotor.setPower(-.25);
             }
-            else if(robot.sensordist.getDistance(DistanceUnit.INCH) > 6.5)
+            else if(robot.sensorDist.getDistance(DistanceUnit.INCH) > 6.5)
             {
-                telemetry.addData("C3:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C3:",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 robot.fLMotor.setPower(.25);
                 robot.fRMotor.setPower(-.25);
@@ -195,7 +195,7 @@ public class MecanumAuton2BlueDepo extends LinearOpMode
             }
             else
             {
-                telemetry.addData("C4:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("C4:",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
                 //foward
                 robot.fLMotor.setPower(.8);

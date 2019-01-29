@@ -22,7 +22,7 @@ public class MecanumHardware2
     public Servo bucket;
 
 
-    public DistanceSensor sensordist;
+    public DistanceSensor sensorDist;
     public DistanceSensor sensordistdepo;
 
     //declaring values for use with encoders
@@ -100,7 +100,7 @@ public class MecanumHardware2
         armFlip.setDirection(DcMotor.Direction.FORWARD);
         elevator.setDirection(DcMotor.Direction.FORWARD);
 
-        sensordist = hwMap.get(DistanceSensor.class, "sensorDist");
+        sensorDist = hwMap.get(DistanceSensor.class, "sensorDist");
         sensordistdepo = hwMap.get(DistanceSensor.class, "sensordistdepo");
     }
 }

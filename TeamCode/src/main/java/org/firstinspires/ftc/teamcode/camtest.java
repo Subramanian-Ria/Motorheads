@@ -83,13 +83,13 @@ public class camtest extends LinearOpMode
         while(runtime.seconds() < 20 || opModeIsActive())
         {
             if (goldMineralLocation == MineralLocation.Left) {
-                telemetry.addData("Left", (robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("Left", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
             } else if (goldMineralLocation == MineralLocation.Center) {
-                telemetry.addData("Center", (robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("Center", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
             } else {
-                telemetry.addData("Right", (robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.addData("Right", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
                 telemetry.update();
             }
         }

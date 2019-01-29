@@ -75,7 +75,7 @@ public class FullSensorTest extends LinearOpMode
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
 
-            telemetry.addData("Distance: ", robot.sensordist.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Distance: ", robot.sensorDist.getDistance(DistanceUnit.INCH));
             telemetry.addData("Distance: ", robot.sensordistdepo.getDistance(DistanceUnit.INCH));
             telemetry.update();
 

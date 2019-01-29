@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class MecanumCraterAuton extends LinearOpMode{
 
     //declare opmode members
-    MecanumHardware         robot = new MecanumHardware();
+    MecanumHardware2         robot = new MecanumHardware2();
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double COUNTS_PER_REV    = 1120 ;// Andymark 40...  TETRIX Motor Encoder = 1440

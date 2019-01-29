@@ -22,7 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 @Autonomous(name = "GYROTEST", group = "Testing")
 public class GyroTest extends LinearOpMode
 {
-    MecanumHardware robot = new MecanumHardware();
+    MecanumHardware2 robot = new MecanumHardware2();
     private ElapsedTime runtime = new ElapsedTime();
 
 
