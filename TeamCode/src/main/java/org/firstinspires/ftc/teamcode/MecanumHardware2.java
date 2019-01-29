@@ -23,7 +23,8 @@ public class MecanumHardware2
 
 
     public DistanceSensor sensorDist;
-    public DistanceSensor sensordistdepo;
+    public DistanceSensor sensorDistDepo;
+    public DistanceSensor sensorDistElevator;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -101,6 +102,7 @@ public class MecanumHardware2
         elevator.setDirection(DcMotor.Direction.FORWARD);
 
         sensorDist = hwMap.get(DistanceSensor.class, "sensorDist");
-        sensordistdepo = hwMap.get(DistanceSensor.class, "sensordistdepo");
+        sensorDistDepo = hwMap.get(DistanceSensor.class, "sensorDistDepo");
+        sensorDistElevator = hwMap.get(DistanceSensor.class, "sensorDistElevator");
     }
 }
