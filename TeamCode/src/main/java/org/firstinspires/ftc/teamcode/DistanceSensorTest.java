@@ -11,15 +11,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-import legacy.servoLeftTest;
 
-
-@Autonomous(name = "AmericanTest", group = "Testing")
-public class AmericanTest extends LinearOpMode
-{
-    MecanumHardware2 robot = new MecanumHardware2();
+@Autonomous(name = "DistanceSensorTest", group = "MecanumBot2")
+public class DistanceSensorTest extends LinearOpMode {
+    DistanceSensorHardware robot = new DistanceSensorHardware();
     private ElapsedTime runtime = new ElapsedTime();
 
 
@@ -36,16 +34,16 @@ public class AmericanTest extends LinearOpMode
     public float WEST;
     public float SOUTH;
 
-    static final double     COUNTS_PER_MOTOR_REV = 1120 ;    // Currently: Andymark Neverest 40
-    static final double     DRIVE_GEAR_REDUCTION = 2.0 ;     // This is < 1.0 if geared UP //On OUR CENTER MOTOR THE GEAR REDUCTION IS .5
-    static final double     DRIVE_GEAR_REDUCTION_CM = 0.5 ;
-    static final double     WHEEL_DIAMETER_INCHES = 3.54331;     // For figuring circumference
-    static final double     COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double COUNTS_PER_MOTOR_REV = 1120;    // Currently: Andymark Neverest 40
+    static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP //On OUR CENTER MOTOR THE GEAR REDUCTION IS .5
+    static final double DRIVE_GEAR_REDUCTION_CM = 0.5;
+    static final double WHEEL_DIAMETER_INCHES = 3.54331;     // For figuring circumference
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
+    static final double COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED = .6;
-    static final double TURN_SPEED = .25;
+    static final double DRIVE_SPEED = .5;
+    static final double TURN_SPEED = .2;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -55,18 +53,29 @@ public class AmericanTest extends LinearOpMode
     double righttarget;
 
 
-    public void runOpMode()
-    {
+    public void runOpMode() {
         robot.init(hardwareMap);
 
         //run using and stop and reset encoders for all relevant motors
-        stopAndReset();
+        //stopAndReset();
 
         waitForStart();
-        dropAmerica();
+
+        //gyroinit();
+
+        while (true) {
+            //telemetry.addData("Z", readAngle("z"));
+            //telemetry.addData("y", readAngle("y"));
+            //telemetry.addData("x", readAngle("x"));
+
+            telemetry.addData("Distance: ", robot.sensorDist.getDistance(DistanceUnit.INCH));
+            // telemetry.addData("Distance: ", robot.sensordistdepo.getDistance(DistanceUnit.INCH));
+            telemetry.update();
+
+        }
 
 
-
+/*
 
 
     }
@@ -331,6 +340,7 @@ public class AmericanTest extends LinearOpMode
         }
     }
     */
+/*
     public void encoderElevator(double speed,double distance, double timeoutS) {
         int newElevatorTarget;
 
@@ -374,21 +384,6 @@ public class AmericanTest extends LinearOpMode
         }
     }
 
-    public void dropAmerica()
-    {
-        robot.armEx.setPower(.3);
-        sleep( 650);
-        robot.armEx.setPower(0);
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
-
-
-    }
     public void gyroinit()
     {
 
@@ -411,5 +406,6 @@ public class AmericanTest extends LinearOpMode
 
         updateAngles();
         NORTH = angles.firstAngle;
+    }*/
     }
 }

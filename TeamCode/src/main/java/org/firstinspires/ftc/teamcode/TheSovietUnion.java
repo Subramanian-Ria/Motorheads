@@ -16,8 +16,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import legacy.servoLeftTest;
 
 
-@Autonomous(name = "AmericanTest", group = "Testing")
-public class AmericanTest extends LinearOpMode
+@Autonomous(name = "TheSovietUnion", group = "Testing")
+public class TheSovietUnion extends LinearOpMode
 {
     MecanumHardware2 robot = new MecanumHardware2();
     private ElapsedTime runtime = new ElapsedTime();
@@ -63,6 +63,7 @@ public class AmericanTest extends LinearOpMode
         stopAndReset();
 
         waitForStart();
+        encoderElevator(1, 9.545,40);
         dropAmerica();
 
 
@@ -376,17 +377,9 @@ public class AmericanTest extends LinearOpMode
 
     public void dropAmerica()
     {
-        robot.armEx.setPower(.3);
-        sleep( 650);
+        robot.armEx.setPower(-.5);
+        sleep( 850);
         robot.armEx.setPower(0);
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
-
 
     }
     public void gyroinit()

@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,13 +14,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.Device;
+import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
-import legacy.servoLeftTest;
 
 
-@Autonomous(name = "AmericanTest", group = "Testing")
-public class AmericanTest extends LinearOpMode
+
+@Autonomous(name = "camtest2", group = "MecanumBot2")
+public class camtest2 extends LinearOpMode
 {
     MecanumHardware2 robot = new MecanumHardware2();
     private ElapsedTime runtime = new ElapsedTime();
@@ -25,6 +32,9 @@ public class AmericanTest extends LinearOpMode
 
     // The IMU sensor object
     BNO055IMU imu;
+
+    //tensorflow object
+    TensorFlow tf;
 
     // State used for updating telemetry
     Orientation angles;
@@ -45,7 +55,7 @@ public class AmericanTest extends LinearOpMode
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED = .6;
-    static final double TURN_SPEED = .25;
+    static final double TURN_SPEED = .3;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -58,12 +68,44 @@ public class AmericanTest extends LinearOpMode
     public void runOpMode()
     {
         robot.init(hardwareMap);
-
+        tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
-        dropAmerica();
+        tf.start();
+        sleep(500);
+
+        MineralLocation goldMineralLocation;
+        goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
+        sleep(1000);
+        goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
+
+        while(runtime.seconds() < 20 || opModeIsActive())
+        {
+
+            goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
+            if (goldMineralLocation == MineralLocation.Left)
+            {
+
+
+                telemetry.addData("Left", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+            }
+            else if (goldMineralLocation == MineralLocation.Center)
+            {
+                telemetry.addData("Center", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+            }
+            else
+                {
+            telemetry.addData("Right", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
+            }
+
+        }
+        tf.shutdown();
+
 
 
 
@@ -98,39 +140,39 @@ public class AmericanTest extends LinearOpMode
         if (opModeIsActive()) {
             if(heading == "f")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
 
             }
 
             else if(heading == "b")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
 
 
             }
 
             else if(heading == "r")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); //weird should be +
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); //weird should be +
 
 
             }
 
             else if(heading == "l")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); // weird should be +
-                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); // weird should be +
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
 
             }
 
@@ -281,17 +323,17 @@ public class AmericanTest extends LinearOpMode
             telemetry.update();
             if(error > 0)
             {
-                robot.fRMotor.setPower(powerScaled);
-                robot.bRMotor.setPower(powerScaled);
-                robot.fLMotor.setPower(-powerScaled);
-                robot.bLMotor.setPower(-powerScaled);
-            }
-            else if(error < 0)
-            {
                 robot.fRMotor.setPower(-powerScaled);
                 robot.bRMotor.setPower(-powerScaled);
                 robot.fLMotor.setPower(powerScaled);
                 robot.bLMotor.setPower(powerScaled);
+            }
+            else if(error < 0)
+            {
+                robot.fRMotor.setPower(powerScaled);
+                robot.bRMotor.setPower(powerScaled);
+                robot.fLMotor.setPower(-powerScaled);
+                robot.bLMotor.setPower(-powerScaled);
             }
         }
         while ((Math.abs(error) > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
@@ -377,7 +419,7 @@ public class AmericanTest extends LinearOpMode
     public void dropAmerica()
     {
         robot.armEx.setPower(.3);
-        sleep( 650);
+        sleep( 750);
         robot.armEx.setPower(0);
         for(int i = 3; i <11; i++)
         {
@@ -387,8 +429,8 @@ public class AmericanTest extends LinearOpMode
             sleep(100);
         }
 
-
     }
+
     public void gyroinit()
     {
 

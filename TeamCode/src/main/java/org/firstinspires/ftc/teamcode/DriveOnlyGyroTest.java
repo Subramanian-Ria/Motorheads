@@ -13,13 +13,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-import legacy.servoLeftTest;
 
-
-@Autonomous(name = "AmericanTest", group = "Testing")
-public class AmericanTest extends LinearOpMode
+@Autonomous(name = "DriveOnlyGyroTest", group = "Testing")
+public class DriveOnlyGyroTest extends LinearOpMode
 {
-    MecanumHardware2 robot = new MecanumHardware2();
+    MecanumDriveOnlyHardware robot = new MecanumDriveOnlyHardware();
     private ElapsedTime runtime = new ElapsedTime();
 
 
@@ -63,7 +61,127 @@ public class AmericanTest extends LinearOpMode
         stopAndReset();
 
         waitForStart();
-        dropAmerica();
+        //encoderElevator(1, -8.4,40);
+        gyroinit();
+        //BACKS OUT FROM HOOK
+        /*encoderDrive(1,"b",10, DRIVE_SPEED);
+        sleep(200);
+        encoderDrive(4.5,"r",10, DRIVE_SPEED);
+        sleep(200);
+        encoderDrive(.7,"f",5, DRIVE_SPEED);
+        sleep(200);
+
+        //Knocks out center mineral
+        encoderDrive(14,"r",10, DRIVE_SPEED);
+        sleep(200);*/
+
+        //go back
+       /* encoderDrive(3,"l",10, DRIVE_SPEED);
+        sleep(200);
+
+        //Go to the wall
+        encoderDrive(14,"f",10, DRIVE_SPEED);
+        sleep(200);*/
+
+        //turns/moves to deposit marker
+        turnDegrees(90,TURN_SPEED,4.5);
+        sleep(200);
+        turnDegrees(-90,TURN_SPEED, 4.5);
+        sleep(200);
+        turnDegrees(15,TURN_SPEED,4.5);
+        sleep(200);
+        turnDegrees(-15,TURN_SPEED,4.5);
+        /*while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.9)
+        {
+            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
+            robot.fLMotor.setPower(.35);
+            robot.fRMotor.setPower(-.35);
+            robot.bLMotor.setPower(-.35);
+            robot.bRMotor.setPower(.35);
+
+        }*/
+        robot.fLMotor.setPower(0);
+        robot.fRMotor.setPower(0);
+        robot.bLMotor.setPower(0);
+        robot.bRMotor.setPower(0);
+        sleep(100);
+        telemetry.addData("Z", readAngle("z"));
+        telemetry.addData("y", readAngle("y"));
+        telemetry.addData("x", readAngle("x"));
+        telemetry.update();
+
+        //encoderDrive(18,"b",10, DRIVE_SPEED);
+        sleep(200);
+
+        //back to the wall again(avoid hitting silver)
+       /* while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.2)
+        {
+            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
+            robot.fLMotor.setPower(.35);
+            robot.fRMotor.setPower(-.35);
+            robot.bLMotor.setPower(-.35);
+            robot.bRMotor.setPower(.35);
+
+        }*/
+        robot.fLMotor.setPower(0);
+        robot.fRMotor.setPower(0);
+        robot.bLMotor.setPower(0);
+        robot.bRMotor.setPower(0);
+        sleep(100);
+
+        //dropAmerica();
+        sleep(500);
+
+
+        /*while(readAngle("x") < 2.5 || runtime.seconds() < 30)
+        {
+
+            telemetry.addData("Z", readAngle("z"));
+            telemetry.addData("y", readAngle("y"));
+            telemetry.addData("x", readAngle("x"));
+            telemetry.addData("time", runtime.seconds());
+            //telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
+
+            if(Math.abs(readAngle("z")) > 130)
+            {
+
+                //telemetry.addData("C1:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                //foward
+                robot.fLMotor.setPower(-.6);
+                robot.fRMotor.setPower(-.6);
+                robot.bLMotor.setPower(-.6);
+                robot.bRMotor.setPower(-.6);
+            }
+            /*else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 3.5)
+            {
+                telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                robot.fLMotor.setPower(-.35);
+                robot.fRMotor.setPower(.35);
+                robot.bLMotor.setPower(.35);
+                robot.bRMotor.setPower(-.35);
+            }*/
+            /*else
+            {
+                //telemetry.addData("C2:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
+                //right?
+                robot.fRMotor.setPower(.1);
+                robot.bRMotor.setPower(.1);
+                robot.fLMotor.setPower(-.1);
+                robot.bLMotor.setPower(-.1);
+            }
+
+        }*/
+        robot.fLMotor.setPower(0);
+        robot.fRMotor.setPower(0);
+        robot.bLMotor.setPower(0);
+        robot.bRMotor.setPower(0);
+        sleep(100);
 
 
 
@@ -79,8 +197,8 @@ public class AmericanTest extends LinearOpMode
         robot.fRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.bRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void encoderDrive(double inches, String direction, double timeoutS, double Speed)
@@ -294,7 +412,7 @@ public class AmericanTest extends LinearOpMode
                 robot.bLMotor.setPower(powerScaled);
             }
         }
-        while ((Math.abs(error) > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
+        while ((Math.abs(error) > 5) && (runtime.seconds() < timeoutS) && opModeIsActive());
 
         robot.fRMotor.setPower(0);
         robot.bRMotor.setPower(0);
@@ -331,7 +449,7 @@ public class AmericanTest extends LinearOpMode
         }
     }
     */
-    public void encoderElevator(double speed,double distance, double timeoutS) {
+   /* public void encoderElevator(double speed,double distance, double timeoutS) {
         int newElevatorTarget;
 
         // Ensure that the opmode is still active
@@ -372,23 +490,16 @@ public class AmericanTest extends LinearOpMode
             //  sleep(250);   // optional pause after each move
 
         }
-    }
+    }*/
 
-    public void dropAmerica()
+    /*public void dropAmerica()
     {
-        robot.armEx.setPower(.3);
-        sleep( 650);
+        robot.armEx.setPower(.5);
+        sleep(1500);
         robot.armEx.setPower(0);
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
+        robot.bucket.setPosition(1);
 
-
-    }
+    }*/
     public void gyroinit()
     {
 

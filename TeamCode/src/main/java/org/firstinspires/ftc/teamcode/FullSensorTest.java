@@ -19,10 +19,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
-@Autonomous(name = "FullSensorTest", group = "Debugging")
+@Autonomous(name = "FullSensorTest", group = "MecanumBot2")
 public class FullSensorTest extends LinearOpMode
 {
-    MecanumHardware robot = new MecanumHardware();
+    MecanumHardware2 robot = new MecanumHardware2();
     private ElapsedTime runtime = new ElapsedTime();
 
 
@@ -74,17 +74,8 @@ public class FullSensorTest extends LinearOpMode
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));
             telemetry.addData("x", readAngle("x"));
-            telemetry.addData("Alpha: ", robot.sensorCol1.alpha());
-            telemetry.addData("Red: ", robot.sensorCol1.red());
-            telemetry.addData("Green: ", robot.sensorCol1.green());
-            telemetry.addData("Blue: ", robot.sensorCol1.blue());
 
-            telemetry.addData("Alpha2: ", robot.sensorCol2.alpha());
-            telemetry.addData("Red2: ", robot.sensorCol2.red());
-            telemetry.addData("Green2: ", robot.sensorCol2.green());
-            telemetry.addData("Blue: ", robot.sensorCol2.blue());
-
-            telemetry.addData("Distance: ", robot.sensordist.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Distance: ", robot.sensorDist.getDistance(DistanceUnit.INCH));
             telemetry.addData("Distance: ", robot.sensordistdepo.getDistance(DistanceUnit.INCH));
             telemetry.update();
 
@@ -399,12 +390,6 @@ public class FullSensorTest extends LinearOpMode
         }
     }
 
-    public void dropAmerica()
-    {
-        robot.intake.setPower(-.5);
-        sleep(1500);
-        robot.intake.setPower(0);
-    }
     public void gyroinit()
     {
 

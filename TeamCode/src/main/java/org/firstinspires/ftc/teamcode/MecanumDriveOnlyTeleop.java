@@ -1,19 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="MecanumTeleop", group="MecanumBot")
+@TeleOp(name="MecanumDriveOnlyTeleop", group="MecanumDriveOnlyBot")
 //@Disabled
 
-public class MecanumTeleop extends OpMode {
+public class MecanumDriveOnlyTeleop extends OpMode {
 
-    MecanumHardware2 robot = new MecanumHardware2();
+    MecanumDriveOnlyHardware robot = new MecanumDriveOnlyHardware();
     ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
@@ -43,7 +40,7 @@ public class MecanumTeleop extends OpMode {
          */
         robot.init(hardwareMap);
         //robot.intake.setPower(0);
-        robot.armFlip.setPower(0);
+        //robot.armFlip.setPower(0);
     }
 
     @Override
@@ -126,11 +123,11 @@ public class MecanumTeleop extends OpMode {
         //
         //GAMEPAD2 TELE-OP
         //horizontal arm movement
-        if (gamepad2.dpad_right) {
-            robot.armEx.setPower(.8);
+        /*if (gamepad2.dpad_right) {
+            robot.armEx.setPower(-.8);
         }
         else if (gamepad2.dpad_left) {
-            robot.armEx.setPower(-.8);
+            robot.armEx.setPower(.8);
         }
         else {
             robot.armEx.setPower(0);
@@ -155,7 +152,7 @@ public class MecanumTeleop extends OpMode {
         }
         if(PowerOn)
         {
-            robot.intake.setPower(.9);
+            robot.intake.setPower(0.6);
         }
         else
         {
@@ -193,7 +190,7 @@ public class MecanumTeleop extends OpMode {
         else {
             robot.armFlip.setPower(0);
         }
-        //mecanumMove();
+        //mecanumMove();*/
     }
 
     public void mecanumMove() {
