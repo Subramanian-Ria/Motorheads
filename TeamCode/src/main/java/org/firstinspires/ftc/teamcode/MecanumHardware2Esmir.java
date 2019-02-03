@@ -1,31 +1,30 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class MecanumHardware2
+public class MecanumHardware2Esmir
 {
-    public DcMotor fLMotor;
-    public DcMotor fRMotor;
-    public DcMotor bLMotor;
-    public DcMotor bRMotor;
+   // public DcMotor fLMotor;
+    //public DcMotor fRMotor;
+    //public DcMotor bLMotor;
+    //public DcMotor bRMotor;
     public DcMotor EsmirMotor;
 
-    public DcMotor armFlip;
-    public DcMotor elevator;
-    public DcMotor armEx;
+    //public DcMotor armFlip;
+    //public DcMotor elevator;
+    //public DcMotor armEx;
 
-    public CRServo intake;
-    public Servo bucket;
+    //public CRServo intake;
+    //public Servo bucket;
 
 
     public DistanceSensor sensorDist;
-    public DistanceSensor sensorDistDepo;
-    public DistanceSensor sensorDistElevator;
+    //public DistanceSensor sensorDistDepo;
+    //public DistanceSensor sensorDistElevator;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -45,10 +44,13 @@ public class MecanumHardware2
         hwMap = ahwMap;
 
         // Define Motors
-        fLMotor = hwMap.get(DcMotor.class, "fLMotor");
+       /* fLMotor = hwMap.get(DcMotor.class, "fLMotor");
         fRMotor = hwMap.get(DcMotor.class, "fRMotor");
         bRMotor = hwMap.get(DcMotor.class, "bRMotor");
         bLMotor = hwMap.get(DcMotor.class, "bLMotor");
+        */
+       EsmirMotor = hwMap.get(DcMotor.class, "EsmirMotor");
+       /*
 
         armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
@@ -69,7 +71,9 @@ public class MecanumHardware2
         intake.setPower(0);
         bucket.setPosition(.5);
 
-
+*/
+       EsmirMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+/*
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         fLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -101,9 +105,9 @@ public class MecanumHardware2
         armEx.setDirection(DcMotor.Direction.REVERSE);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
         elevator.setDirection(DcMotor.Direction.FORWARD);
-
+*/
         sensorDist = hwMap.get(DistanceSensor.class, "sensorDist");
-        sensorDistDepo = hwMap.get(DistanceSensor.class, "sensorDistDepo");
-        sensorDistElevator = hwMap.get(DistanceSensor.class, "sensorDistElevator");
+  //      sensorDistDepo = hwMap.get(DistanceSensor.class, "sensorDistDepo");
+    //    sensorDistElevator = hwMap.get(DistanceSensor.class, "sensorDistElevator");
     }
 }

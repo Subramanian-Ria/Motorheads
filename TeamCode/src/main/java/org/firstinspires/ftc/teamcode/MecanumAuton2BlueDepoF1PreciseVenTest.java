@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,14 +15,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.TensorFlow.Device;
-import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
+import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 
 
-
-
-@Autonomous(name = "MecanumAuton2BlueDepoF1Precise", group = "MecanumBot2")
-public class MecanumAuton2BlueDepoF1Precise extends LinearOpMode
+@Autonomous(name = "MecanumAuton2BlueDepoF1PreciseVenTest", group = "MecanumBot2")
+public class MecanumAuton2BlueDepoF1PreciseVenTest extends LinearOpMode
 {
     MecanumHardware2 robot = new MecanumHardware2();
     private ElapsedTime runtime = new ElapsedTime();
@@ -506,7 +502,7 @@ public class MecanumAuton2BlueDepoF1Precise extends LinearOpMode
             //installed at the base.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.elevator.isBusy())) {
+                    (robot.elevator.isBusy()) && (robot.sensorDist.getDistance(DistanceUnit.INCH)<2.7)) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
