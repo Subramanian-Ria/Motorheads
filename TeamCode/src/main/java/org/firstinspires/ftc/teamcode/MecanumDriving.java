@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,17 +16,21 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.Device;
+import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
-
-@Autonomous(name = "MecanumDriveOnlyAuton", group = "Testing")
-public class MecanumDriveOnlyAuton extends LinearOpMode
+public class MecanumDriving extends LinearOpMode
 {
-    MecanumDriveOnlyHardware robot = new MecanumDriveOnlyHardware();
-    private ElapsedTime runtime = new ElapsedTime();
+    MecanumHardware2 robot = new MecanumHardware2();
+    public ElapsedTime runtime = new ElapsedTime();
 
 
     // The IMU sensor object
     BNO055IMU imu;
+
+    //tensorflow object
+    TensorFlow tf;
 
     // State used for updating telemetry
     Orientation angles;
@@ -43,8 +50,8 @@ public class MecanumDriveOnlyAuton extends LinearOpMode
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED = .6;
-    static final double TURN_SPEED = .25;
+    static final double     DRIVE_SPEED = .7;
+    static final double TURN_SPEED = .4;
 
     //Encoder position tracking variables
     double lefttrack;
@@ -53,136 +60,26 @@ public class MecanumDriveOnlyAuton extends LinearOpMode
     double lefttarget;
     double righttarget;
 
-
     public void runOpMode()
     {
         robot.init(hardwareMap);
 
+        tf = new TensorFlow(hardwareMap, TensorFlow.Device.Webcam,telemetry);
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
-        //encoderElevator(1, -8.4,40);
-        gyroinit();
-        //BACKS OUT FROM HOOK
-        encoderDrive(1,"b",10, DRIVE_SPEED);
-        sleep(200);
-        encoderDrive(4.5,"r",10, DRIVE_SPEED);
-        sleep(200);
-        encoderDrive(.7,"f",5, DRIVE_SPEED);
-        sleep(200);
 
-        //Knocks out center mineral
-        encoderDrive(14,"r",10, DRIVE_SPEED);
-        sleep(200);
+        tf.start();
 
-        //go back
-        encoderDrive(3,"l",10, DRIVE_SPEED);
-        sleep(200);
-
-        //Go to the wall
-        encoderDrive(14,"f",10, DRIVE_SPEED);
-        sleep(200);
-
-        //turns/moves to deposit marker
-        turnDegrees(133,TURN_SPEED,4.5);
-        /*while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.9)
-        {
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-            telemetry.update();
-            robot.fLMotor.setPower(.35);
-            robot.fRMotor.setPower(-.35);
-            robot.bLMotor.setPower(-.35);
-            robot.bRMotor.setPower(.35);
-
-        }*/
-        robot.fLMotor.setPower(0);
-        robot.fRMotor.setPower(0);
-        robot.bLMotor.setPower(0);
-        robot.bRMotor.setPower(0);
-        sleep(100);
-        telemetry.addData("Z", readAngle("z"));
-        telemetry.addData("y", readAngle("y"));
-        telemetry.addData("x", readAngle("x"));
-        telemetry.update();
-
-        encoderDrive(18,"b",10, DRIVE_SPEED);
-        sleep(200);
-
-        //back to the wall again(avoid hitting silver)
-       /* while(robot.sensordist.getDistance(DistanceUnit.INCH) > 4.2)
-        {
-            telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-            telemetry.update();
-            robot.fLMotor.setPower(.35);
-            robot.fRMotor.setPower(-.35);
-            robot.bLMotor.setPower(-.35);
-            robot.bRMotor.setPower(.35);
-
-        }*/
-        robot.fLMotor.setPower(0);
-        robot.fRMotor.setPower(0);
-        robot.bLMotor.setPower(0);
-        robot.bRMotor.setPower(0);
-        sleep(100);
-
-        //dropAmerica();
-        sleep(500);
-
-
-        while(readAngle("x") < 2.5 || runtime.seconds() < 30)
-        {
-
-            telemetry.addData("Z", readAngle("z"));
-            telemetry.addData("y", readAngle("y"));
-            telemetry.addData("x", readAngle("x"));
-            telemetry.addData("time", runtime.seconds());
-            //telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-            telemetry.update();
-
-            if(Math.abs(readAngle("z")) > 130)
-            {
-
-                //telemetry.addData("C1:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                //foward
-                robot.fLMotor.setPower(-.6);
-                robot.fRMotor.setPower(-.6);
-                robot.bLMotor.setPower(-.6);
-                robot.bRMotor.setPower(-.6);
-            }
-            /*else if(robot.sensordist.getDistance(DistanceUnit.INCH) < 3.5)
-            {
-                telemetry.addData("dist:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                robot.fLMotor.setPower(-.35);
-                robot.fRMotor.setPower(.35);
-                robot.bLMotor.setPower(.35);
-                robot.bRMotor.setPower(-.35);
-            }*/
-            else
-            {
-                //telemetry.addData("C2:",(robot.sensordist.getDistance(DistanceUnit.INCH)));
-                telemetry.update();
-                //right?
-                robot.fRMotor.setPower(.1);
-                robot.bRMotor.setPower(.1);
-                robot.fLMotor.setPower(-.1);
-                robot.bLMotor.setPower(-.1);
-            }
-
-        }
-        robot.fLMotor.setPower(0);
-        robot.fRMotor.setPower(0);
-        robot.bLMotor.setPower(0);
-        robot.bRMotor.setPower(0);
-        sleep(100);
 
 
 
 
 
     }
+
+
     public void stopAndReset() {
         robot.fLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.fLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -192,8 +89,8 @@ public class MecanumDriveOnlyAuton extends LinearOpMode
         robot.fRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.bRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void encoderDrive(double inches, String direction, double timeoutS, double Speed)
@@ -211,39 +108,39 @@ public class MecanumDriveOnlyAuton extends LinearOpMode
         if (opModeIsActive()) {
             if(heading == "f")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
 
             }
 
             else if(heading == "b")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
 
 
             }
 
             else if(heading == "r")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); //weird should be +
+                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); //weird should be +
 
 
             }
 
             else if(heading == "l")
             {
-                TargetFL = robot.fLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
-                TargetFR = robot.fRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
-                TargetBL = robot.bLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH); // weird should be +
-                TargetBR = robot.bRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetFL = robot.fLMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
+                TargetFR = robot.fRMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH);
+                TargetBL = robot.bLMotor.getCurrentPosition() + (int)( inches* COUNTS_PER_INCH); // weird should be +
+                TargetBR = robot.bRMotor.getCurrentPosition() - (int)( inches* COUNTS_PER_INCH);
 
             }
 
@@ -394,17 +291,17 @@ public class MecanumDriveOnlyAuton extends LinearOpMode
             telemetry.update();
             if(error > 0)
             {
-                robot.fRMotor.setPower(powerScaled);
-                robot.bRMotor.setPower(powerScaled);
-                robot.fLMotor.setPower(-powerScaled);
-                robot.bLMotor.setPower(-powerScaled);
-            }
-            else if(error < 0)
-            {
                 robot.fRMotor.setPower(-powerScaled);
                 robot.bRMotor.setPower(-powerScaled);
                 robot.fLMotor.setPower(powerScaled);
                 robot.bLMotor.setPower(powerScaled);
+            }
+            else if(error < 0)
+            {
+                robot.fRMotor.setPower(powerScaled);
+                robot.bRMotor.setPower(powerScaled);
+                robot.fLMotor.setPower(-powerScaled);
+                robot.bLMotor.setPower(-powerScaled);
             }
         }
         while ((Math.abs(error) > 1.5) && (runtime.seconds() < timeoutS) && opModeIsActive());
@@ -444,7 +341,7 @@ public class MecanumDriveOnlyAuton extends LinearOpMode
         }
     }
     */
-   /* public void encoderElevator(double speed,double distance, double timeoutS) {
+    public void encoderElevator(double speed,double distance, double timeoutS) {
         int newElevatorTarget;
 
         // Ensure that the opmode is still active
@@ -485,16 +382,23 @@ public class MecanumDriveOnlyAuton extends LinearOpMode
             //  sleep(250);   // optional pause after each move
 
         }
-    }*/
+    }
 
-    /*public void dropAmerica()
+    public void dropAmerica()
     {
         robot.armEx.setPower(.5);
-        sleep(1500);
+        sleep( 875);
         robot.armEx.setPower(0);
-        robot.bucket.setPosition(1);
+        for(int i = 3; i <11; i++)
+        {
+            robot.bucket.setPosition(.1*i);
+            telemetry.addData("pos", .1*i);
+            telemetry.update();
+            sleep(100);
+        }
 
-    }*/
+    }
+
     public void gyroinit()
     {
 

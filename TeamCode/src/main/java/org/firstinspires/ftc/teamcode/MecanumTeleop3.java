@@ -1,16 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="MecanumDriveOnlyTeleop", group="MecanumDriveOnlyBot")
+@TeleOp(name="MecanumTeleop3", group="MecanumBot3")
 //@Disabled
 
-public class MecanumDriveOnlyTeleop extends OpMode {
+public class MecanumTeleop3 extends OpMode {
 
-    MecanumDriveOnlyHardware robot = new MecanumDriveOnlyHardware();
+    MecanumHardware3 robot = new MecanumHardware3();
     ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
@@ -40,111 +43,24 @@ public class MecanumDriveOnlyTeleop extends OpMode {
          */
         robot.init(hardwareMap);
         //robot.intake.setPower(0);
-        //robot.armFlip.setPower(0);
+        robot.armFlip.setPower(0);
     }
 
     @Override
     public void loop() {
-        //GAMEPAD1 TELE-OP
-        //horizontal arm movement
-        /*if (gamepad1.dpad_right) {
-            robot.armEx.setPower(-pLim);
-        }
-        else if (gamepad1.dpad_left) {
-            robot.armEx.setPower(pLim);
-        }
-        else {
-            robot.armEx.setPower(0);
-        }
 
-        if(gamepad1.y) {
-            robot.bucket.setPosition(.6);//flat position
-        }
-        if(gamepad1.a) {
-            robot.bucket.setPosition(.45);//cube position
-        }
-        if(gamepad1.b) {
-            robot.bucket.setPosition(.25);//armFlip position
-        }
-        //if(gamepad1.x) {
-        intakeNew= gamepad1.x;
-        if(intakeNew != intakeOld)
-        {
-            PowerOn= !PowerOn;
-        }
-        if(PowerOn)
-        {
-            robot.intake.setPower(0.6);
-        }
-        else
-        {
-            robot.intake.setPower(0);
-        }
-        intakeOld = intakeNew;
-
-
-        //elevator controls
-        if (gamepad1.dpad_up) {
-            robot.elevator.setPower(-1);
-        }
-        else if (gamepad1.dpad_down) {
-            robot.elevator.setPower(1);
-        }
-        else {
-            robot.elevator.setPower(0);
-        }
-
-        //manual movement of the arm flip- may replace encoder movement
-        if (gamepad1.left_bumper) {
-            robot.armFlip.setPower(-pSlowSlow);
-        }
-        else if (gamepad1.right_bumper) {
-            robot.armFlip.setPower(pSlowSlow);
-        }
-
-        //fast arm flip
-        else if (gamepad1.left_trigger > tHold)
-        {
-            robot.armFlip.setPower(-pLim);
-        }
-        else if (gamepad1.right_trigger > tHold) {
-            robot.armFlip.setPower(pLim);
-        }
-        else {
-            robot.armFlip.setPower(0);
-        }*/
         mecanumMove();
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //GAMEPAD2 TELE-OP
         //horizontal arm movement
-        /*if (gamepad2.dpad_right) {
-            robot.armEx.setPower(-.8);
-        }
-        else if (gamepad2.dpad_left) {
+        if (gamepad2.dpad_right) {
             robot.armEx.setPower(.8);
         }
+        else if (gamepad2.dpad_left) {
+            robot.armEx.setPower(-.8);
+        }
         else {
             robot.armEx.setPower(0);
         }
 
-        //3 pos bucket
-        if(gamepad2.y) {
-            robot.bucket.setPosition(.6);//flat position
-        }
-        if(gamepad2.a) {
-            robot.bucket.setPosition(.45);//cube position
-        }
-        if(gamepad2.b) {
-            robot.bucket.setPosition(.25);//armFlip position
-        }
-        //if(gamepad1.x) {
-        //intake on/off using gamepad x
         intakeNew= gamepad2.x;
         if(intakeNew != intakeOld)
         {
@@ -152,11 +68,11 @@ public class MecanumDriveOnlyTeleop extends OpMode {
         }
         if(PowerOn)
         {
-            robot.intake.setPower(0.6);
+            robot.bucket.setPower(.9);
         }
         else
         {
-            robot.intake.setPower(0);
+            robot.bucket.setPower(0);
         }
         intakeOld = intakeNew;
 
@@ -190,7 +106,7 @@ public class MecanumDriveOnlyTeleop extends OpMode {
         else {
             robot.armFlip.setPower(0);
         }
-        //mecanumMove();*/
+        //mecanumMove();
     }
 
     public void mecanumMove() {
