@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import static android.os.SystemClock.sleep;
+
 
 @TeleOp(name="MecanumTeleop", group="MecanumBot")
 //@Disabled
@@ -145,6 +147,21 @@ public class MecanumTeleop extends OpMode {
         }
         if(gamepad2.b) {
             robot.bucket.setPosition(.25);//armFlip position
+        }
+        //light adjustment for Father EsBir
+        if(gamepad1.right_bumper)
+        {
+            robot.lights.setPosition(robot.lights.getPosition()+1);
+            telemetry.addData("Light Value", robot.lights.getPosition());
+            telemetry.update();
+            sleep(250);
+        }
+        while(gamepad1.left_bumper)
+        {
+            robot.lights.setPosition(robot.lights.getPosition()-1);
+            telemetry.addData("Light Value", robot.lights.getPosition());
+            telemetry.update();
+            sleep(250);
         }
         //if(gamepad1.x) {
         //intake on/off using gamepad x

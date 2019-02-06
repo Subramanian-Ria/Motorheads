@@ -13,7 +13,6 @@ public class MecanumHardware2
     public DcMotor fRMotor;
     public DcMotor bLMotor;
     public DcMotor bRMotor;
-    public DcMotor EsmirMotor;
 
     public DcMotor armFlip;
     public DcMotor elevator;
@@ -21,6 +20,7 @@ public class MecanumHardware2
 
     public CRServo intake;
     public Servo bucket;
+    public Servo lights;
 
 
     public DistanceSensor sensorDist;
@@ -56,6 +56,7 @@ public class MecanumHardware2
 
         intake = hwMap.get(CRServo.class, "intake");
         bucket = hwMap.get(Servo.class, "bucket");
+        lights = hwMap.get(Servo.class, "lights");
 
         fLMotor.setPower(0);
         bLMotor.setPower(0);
@@ -68,6 +69,7 @@ public class MecanumHardware2
 
         intake.setPower(0);
         bucket.setPosition(.5);
+        lights.setPosition(500);
 
 
         // Set all motors to run without encoders.
