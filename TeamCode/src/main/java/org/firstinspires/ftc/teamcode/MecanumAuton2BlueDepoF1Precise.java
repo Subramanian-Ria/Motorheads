@@ -502,8 +502,6 @@ public class MecanumAuton2BlueDepoF1Precise extends LinearOpMode
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            //Note from Vendrick: adding a new condition to the while statement to hopefully incorporate the sensor
-            //installed at the base.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (robot.elevator.isBusy())) {

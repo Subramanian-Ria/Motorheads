@@ -13,6 +13,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import legacy.uselessjunk.MecanumDriveOnlyHardware;
+
 
 @Autonomous(name = "DriveOnlyGyroTest", group = "Testing")
 public class DriveOnlyGyroTest extends LinearOpMode

@@ -1,40 +1,27 @@
-//THIS IS A MOTORHEADS PROGRAM
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-//@Disabled
 
-
-public class MecanumDriveOnlyHardware
+public class MecanumHardware3
 {
-    /* Public OpMode members. */
-    //Initialize everything
     public DcMotor fLMotor;
     public DcMotor fRMotor;
     public DcMotor bLMotor;
     public DcMotor bRMotor;
 
-    //public DcMotor armEx;
-    //public DcMotor armFlip;
+    public DcMotor armFlip;
+    public DcMotor elevator;
+    public DcMotor armEx;
 
-    //public  DcMotor intake;
+    public DcMotor bucket;
 
-    //public DcMotor elevator;
-
-    //public ColorSensor sensorCol1;
-    //public ColorSensor sensorCol2;
-    //public DistanceSensor sensordist;
-    //public DistanceSensor sensordistdepo;
-
-    //public CRServo intake;
-    //public Servo bucket;
+    public DistanceSensor sensorDist;
+    public DistanceSensor sensorDistDepo;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -59,82 +46,59 @@ public class MecanumDriveOnlyHardware
         bRMotor = hwMap.get(DcMotor.class, "bRMotor");
         bLMotor = hwMap.get(DcMotor.class, "bLMotor");
 
-        /*armEx = hwMap.get(DcMotor.class, "armEx");
+        armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
-
-        //intake = hwMap.get(DcMotor.class, "intake");
-
         elevator = hwMap.get(DcMotor.class, "elevator");
 
-        intake = hwMap.get(CRServo.class, "intake");
-        bucket = hwMap.get(Servo.class, "bucket");*/
-
-        //Setting Motor Directions
-        //fLMotor.setDirection(DcMotor.Direction.FORWARD); //right and left should be correct
-        //fRMotor.setDirection(DcMotor.Direction.FORWARD);
-        //bLMotor.setDirection(DcMotor.Direction.REVERSE);
-        //bRMotor.setDirection(DcMotor.Direction.FORWARD);
-
-        // Set all motors to zero power
+        bucket = hwMap.get(DcMotor.class, "bucket");
 
         fLMotor.setPower(0);
         bLMotor.setPower(0);
         fRMotor.setPower(0);
         bRMotor.setPower(0);
 
-        /*armEx.setPower(0);
+        armEx.setPower(0);
         armFlip.setPower(0);
-
-        //intake.setPower(0);
-
         elevator.setPower(0);
 
-        intake.setPower(0);
-        bucket.setPosition(.5);*/
+        bucket.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        fLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        fRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bLMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bRMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        fLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        /*armEx.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
+        armEx.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bucket.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         fLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        /*armEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bucket.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
-
+        //flipped these 4
         fLMotor.setDirection(DcMotor.Direction.REVERSE);
         fRMotor.setDirection(DcMotor.Direction.FORWARD);
         bLMotor.setDirection(DcMotor.Direction.REVERSE);
         bRMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        //intake.setDirection(CRServo.Direction.FORWARD);
+        armEx.setDirection(DcMotor.Direction.REVERSE);
+        armFlip.setDirection(DcMotor.Direction.FORWARD);
+        elevator.setDirection(DcMotor.Direction.FORWARD);
 
-        //armEx.setDirection(DcMotor.Direction.FORWARD);
-       // armFlip.setDirection(DcMotor.Direction.FORWARD);
+        bucket.setDirection(DcMotor.Direction.FORWARD);
 
-        //intake.setDirection(DcMotor.Direction.FORWARD);
-
-        /*elevator.setDirection(DcMotor.Direction.FORWARD);
-
-        sensorCol1 = hwMap.get(ColorSensor.class, "sensorCol1");
-        sensorCol2 = hwMap.get(ColorSensor.class, "sensorCol2");
-        sensordist = hwMap.get(DistanceSensor.class, "sensorDist");
-        sensordistdepo = hwMap.get(DistanceSensor.class, "sensordistdepo");*/
+        sensorDist = hwMap.get(DistanceSensor.class, "sensorDist");
+        sensorDistDepo = hwMap.get(DistanceSensor.class, "sensorDistDepo");
     }
 }
