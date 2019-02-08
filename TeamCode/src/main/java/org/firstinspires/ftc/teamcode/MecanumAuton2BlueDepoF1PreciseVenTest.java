@@ -502,7 +502,7 @@ public class MecanumAuton2BlueDepoF1PreciseVenTest extends LinearOpMode
             //installed at the base.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.elevator.isBusy()) && (robot.sensorDist.getDistance(DistanceUnit.INCH)<2.7)) {
+                    (robot.elevator.isBusy()) && (robot.sensorDist.getDistance(DistanceUnit.INCH) < 2.7)) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
@@ -510,6 +510,9 @@ public class MecanumAuton2BlueDepoF1PreciseVenTest extends LinearOpMode
                         robot.elevator.getCurrentPosition());
                 telemetry.update();
             }
+            //allows hook to get above the edge of the latch
+            //TODO: check value
+            sleep(100);
 
             // Stop all motion;
             robot.elevator.setPower(0);
