@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
 
 
-@Autonomous(name = "MecanumAuton2BlueDepo", group = "MecanumBot2")
+@Autonomous(name = "MecanumAuton3Depo", group = "MecanumBot2")
 public class MecanumAuton3Depo extends MecanumDriving
 {
 
