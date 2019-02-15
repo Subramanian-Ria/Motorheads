@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,13 +13,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.TensorFlow.Device;
-import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
-import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
+
+import legacy.MecanumHardware2;
 
 public class MecanumDriving extends LinearOpMode
 {
-    MecanumHardware2 robot = new MecanumHardware2();
+    MecanumHardware3 robot = new MecanumHardware3();
     public ElapsedTime runtime = new ElapsedTime();
 
 
@@ -363,9 +359,12 @@ public class MecanumDriving extends LinearOpMode
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            //Note from Vendrick: adding a new condition to the while statement to hopefully incorporate the sensor
+            //installed at the base.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.elevator.isBusy())) {
+                    (robot.elevator.isBusy()) && (robot.sensorDist.getDistance(DistanceUnit.INCH) > 1.95
+            )) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
@@ -373,6 +372,9 @@ public class MecanumDriving extends LinearOpMode
                         robot.elevator.getCurrentPosition());
                 telemetry.update();
             }
+            //allows hook to get above the edge of the latch
+            //TODO: check value
+            sleep(100);
 
             // Stop all motion;
             robot.elevator.setPower(0);
@@ -384,18 +386,10 @@ public class MecanumDriving extends LinearOpMode
         }
     }
 
+
     public void dropAmerica()
     {
-        robot.armEx.setPower(.5);
-        sleep( 875);
-        robot.armEx.setPower(0);
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
+
 
     }
 

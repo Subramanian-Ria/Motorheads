@@ -1,21 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+
+import legacy.MecanumHardware2;
 
 import static android.os.SystemClock.sleep;
 
 
-@TeleOp(name="MecanumTeleop", group="MecanumBot")
+@TeleOp(name="MecanumTeleop", group="MecanumBot3")
 //@Disabled
 
 public class MecanumTeleop extends OpMode {
 
-    MecanumHardware2 robot = new MecanumHardware2();
+    MecanumHardware3 robot = new MecanumHardware3();
     ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
@@ -137,7 +136,7 @@ public class MecanumTeleop extends OpMode {
         else {
             robot.armEx.setPower(0);
         }
-
+        /*
         //3 pos bucket
         if(gamepad2.y) {
             robot.bucket.setPosition(.6);//flat position
@@ -148,6 +147,7 @@ public class MecanumTeleop extends OpMode {
         if(gamepad2.b) {
             robot.bucket.setPosition(.25);//armFlip position
         }
+        */
         //light adjustment for Father EsBir
         if(gamepad1.right_bumper)
         {
@@ -172,11 +172,11 @@ public class MecanumTeleop extends OpMode {
         }
         if(PowerOn)
         {
-            robot.intake.setPower(.9);
+            robot.bucket.setPower(.9);
         }
         else
         {
-            robot.intake.setPower(0);
+            robot.bucket.setPower(0);
         }
         intakeOld = intakeNew;
 

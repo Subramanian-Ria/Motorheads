@@ -1,10 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package legacy;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import legacy.MecanumHardware2Esmir;
 
+@Disabled
 @TeleOp(name="MecanumTeleopEsmir", group="MecanumBot")
 //@Disabled
 

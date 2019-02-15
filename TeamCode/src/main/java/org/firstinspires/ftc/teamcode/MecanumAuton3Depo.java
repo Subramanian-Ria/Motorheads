@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
 
 
-@Autonomous(name = "MecanumAuton3Depo", group = "MecanumBot2")
+@Autonomous(name = "MecanumAuton3Depo", group = "MecanumBot")
 public class MecanumAuton3Depo extends MecanumDriving
 {
 
@@ -49,7 +49,7 @@ public class MecanumAuton3Depo extends MecanumDriving
         {
             turnDegrees(-30, TURN_SPEED, 2);
             encoderDrive(17.5, "l", 10, DRIVE_SPEED);
-            turnDegrees(133, TURN_SPEED, 3.5);
+            turnDegrees(43, TURN_SPEED, 3.5);
             encoderDrive(10, "b", 10, DRIVE_SPEED);
 
         }
@@ -60,7 +60,7 @@ public class MecanumAuton3Depo extends MecanumDriving
             encoderDrive(24, "l", 10, DRIVE_SPEED);
             sleep(200);
             //turns/moves to deposit marker
-            turnDegrees(133, TURN_SPEED, 3.5);
+            turnDegrees(43, TURN_SPEED, 3.5);
         }
 
         else
@@ -69,7 +69,7 @@ public class MecanumAuton3Depo extends MecanumDriving
             encoderDrive(17.5, "l", 10, DRIVE_SPEED);
             turnDegrees(43, TURN_SPEED, 2);
             encoderDrive(13, "b", 10, DRIVE_SPEED);
-            turnDegrees(133, TURN_SPEED, 3);
+            turnDegrees(43, TURN_SPEED, 3);
         }
         //sleep(500);
         while(robot.sensorDist.getDistance(DistanceUnit.INCH) > 2.2)

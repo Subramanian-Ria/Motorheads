@@ -22,6 +22,9 @@ public class MecanumHardware3
 
     public DistanceSensor sensorDist;
     public DistanceSensor sensorDistDepo;
+    public DistanceSensor sensorDistElevator;
+
+    public Servo lights;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -46,6 +49,9 @@ public class MecanumHardware3
         bRMotor = hwMap.get(DcMotor.class, "bRMotor");
         bLMotor = hwMap.get(DcMotor.class, "bLMotor");
 
+        lights = hwMap.get(Servo.class, "lights");
+
+
         armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
         elevator = hwMap.get(DcMotor.class, "elevator");
@@ -62,6 +68,8 @@ public class MecanumHardware3
         elevator.setPower(0);
 
         bucket.setPower(0);
+
+        lights.setPosition(500);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -94,11 +102,12 @@ public class MecanumHardware3
 
         armEx.setDirection(DcMotor.Direction.REVERSE);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
-        elevator.setDirection(DcMotor.Direction.FORWARD);
+        elevator.setDirection(DcMotor.Direction.REVERSE);
 
         bucket.setDirection(DcMotor.Direction.FORWARD);
 
         sensorDist = hwMap.get(DistanceSensor.class, "sensorDist");
         sensorDistDepo = hwMap.get(DistanceSensor.class, "sensorDistDepo");
+        sensorDistElevator = hwMap.get(DistanceSensor.class, "sensorDistElevator");
     }
 }

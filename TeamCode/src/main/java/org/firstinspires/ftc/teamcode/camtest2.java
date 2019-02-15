@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -20,7 +18,7 @@ import org.firstinspires.ftc.teamcode.TensorFlow.Device;
 import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
-
+import legacy.MecanumHardware2;
 
 
 @Autonomous(name = "camtest2", group = "MecanumBot2")

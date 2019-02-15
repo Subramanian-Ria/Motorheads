@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package legacy;
 
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -14,13 +15,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.TensorFlow;
 import org.firstinspires.ftc.teamcode.TensorFlow.Device;
-import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
+import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
+import legacy.MecanumHardware2;
 
-@Autonomous(name = "MecanumAuton2BlueDepoF1PreciseVenTest", group = "MecanumBot2")
-public class MecanumAuton2BlueDepoF1PreciseVenTest extends LinearOpMode
+@Disabled
+@Autonomous(name = "MecanumAuton2BlueDepo", group = "MecanumBot2")
+public class MecanumAuton2BlueDepo extends LinearOpMode
 {
     MecanumHardware2 robot = new MecanumHardware2();
     private ElapsedTime runtime = new ElapsedTime();
@@ -76,7 +80,7 @@ public class MecanumAuton2BlueDepoF1PreciseVenTest extends LinearOpMode
         sleep(250);
 
         MineralLocation goldMineralLocation;
-        encoderElevator(1, -9.642,40);
+        encoderElevator(1, -9.542,40);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
         sleep(1500);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
@@ -498,11 +502,9 @@ public class MecanumAuton2BlueDepoF1PreciseVenTest extends LinearOpMode
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            //Note from Vendrick: adding a new condition to the while statement to hopefully incorporate the sensor
-            //installed at the base.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.elevator.isBusy()) && (robot.sensorDist.getDistance(DistanceUnit.INCH) < 2.7)) {
+                    (robot.elevator.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
@@ -510,9 +512,6 @@ public class MecanumAuton2BlueDepoF1PreciseVenTest extends LinearOpMode
                         robot.elevator.getCurrentPosition());
                 telemetry.update();
             }
-            //allows hook to get above the edge of the latch
-            //TODO: check value
-            sleep(100);
 
             // Stop all motion;
             robot.elevator.setPower(0);

@@ -15,8 +15,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.TensorFlow.Device;
-import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
-import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
+
+import legacy.MecanumHardware2;
 
 
 @Autonomous(name = "MecanumDriveMotorTest", group = "MecanumBot2")
