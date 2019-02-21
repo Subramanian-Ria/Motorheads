@@ -166,6 +166,10 @@ public class MecanumDriving extends LinearOpMode
             robot.fRMotor.setPower(Math.abs(Speed));
             robot.bRMotor.setPower(Math.abs(Speed));
             robot.bLMotor.setPower(Math.abs(Speed));
+            /*robot.fLMotor.setPower(Speed);
+            robot.fRMotor.setPower(Speed);
+            robot.bRMotor.setPower(Speed);
+            robot.bLMotor.setPower(Speed);*/
 
 
             // keep looping while we are still active, and there is time left, and both motors are running.
@@ -374,7 +378,6 @@ public class MecanumDriving extends LinearOpMode
                 telemetry.update();
             }
             //allows hook to get above the edge of the latch
-            //TODO: check value
             sleep(800);
 
             // Stop all motion;
@@ -390,8 +393,7 @@ public class MecanumDriving extends LinearOpMode
 
     public void dropAmerica()
     {
-
-
+        //TODO: WRITE
     }
 
     public void gyroinit()

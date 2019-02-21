@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.TensorFlow.Device;
 import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
@@ -49,7 +51,9 @@ public class MecanumAuton3Depo extends MecanumDriving
             turnDegrees(-25, TURN_SPEED, 2);
             encoderDrive(17.5, "l", 10, DRIVE_SPEED);
             turnDegrees(-43, TURN_SPEED, 2.5);
-            encoderDrive(10, "b", 10, DRIVE_SPEED);
+            sleep(100);
+            //encoderDrive(2, "b", 5, DRIVE_SPEED);
+            encoderDrive(10, "f", 10, DRIVE_SPEED);
 
         }
         else if (goldMineralLocation == MineralLocation.Center)

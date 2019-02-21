@@ -397,7 +397,6 @@ public class MecanumDriveMotorTest extends LinearOpMode
                 telemetry.update();
             }
             //allows hook to get above the edge of the latch
-            //TODO: check value
             sleep(100);
 
             // Stop all motion;
