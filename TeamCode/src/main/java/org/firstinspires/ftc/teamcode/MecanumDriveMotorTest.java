@@ -19,10 +19,10 @@ import org.firstinspires.ftc.teamcode.TensorFlow.Device;
 import legacy.MecanumHardware2;
 
 
-@Autonomous(name = "MecanumDriveMotorTest", group = "MecanumBot2")
+@Autonomous(name = "MecanumDriveMotorTest", group = "MecanumBot3")
 public class MecanumDriveMotorTest extends LinearOpMode
 {
-    MecanumHardware2 robot = new MecanumHardware2();
+    MecanumHardware3 robot = new MecanumHardware3();
     private ElapsedTime runtime = new ElapsedTime();
 
 
@@ -408,21 +408,6 @@ public class MecanumDriveMotorTest extends LinearOpMode
             //  sleep(250);   // optional pause after each move
 
         }
-    }
-
-    public void dropAmerica()
-    {
-        robot.armEx.setPower(.5);
-        sleep( 875);
-        robot.armEx.setPower(0);
-        for(int i = 3; i <11; i++)
-        {
-            robot.bucket.setPosition(.1*i);
-            telemetry.addData("pos", .1*i);
-            telemetry.update();
-            sleep(100);
-        }
-
     }
 
     public void gyroinit()

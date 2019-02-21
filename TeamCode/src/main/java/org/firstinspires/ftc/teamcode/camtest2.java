@@ -21,46 +21,11 @@ import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 import legacy.MecanumHardware2;
 
 
-@Autonomous(name = "camtest2", group = "MecanumBot2")
+@Autonomous(name = "camtest2", group = "MecanumBot3")
 public class camtest2 extends MecanumDriving
 {
     MecanumHardware3 robot = new MecanumHardware3();
-    private ElapsedTime runtime = new ElapsedTime();
 
-
-    // The IMU sensor object
-    BNO055IMU imu;
-
-    //tensorflow object
-    TensorFlow tf;
-
-    // State used for updating telemetry
-    Orientation angles;
-    Acceleration gravity;
-
-    //turn headings
-    public float NORTH;
-    public float EAST;
-    public float WEST;
-    public float SOUTH;
-
-    static final double     COUNTS_PER_MOTOR_REV = 1120 ;    // Currently: Andymark Neverest 40
-    static final double     DRIVE_GEAR_REDUCTION = 2.0 ;     // This is < 1.0 if geared UP //On OUR CENTER MOTOR THE GEAR REDUCTION IS .5
-    static final double     DRIVE_GEAR_REDUCTION_CM = 0.5 ;
-    static final double     WHEEL_DIAMETER_INCHES = 3.54331;     // For figuring circumference
-    static final double     COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     COUNTS_PER_INCH_CM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION_CM) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED = .6;
-    static final double TURN_SPEED = .3;
-
-    //Encoder position tracking variables
-    double lefttrack;
-    double righttrack;
-
-    double lefttarget;
-    double righttarget;
 
 
     public void runOpMode()

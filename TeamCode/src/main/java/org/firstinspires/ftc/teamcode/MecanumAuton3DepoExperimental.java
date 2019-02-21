@@ -26,12 +26,12 @@ public class MecanumAuton3DepoExperimental extends MecanumDriving
         gyroinit();
 
 
-        robot.fLMotor.setPower(.8);
-        robot.fRMotor.setPower(.8);
-        robot.bLMotor.setPower(.8);
-        robot.bRMotor.setPower(.8);
-        robot.armEx.setPower(1);
-        sleep(2000);
+        robot.fLMotor.setPower(-.9);
+        robot.fRMotor.setPower(-.9);
+        robot.bLMotor.setPower(-.9);
+        robot.bRMotor.setPower(-.9);
+        robot.armEx.setPower(-.75);
+        sleep(1100);
 
 
 

@@ -11,12 +11,12 @@ import legacy.MecanumHardware2;
 import legacy.servoLeftTest;
 
 @Disabled
-@Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot2")
+@Autonomous(name="ElevatorLowerWithClicks", group="MecanumBot3")
 //@Disabled
 public class ElevatorLowerWithClicks extends LinearOpMode{
 
     /* Declare OpMode members. */
-    MecanumHardware2 robot   = new MecanumHardware2();   // Use a Pushbot's hardware
+    MecanumHardware3 robot   = new MecanumHardware3();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 
@@ -53,7 +53,7 @@ public class ElevatorLowerWithClicks extends LinearOpMode{
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderElevator(1, 9.545,40);
+        encoderElevator(1, 9.542,40);
         telemetry.update();
         //     encoderTurn(TURN_SPEED, 4.0
         // telemetry.addData("Turn", "Complete");

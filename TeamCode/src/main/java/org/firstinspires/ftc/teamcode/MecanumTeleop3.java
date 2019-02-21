@@ -24,7 +24,7 @@ public class MecanumTeleop3 extends OpMode {
     static final double TURN_SPEED = 0.5;
 
     private float pLim = 1f; //power multiplier that acts as a limit
-    private float drive = .6f;
+    private float drive = .8f;
     private float tHold = .1f; //lowest threshold for it to register
     private float pSlow = .2f;
     private float pSlowSlow = .1f;

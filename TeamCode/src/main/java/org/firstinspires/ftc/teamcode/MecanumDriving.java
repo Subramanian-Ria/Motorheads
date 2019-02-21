@@ -363,18 +363,19 @@ public class MecanumDriving extends LinearOpMode
             //installed at the base.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.elevator.isBusy()) && (robot.sensorDist.getDistance(DistanceUnit.INCH) > 1.95
+                    (robot.elevator.isBusy()) && (robot.sensorDistElevator.getDistance(DistanceUnit.INCH) > 2.10
             )) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newElevatorTarget);
+                telemetry.addData("dist", robot.sensorDistElevator.getDistance(DistanceUnit.INCH));
                 telemetry.addData("Path2",  "Running at %7d",
                         robot.elevator.getCurrentPosition());
                 telemetry.update();
             }
             //allows hook to get above the edge of the latch
             //TODO: check value
-            sleep(100);
+            sleep(800);
 
             // Stop all motion;
             robot.elevator.setPower(0);

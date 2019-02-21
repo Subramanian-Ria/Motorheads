@@ -100,11 +100,11 @@ public class MecanumHardware3
         bLMotor.setDirection(DcMotor.Direction.REVERSE);
         bRMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        armEx.setDirection(DcMotor.Direction.REVERSE);
+        armEx.setDirection(DcMotor.Direction.FORWARD);
         armFlip.setDirection(DcMotor.Direction.FORWARD);
         elevator.setDirection(DcMotor.Direction.REVERSE);
 
-        bucket.setDirection(DcMotor.Direction.FORWARD);
+        bucket.setDirection(DcMotor.Direction.REVERSE);
 
         sensorDist = hwMap.get(DistanceSensor.class, "sensorDist");
         sensorDistDepo = hwMap.get(DistanceSensor.class, "sensorDistDepo");

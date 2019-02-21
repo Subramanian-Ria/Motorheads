@@ -29,7 +29,7 @@ public class MecanumAuton3Crater extends MecanumDriving
         sleep(250);
 
         MineralLocation goldMineralLocation;
-        encoderElevator(1, -9.542,40);
+        //encoderElevator(1, -9.542,40);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
         sleep(1500);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
@@ -49,27 +49,32 @@ public class MecanumAuton3Crater extends MecanumDriving
         {
             turnDegrees(-30, TURN_SPEED, 2);
             encoderDrive(17.5, "l", 10, DRIVE_SPEED);
-            turnDegrees(133, TURN_SPEED, 3.5);
-            encoderDrive(10, "b", 10, DRIVE_SPEED);
+            encoderDrive(2, "r", 10, DRIVE_SPEED);
+            turnDegrees(30, TURN_SPEED, 2);
+            encoderDrive(12, "b", 10, DRIVE_SPEED);
+            turnDegrees(43, TURN_SPEED, 2);
 
         }
 
         else if(goldMineralLocation == MineralLocation.Center)
         {
             //Knocks out center mineral
-            encoderDrive(24, "l", 10, DRIVE_SPEED);
-            sleep(200);
+            encoderDrive(14, "l", 10, DRIVE_SPEED);
+            encoderDrive(2, "r", 10, DRIVE_SPEED);
+            encoderDrive(14, "b", 10, DRIVE_SPEED);
+            turnDegrees(43, TURN_SPEED, 2);
             //turns/moves to deposit marker
-            turnDegrees(133, TURN_SPEED, 3.5);
+
         }
 
         else
         {
             turnDegrees(30, TURN_SPEED, 2);
             encoderDrive(17.5, "l", 10, DRIVE_SPEED);
+            encoderDrive(2, "r", 10, DRIVE_SPEED);
+            turnDegrees(-30, TURN_SPEED, 2);
+            encoderDrive(16, "b", 10, DRIVE_SPEED);
             turnDegrees(43, TURN_SPEED, 2);
-            encoderDrive(13, "b", 10, DRIVE_SPEED);
-            turnDegrees(133, TURN_SPEED, 3);
         }
         //sleep(500);
         while(robot.sensorDist.getDistance(DistanceUnit.INCH) > 2.2)
