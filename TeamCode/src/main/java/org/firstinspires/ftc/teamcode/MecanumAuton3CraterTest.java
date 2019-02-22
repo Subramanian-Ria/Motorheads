@@ -1,16 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.TensorFlow.Device;
-import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
+import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 
 
-
-
-@Autonomous(name = "MecanumAuton3Crater", group = "MecanumBot3")
-public class MecanumAuton3Crater extends MecanumDriving
+@Autonomous(name = "MecanumAuton3CraterTest", group = "MecanumBot3")
+public class MecanumAuton3CraterTest extends MecanumDriving
 {
 
     public void runOpMode()
@@ -47,7 +46,22 @@ public class MecanumAuton3Crater extends MecanumDriving
         encoderDrive(2,"b",5, DRIVE_SPEED);
         sleep(200);
 
-        if(goldMineralLocation == MineralLocation.Left)
+        telemetry.addData("Location Right", 0);
+        telemetry.update();
+        turnDegrees(35, TURN_SPEED, 2);
+        //drive towards mineral
+        encoderDrive(14.5, "l", 10, DRIVE_SPEED);
+        encoderDrive(4, "r", 10, DRIVE_SPEED);
+        sleep(100);
+        turnDegrees(4.5, TURN_SPEED, 10);
+        /*sleep(200);
+        encoderDrive(14, "b", 10, DRIVE_SPEED);
+        sleep(100);
+        encoderDrive(7, "l", 10, DRIVE_SPEED);*/
+        //encoderDrive(16, "b", 10, DRIVE_SPEED);
+        //turnDegrees(-43, TURN_SPEED, 2);
+
+        /*if(goldMineralLocation == MineralLocation.Left)
         {
             telemetry.addData("Location Left", 0);
             telemetry.update();
@@ -83,9 +97,9 @@ public class MecanumAuton3Crater extends MecanumDriving
             turnDegrees(-30, TURN_SPEED, 2);
             encoderDrive(16, "b", 10, DRIVE_SPEED);
             turnDegrees(-43, TURN_SPEED, 2);
-        }
+        }*/
         //sleep(500);
-        while(robot.sensorDist.getDistance(DistanceUnit.INCH) > 2.2)
+        /*while(robot.sensorDist.getDistance(DistanceUnit.INCH) > 2.2)
         {
             telemetry.addData("dist:",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
@@ -174,7 +188,7 @@ public class MecanumAuton3Crater extends MecanumDriving
         robot.fRMotor.setPower(0);
         robot.bLMotor.setPower(0);
         robot.bRMotor.setPower(0);
-        sleep(100);
+        sleep(100);*/
 
     }
 

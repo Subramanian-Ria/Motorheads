@@ -379,7 +379,7 @@ public class MecanumDriving extends LinearOpMode
                 telemetry.update();
             }
             //allows hook to get above the edge of the latch
-            sleep(800);
+            sleep(850);
 
             // Stop all motion;
             robot.elevator.setPower(0);
@@ -394,7 +394,6 @@ public class MecanumDriving extends LinearOpMode
 
     public void dropAmerica()
     {
-        //TODO: WRITE
         robot.marker.setPower(1);
         sleep(1000);
         robot.marker.setPower(0);
