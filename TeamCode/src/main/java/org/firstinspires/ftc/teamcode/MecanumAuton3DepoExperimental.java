@@ -30,8 +30,8 @@ public class MecanumAuton3DepoExperimental extends MecanumDriving
         robot.fRMotor.setPower(-.9);
         robot.bLMotor.setPower(-.9);
         robot.bRMotor.setPower(-.9);
-        robot.armEx.setPower(-.75);
-        sleep(1100);
+        robot.armEx.setPower(-.85);
+        sleep(900);
 
 
 

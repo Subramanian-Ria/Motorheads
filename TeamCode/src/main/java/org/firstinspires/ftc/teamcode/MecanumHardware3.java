@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -25,7 +26,7 @@ public class MecanumHardware3
     public DistanceSensor sensorDistElevator;
 
     public Servo lights;
-    public Servo marker;
+    public CRServo marker;
 
     //declaring values for use with encoders
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // AndyMark Motor Encoder
@@ -51,7 +52,7 @@ public class MecanumHardware3
         bLMotor = hwMap.get(DcMotor.class, "bLMotor");
 
         lights = hwMap.get(Servo.class, "lights");
-        marker = hwMap.get(Servo.class, "marker");
+        marker = hwMap.get(CRServo.class, "marker");
 
         armEx = hwMap.get(DcMotor.class, "armEx");
         armFlip = hwMap.get(DcMotor.class, "armFlip");
@@ -71,7 +72,7 @@ public class MecanumHardware3
         bucket.setPower(0);
 
         lights.setPosition(500);
-        marker.setPosition(1);
+        marker.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -107,6 +108,7 @@ public class MecanumHardware3
         elevator.setDirection(DcMotor.Direction.REVERSE);
 
         bucket.setDirection(DcMotor.Direction.REVERSE);
+        marker.setDirection(CRServo.Direction.FORWARD);
 
         sensorDist = hwMap.get(DistanceSensor.class, "sensorDist");
         sensorDistDepo = hwMap.get(DistanceSensor.class, "sensorDistDepo");

@@ -69,7 +69,7 @@ public class MecanumAuton3Depo extends MecanumDriving
             turnDegrees(30, TURN_SPEED, 2);
             encoderDrive(17.5, "l", 10, DRIVE_SPEED);
             turnDegrees(-43, TURN_SPEED, 2.5);
-            encoderDrive(5, "f", 10, DRIVE_SPEED);
+            encoderDrive(2.5, "f", 10, DRIVE_SPEED);
             encoderDrive(15, "l", 10, DRIVE_SPEED);
         }
         //sleep(500);
@@ -87,19 +87,15 @@ public class MecanumAuton3Depo extends MecanumDriving
         robot.fRMotor.setPower(0);
         robot.bLMotor.setPower(0);
         robot.bRMotor.setPower(0);
-        sleep(100);
+        dropAmerica();
+
         telemetry.addData("Z", readAngle("z"));
         telemetry.addData("y", readAngle("y"));
         telemetry.addData("x", readAngle("x"));
-        telemetry.update();
-
-        dropAmerica();
-
-        //encoderDrive(30,"f", 15,DRIVE_SPEED);
         telemetry.addData("runtime 1", runtime.seconds());
         telemetry.update();
         runtime.reset();
-        while((readAngle("y") < 1.5 || runtime.seconds() < 5) && opModeIsActive())
+        while((readAngle("y") < 1.3 || runtime.seconds() < 5) && opModeIsActive())
         {
             telemetry.addData("Z", readAngle("z"));
             telemetry.addData("y", readAngle("y"));

@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -394,6 +395,9 @@ public class MecanumDriving extends LinearOpMode
     public void dropAmerica()
     {
         //TODO: WRITE
+        robot.marker.setPower(1);
+        sleep(1000);
+        robot.marker.setPower(0);
     }
 
     public void gyroinit()

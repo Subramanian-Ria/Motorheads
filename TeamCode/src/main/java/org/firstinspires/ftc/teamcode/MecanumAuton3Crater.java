@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 public class MecanumAuton3Crater extends MecanumDriving
 {
 
-
     public void runOpMode()
     {
         robot.init(hardwareMap);
@@ -29,13 +28,20 @@ public class MecanumAuton3Crater extends MecanumDriving
         sleep(250);
 
         MineralLocation goldMineralLocation;
-        //encoderElevator(1, -9.542,40);
+
+        encoderElevator(1, -9.542, 40);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
-        sleep(1500);
+        sleep(1000);
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
-        //BACKS OUT FROM HOOK
+
         tf.shutdown();
+
+        //BACKS OUT FROM HOOK
         gyroinit();
+
+        encoderDrive(2, "f", 10, DRIVE_SPEED);
+        sleep(200);
+
         encoderDrive(2,"f",10, DRIVE_SPEED);
         sleep(200);
 
@@ -52,17 +58,17 @@ public class MecanumAuton3Crater extends MecanumDriving
             encoderDrive(2, "r", 10, DRIVE_SPEED);
             turnDegrees(30, TURN_SPEED, 2);
             encoderDrive(12, "b", 10, DRIVE_SPEED);
-            turnDegrees(43, TURN_SPEED, 2);
+            turnDegrees(-43, TURN_SPEED, 2);
 
         }
 
         else if(goldMineralLocation == MineralLocation.Center)
         {
             //Knocks out center mineral
-            encoderDrive(14, "l", 10, DRIVE_SPEED);
+            encoderDrive(13, "l", 10, DRIVE_SPEED);
             encoderDrive(2, "r", 10, DRIVE_SPEED);
             encoderDrive(14, "b", 10, DRIVE_SPEED);
-            turnDegrees(43, TURN_SPEED, 2);
+            turnDegrees(-43, TURN_SPEED, 2);
             //turns/moves to deposit marker
 
         }
@@ -74,17 +80,17 @@ public class MecanumAuton3Crater extends MecanumDriving
             encoderDrive(2, "r", 10, DRIVE_SPEED);
             turnDegrees(-30, TURN_SPEED, 2);
             encoderDrive(16, "b", 10, DRIVE_SPEED);
-            turnDegrees(43, TURN_SPEED, 2);
+            turnDegrees(-43, TURN_SPEED, 2);
         }
         //sleep(500);
         while(robot.sensorDist.getDistance(DistanceUnit.INCH) > 2.2)
         {
             telemetry.addData("dist:",(robot.sensorDist.getDistance(DistanceUnit.INCH)));
             telemetry.update();
-            robot.fLMotor.setPower(.4);
-            robot.fRMotor.setPower(-.4);
-            robot.bLMotor.setPower(-.4);
-            robot.bRMotor.setPower(.4);
+            robot.fLMotor.setPower(-.4);
+            robot.fRMotor.setPower(.4);
+            robot.bLMotor.setPower(.4);
+            robot.bRMotor.setPower(-.4);
 
         }
         robot.fLMotor.setPower(0);
@@ -97,7 +103,10 @@ public class MecanumAuton3Crater extends MecanumDriving
         telemetry.addData("x", readAngle("x"));
         telemetry.update();
 
-        dropAmerica();
+        encoderDrive(30,"b", 15,DRIVE_SPEED);
+        robot.bucket.setPower(-.2);
+
+
 
         //encoderDrive(30,"f", 15,DRIVE_SPEED);
         telemetry.addData("runtime 1", runtime.seconds());
@@ -164,13 +173,6 @@ public class MecanumAuton3Crater extends MecanumDriving
         robot.bLMotor.setPower(0);
         robot.bRMotor.setPower(0);
         sleep(100);
-
-        tf.shutdown();
-
-
-
-
-
 
     }
 

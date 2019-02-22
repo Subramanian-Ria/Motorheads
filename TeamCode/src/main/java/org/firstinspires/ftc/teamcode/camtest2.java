@@ -24,9 +24,6 @@ import legacy.MecanumHardware2;
 @Autonomous(name = "camtest2", group = "MecanumBot3")
 public class camtest2 extends MecanumDriving
 {
-    MecanumHardware3 robot = new MecanumHardware3();
-
-
 
     public void runOpMode()
     {
@@ -37,7 +34,7 @@ public class camtest2 extends MecanumDriving
 
         waitForStart();
         tf.start();
-        sleep(500);
+        sleep(250);
 
         MineralLocation goldMineralLocation;
         goldMineralLocation = tf.getMineralLocation(RobotOrientation.Left);
