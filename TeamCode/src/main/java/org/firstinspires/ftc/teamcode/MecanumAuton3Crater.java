@@ -69,7 +69,7 @@ public class MecanumAuton3Crater extends MecanumDriving
             telemetry.update();
             //Knocks out center mineral
             encoderDrive(12, "l", 10, DRIVE_SPEED);
-            encoderDrive(3.5, "r", 10, DRIVE_SPEED);
+            encoderDrive(3.75, "r", 10, DRIVE_SPEED);
             encoderDrive(14, "b", 10, DRIVE_SPEED);
         }
 
@@ -110,22 +110,22 @@ public class MecanumAuton3Crater extends MecanumDriving
 
         //move arm to clear wires and deposit marker
         robot.armFlip.setPower(-.65);
-        sleep(550);
+        sleep(675);
         robot.armFlip.setPower(0);
         //
-        robot.fLMotor.setPower(-.9);
-        robot.fRMotor.setPower(-.9);
-        robot.bLMotor.setPower(-.9);
-        robot.bRMotor.setPower(-.9);
+        robot.fLMotor.setPower(-.95);
+        robot.fRMotor.setPower(-.95);
+        robot.bLMotor.setPower(-.95);
+        robot.bRMotor.setPower(-.95);
         robot.armEx.setPower(-.85);
-        sleep(1300);
+        sleep(1350);
         robot.fLMotor.setPower(0);
         robot.fRMotor.setPower(0);
         robot.bLMotor.setPower(0);
         robot.bRMotor.setPower(0);
         robot.armEx.setPower(0);
-        robot.bucket.setPower(-.25);
-        sleep(200);
+        robot.bucket.setPower(-.5);
+        sleep(500);
         robot.bucket.setPower(0);
         robot.armEx.setPower(1);
         sleep(500);
@@ -134,7 +134,7 @@ public class MecanumAuton3Crater extends MecanumDriving
         telemetry.addData("runtime 1", runtime.seconds());
         telemetry.update();
         runtime.reset();
-        while(readAngle("y") > -2.5 && opModeIsActive())
+        while(readAngle("y") > -1.7 && opModeIsActive())
         {
             telemetry.addData("y; ", readAngle("y"));
             telemetry.update();

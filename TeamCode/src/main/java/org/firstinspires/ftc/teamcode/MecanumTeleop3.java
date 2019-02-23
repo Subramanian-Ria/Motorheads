@@ -83,7 +83,7 @@ public class MecanumTeleop3 extends OpMode {
 
 
         //reverse bucket
-        intakeNew1 = gamepad2.b;
+        intakeNew1 = gamepad2.y;
         if(intakeNew1 != intakeOld1)
         {
             PowerOn1 = !PowerOn1;
