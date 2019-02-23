@@ -1,39 +1,32 @@
 package org.firstinspires.ftc.teamcode;
 
-
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.TensorFlow.Device;
 import org.firstinspires.ftc.teamcode.TensorFlow.RobotOrientation;
 import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
-import legacy.MecanumHardware2;
 
 
-@Autonomous(name = "camtest2", group = "MecanumBot3")
-public class camtest2 extends MecanumDriving
+
+@Autonomous(name = "camtest3", group = "MecanumBot3")
+public class camtest3 extends MecanumDriving
 {
 
-    public void runOpMode()
-    {
+
+    public void runOpMode() {
         robot.init(hardwareMap);
-        tf = new TensorFlow(hardwareMap, Device.Webcam,telemetry);
+
+        tf = new TensorFlow(hardwareMap, Device.Webcam, telemetry);
         //run using and stop and reset encoders for all relevant motors
         stopAndReset();
 
         waitForStart();
+
         tf.start();
+
         sleep(250);
 
         MineralLocation goldMineralLocation;
@@ -58,13 +51,19 @@ public class camtest2 extends MecanumDriving
                 telemetry.update();
             }
             else
-                {
-            telemetry.addData("Right", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
-            telemetry.update();
+            {
+                telemetry.addData("Right", (robot.sensorDist.getDistance(DistanceUnit.INCH)));
+                telemetry.update();
             }
 
         }
         tf.shutdown();
     }
 
-}
+
+    }
+
+
+
+
+

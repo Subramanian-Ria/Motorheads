@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.TensorFlow.MineralLocation;
 
 
 
-@Autonomous(name = "MecanumAuton3Depo", group = "MecanumBot")
+@Autonomous(name = "MecanumAuton3Depo", group = "MecanumBot3")
 public class MecanumAuton3Depo extends MecanumDriving
 {
 
@@ -157,7 +157,7 @@ public class MecanumAuton3Depo extends MecanumDriving
         robot.bRMotor.setPower(0);
         sleep(100);
 
-        tf.shutdown();
+        //tf.shutdown();
 
 
 
