@@ -33,6 +33,10 @@ public class MecanumTeleop3 extends OpMode {
     boolean intakeOld = true;
     boolean intakeNew = false;
     boolean PowerOn=true;
+
+    boolean intakeOld1 = true;
+    boolean intakeNew1 = false;
+    boolean PowerOn1 = true;
     int armFlipRef = 0;//TODO: FIND VALUE
     int count = 0;
 
@@ -61,6 +65,7 @@ public class MecanumTeleop3 extends OpMode {
             robot.armEx.setPower(0);
         }
 
+        //forward bucket
         intakeNew= gamepad2.x;
         if(intakeNew != intakeOld)
         {
@@ -75,6 +80,24 @@ public class MecanumTeleop3 extends OpMode {
             robot.bucket.setPower(0);
         }
         intakeOld = intakeNew;
+
+
+        //reverse bucket
+        intakeNew1 = gamepad2.b;
+        if(intakeNew1 != intakeOld1)
+        {
+            PowerOn1 = !PowerOn1;
+        }
+        if(PowerOn1)
+        {
+            robot.bucket.setPower(-.9);
+        }
+        else
+        {
+            robot.bucket.setPower(0);
+        }
+        intakeOld1 = intakeNew1;
+
 
         //elevator controls
         if (gamepad2.dpad_up) {
@@ -111,8 +134,8 @@ public class MecanumTeleop3 extends OpMode {
 
     public void mecanumMove() {
         //variables
-        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+        double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
+        double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
         double rightX = gamepad1.right_stick_x;
         final double v1 = r * Math.cos(robotAngle) + rightX;
         final double v2 = r * Math.sin(robotAngle) - rightX;
