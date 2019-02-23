@@ -52,10 +52,10 @@ public class MecanumTeleop3 extends OpMode {
         mecanumMove();
         //horizontal arm movement
         if (gamepad2.dpad_right) {
-            robot.armEx.setPower(.8);
+            robot.armEx.setPower(-.8); //currently flipped due to how strung wack
         }
         else if (gamepad2.dpad_left) {
-            robot.armEx.setPower(-.8);
+            robot.armEx.setPower(.8);
         }
         else {
             robot.armEx.setPower(0);
